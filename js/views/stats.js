@@ -86,10 +86,12 @@ VIEWS.stats = function(){
       <div class="card-title">${icon("edit")} 数据管理</div>
       <div class="row" style="flex-wrap:wrap;gap:10px;margin-top:6px">
         <button class="btn btn-ghost btn-sm" id="exportBtn">导出学习数据</button>
+        <button class="btn btn-ghost btn-sm" id="importBtn">导入学习数据</button>
+        <input type="file" id="importFile" accept=".json" style="display:none">
         <button class="btn btn-ghost btn-sm" id="freeBtn">${S.free?"✓ 自由模式已开启（全部解锁）":"开启自由模式（解锁全部阶段）"}</button>
         <button class="btn btn-ghost btn-sm" id="resetBtn" style="color:var(--rose)">重置全部数据</button>
       </div>
-      <p class="tiny" style="margin-top:10px">数据仅保存在本机浏览器（localStorage）。导出后可在其他设备导入；重置不可恢复。</p>
+      <p class="tiny" style="margin-top:10px">数据仅保存在本机浏览器（localStorage）。手机与电脑进度不通用：先在旧设备「导出」，再在新设备「导入」即可无缝接力。重置不可恢复。</p>
     </div>
   </div>`;
   $("#exportBtn", el).addEventListener("click",()=>{
@@ -98,6 +100,21 @@ VIEWS.stats = function(){
     a.href = URL.createObjectURL(blob);
     a.download = `aurum-backup-${dayKey()}.json`;
     a.click(); toast("已导出学习数据","gold");
+  });
+  $("#importBtn", el).addEventListener("click",()=>$("#importFile", el).click());
+  $("#importFile", el).addEventListener("change",(e)=>{
+    const f = e.target.files[0]; if(!f) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      try {
+        const data = JSON.parse(rd.result);
+        if(!data || typeof data!=="object" || !("lessons" in data)) throw new Error("bad");
+        localStorage.setItem(Store.KEY, JSON.stringify(data));
+        toast("导入成功，即将刷新","gold");
+        setTimeout(()=>location.reload(), 800);
+      } catch(err){ toast("文件格式不正确，导入失败"); }
+    };
+    rd.readAsText(f);
   });
   $("#freeBtn", el).addEventListener("click",()=>{
     S.free = !S.free; save(); App.route(); toast(S.free?"自由模式已开启":"已恢复循序解锁模式","");
