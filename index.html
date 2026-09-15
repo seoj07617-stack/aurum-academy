@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="知行金融学院 · Aurum Academy — 从宏观到微观、从知识到纪律的金融学习闭环系统">
+<title>知行金融学院 · Aurum Academy</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238C6D2F'/%3E%3Cstop offset='.5' stop-color='%23C9A227'/%3E%3Cstop offset='1' stop-color='%23E5CE8A'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='34' fill='white' text-anchor='middle'%3E知%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/views.css">
+<link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb orb-a"></div><div class="orb orb-b"></div>
+  <div class="orb orb-c"></div><div class="orb orb-d"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="topnav">
+  <div class="inner">
+    <a class="brand" href="#/home">
+      <span class="mark">知</span>
+      <span><b>知行金融学院</b><i>AURUM ACADEMY</i></span>
+    </a>
+    <div class="navlinks">
+      <a href="#/home" data-nav="home">首页</a>
+      <a href="#/map" data-nav="map">知识地图</a>
+      <a href="#/review" data-nav="review">记忆复习 <span id="navDue" class="tag" style="padding:1px 7px;font-size:10px;display:none"></span></a>
+      <a href="#/wrong" data-nav="wrong">错题本</a>
+      <a href="#/dojo/check" data-nav="dojo">纪律工坊</a>
+      <a href="#/stats" data-nav="stats">数据</a>
+    </div>
+    <div class="nav-right">
+      <span class="streak-chip"><span class="fl"></span><span id="streakN">0</span> 天</span>
+      <span class="lv-chip" id="lvChip">见习研究员</span>
+    </div>
+  </div>
+</nav>
+
+<nav class="botnav">
+  <a href="#/home" data-nav="home"><span class="icn" data-ic="home"></span>首页</a>
+  <a href="#/map" data-nav="map"><span class="icn" data-ic="map"></span>地图</a>
+  <a href="#/review" data-nav="review"><span class="icn" data-ic="zap"></span>复习</a>
+  <a href="#/wrong" data-nav="wrong"><span class="icn" data-ic="book"></span>错题</a>
+  <a href="#/dojo/check" data-nav="dojo"><span class="icn" data-ic="shield"></span>工坊</a>
+  <a href="#/stats" data-nav="stats"><span class="icn" data-ic="chart"></span>数据</a>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+<div id="toasts"></div>
+
+<div class="footer-note">
+  知行金融学院 · Aurum Academy — 学习内容仅用于金融知识教育，不构成任何投资建议。市场有风险，投资需谨慎。<br>
+  数据保存在本机浏览器中，可在「数据」页导出备份。
+</div>
+
+<script src="js/data/foundations.js"></script>
+<script src="js/data/macro.js"></script>
+<script src="js/data/markets.js"></script>
+<script src="js/data/company.js"></script>
+<script src="js/data/technical.js"></script>
+<script src="js/data/funds.js"></script>
+<script src="js/data/models.js"></script>
+<script src="js/data/discipline.js"></script>
+<script src="js/data/portfolio.js"></script>
+<script src="js/data/capstone.js"></script>
+<script src="js/core.js"></script>
+<script src="js/srs.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/views/home.js"></script>
+<script src="js/views/map.js"></script>
+<script src="js/views/stage.js"></script>
+<script src="js/views/lesson.js"></script>
+<script src="js/views/quiz.js"></script>
+<script src="js/views/review.js"></script>
+<script src="js/views/wrong.js"></script>
+<script src="js/views/stats.js"></script>
+<script src="js/views/dojo.js"></script>
+<script>
+/* 顶部导航火苗 / 底部图标注入，然后启动 */
+document.querySelector(".streak-chip .fl").innerHTML =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M12 2.5c.8 3.4 4.6 4.6 4.6 9a4.6 4.6 0 0 1-9.2 0c0-2.4 1.6-3.5 1.6-6 1.2.9 2.4 1 3-3z"/></svg>';
+document.querySelectorAll(".botnav .icn").forEach(n=>{ n.innerHTML = (ICONS[n.dataset.ic]||""); n.classList.add("ic"); });
+document.body.insertAdjacentHTML("afterbegin", GOLD_DEFS);
+App.boot();
+</script>
+</body>
+</html>
