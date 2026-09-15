@@ -1,0 +1,97 @@
+/* ============================================================
+   知行金融学院 · Aurum Academy
+   base.css — 设计令牌 / 排版 / 背景 / 布局工具
+   ============================================================ */
+:root{
+  --bg:#F6F3EC;
+  --ink:#221F1A; --ink2:#6E6A5E; --ink3:#ABA592;
+  --gold:#A8842C; --gold2:#C9A227; --gold3:#E7D397;
+  --gold-grad:linear-gradient(135deg,#8C6D2F 0%,#C9A227 48%,#E5CE8A 100%);
+  --rose:#B45B52; --rose-soft:rgba(180,91,82,.10);
+  --up:#B94A40;  --down:#2A7A68;              /* 红涨绿跌（A股惯例） */
+  --glass:rgba(255,255,255,.58);
+  --glass2:rgba(255,255,255,.80);
+  --gbrd:rgba(255,255,255,.75);
+  --gbrd2:rgba(184,150,62,.28);
+  --sh:0 10px 40px rgba(90,74,34,.10),0 2px 8px rgba(90,74,34,.05);
+  --sh2:0 20px 64px rgba(90,74,34,.17);
+  --r:22px; --r2:16px; --r3:12px;
+  --serif:"Source Han Serif SC","Noto Serif SC","Songti SC",STSong,"SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Microsoft YaHei UI","Microsoft YaHei","Segoe UI",sans-serif;
+  --num:"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --nav-h:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);background:var(--bg);color:var(--ink);
+  font-size:15.5px;line-height:1.78;letter-spacing:.012em;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+}
+::selection{background:rgba(201,162,39,.30)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(140,109,47,.22);border-radius:8px;border:2px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- 背景光晕（磨砂玻璃的底色来源） ---------- */
+.bg-orbs{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(90px)}
+.orb-a{width:58vmax;height:58vmax;left:-20vmax;top:-24vmax;opacity:.55;
+  background:radial-gradient(circle,rgba(216,186,110,.55),rgba(216,186,110,0) 66%);
+  animation:driftA 72s var(--ease) infinite alternate}
+.orb-b{width:50vmax;height:50vmax;right:-18vmax;top:8vmax;opacity:.34;
+  background:radial-gradient(circle,rgba(84,110,140,.55),rgba(84,110,140,0) 66%);
+  animation:driftB 84s var(--ease) infinite alternate}
+.orb-c{width:46vmax;height:46vmax;left:22vmax;bottom:-24vmax;opacity:.30;
+  background:radial-gradient(circle,rgba(196,148,130,.55),rgba(196,148,130,0) 66%);
+  animation:driftC 90s var(--ease) infinite alternate}
+.orb-d{width:30vmax;height:30vmax;right:12vmax;bottom:-10vmax;opacity:.26;
+  background:radial-gradient(circle,rgba(42,122,104,.5),rgba(42,122,104,0) 66%);
+  animation:driftB 96s var(--ease) infinite alternate-reverse}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.5 0 0 0 0 0.38 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- 排版 ---------- */
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:600;letter-spacing:.02em;line-height:1.32}
+.kicker{
+  font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;
+}
+.kicker::before{content:"";width:26px;height:1px;background:var(--gold-grad)}
+.muted{color:var(--ink2)} .faint{color:var(--ink3)}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-spacing:0}
+.gold-text{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.up{color:var(--up)} .down{color:var(--down)}
+.small{font-size:12.5px} .tiny{font-size:11.5px;color:var(--ink3);letter-spacing:.04em}
+
+/* ---------- 布局 ---------- */
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+main{padding-top:calc(var(--nav-h) + 26px);padding-bottom:90px;min-height:70vh}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:1fr 1fr} .g3{grid-template-columns:1fr 1fr 1fr}
+.row{display:flex;align-items:center;gap:10px}
+.between{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(140,109,47,.22),transparent);border:none;margin:8px 0}
+.footer-note{
+  max-width:1160px;margin:30px auto 0;padding:18px 24px 8px;text-align:center;
+  color:var(--ink3);font-size:12px;letter-spacing:.06em;line-height:1.9;
+}
+
+/* ---------- 页面切换 ---------- */
+#app{outline:none}
+.view{animation:viewIn .5s var(--ease) both}
+.st>*{animation:riseIn .55s var(--ease) both}
+.st>*:nth-child(1){animation-delay:.03s}.st>*:nth-child(2){animation-delay:.09s}
+.st>*:nth-child(3){animation-delay:.15s}.st>*:nth-child(4){animation-delay:.21s}
+.st>*:nth-child(5){animation-delay:.27s}.st>*:nth-child(6){animation-delay:.33s}
+.st>*:nth-child(7){animation-delay:.39s}.st>*:nth-child(8){animation-delay:.45s}
+
+@media (max-width:900px){.g3{grid-template-columns:1fr}.g2{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
