@@ -53,10 +53,12 @@
 <main id="app" tabindex="-1"></main>
 <div id="toasts"></div>
 
-<div class="footer-note">
+<footer class="footer-note">
+  <div class="foot-coin" aria-hidden="true"></div>
+  <div class="foot-motto">外圆内方 · 知行合一</div>
   知行金融学院 · Aurum Academy — 学习内容仅用于金融知识教育，不构成任何投资建议。市场有风险，投资需谨慎。<br>
   数据保存在本机浏览器中，可在「数据」页导出备份。
-</div>
+</footer>
 
 <script src="js/data/foundations.js"></script>
 <script src="js/data/macro.js"></script>
@@ -87,6 +89,7 @@ document.querySelector(".streak-chip .fl").innerHTML =
 document.querySelectorAll(".botnav .icn").forEach(n=>{ n.innerHTML = (ICONS[n.dataset.ic]||""); n.classList.add("ic"); });
 document.querySelector(".coin-mark").innerHTML = coinEmblem();
 document.querySelector(".coin-float span").innerHTML = coinEmblem();
+document.querySelector(".foot-coin").innerHTML = coinEmblem();
 document.body.insertAdjacentHTML("afterbegin", GOLD_DEFS);
 App.boot();
 </script>
