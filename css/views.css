@@ -247,8 +247,8 @@
     mask-image:radial-gradient(155px 110px at 90% 4%,rgba(0,0,0,.95),transparent 76%)}
   .stage-hero::after{width:210px;height:140px;opacity:.4;background-size:76px auto}
   .page-head::after{width:220px;height:130px;opacity:.36;background-size:80px auto}
-  /* 移动端悬浮铜钱（右上角，点按回首页）+ 左上主题按钮 */
-  .coin-float{display:block;position:fixed;top:12px;right:15px;z-index:70;width:32px;height:32px;
+  /* 移动端顶冠铜钱（顶部居中，点按回首页）+ 左上主题按钮 */
+  .coin-float{display:block;position:fixed;top:10px;left:50%;margin-left:-16px;z-index:70;width:32px;height:32px;
     filter:drop-shadow(0 3px 8px rgba(140,109,47,.4));
     -webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none;outline:none}
   .coin-float:active{transform:scale(.92);transition:transform .15s}
