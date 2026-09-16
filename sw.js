@@ -1,16 +1,16 @@
 /* 知行金融学院 · Service Worker：网络优先、缓存兜底（离线可用） */
 "use strict";
-const VER = "aurum-v4";
+const VER = "aurum-v5";
 const CORE = [
   "./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png",
   "./css/base.css", "./css/components.css", "./css/views.css", "./css/animations.css",
-  "./js/core.js", "./js/srs.js", "./js/ui.js", "./js/charts.js",
+  "./js/core.js", "./js/srs.js", "./js/sync.js", "./js/ui.js", "./js/charts.js",
   "./js/data/foundations.js", "./js/data/macro.js", "./js/data/markets.js", "./js/data/company.js",
   "./js/data/technical.js", "./js/data/funds.js", "./js/data/models.js", "./js/data/discipline.js",
   "./js/data/portfolio.js", "./js/data/capstone.js", "./js/data/practice.js",
   "./js/views/home.js", "./js/views/map.js", "./js/views/stage.js", "./js/views/lesson.js",
   "./js/views/quiz.js", "./js/views/review.js", "./js/views/wrong.js", "./js/views/stats.js",
-  "./js/views/dojo.js", "./js/views/glossary.js", "./js/views/practice.js"
+  "./js/views/dojo.js", "./js/views/glossary.js", "./js/views/practice.js", "./js/views/daily.js"
 ];
 self.addEventListener("install", e => {
   self.skipWaiting();
