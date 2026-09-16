@@ -138,19 +138,19 @@
 .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:10px}
 .sec-head .no{font-family:var(--num);font-size:13px;font-weight:800;color:var(--gold2);letter-spacing:.1em}
 .sec-head h3{font-size:18.5px}
-.sec p{color:#3B372E;font-size:15px;margin-bottom:8px}
+.sec p{color:var(--body-ink);font-size:15px;margin-bottom:8px}
 .sec ul,.sec ol{padding-left:4px;list-style:none;display:flex;flex-direction:column;gap:8px;margin:8px 0 4px}
-.sec ul li{position:relative;padding-left:22px;font-size:14.5px;color:#3B372E}
+.sec ul li{position:relative;padding-left:22px;font-size:14.5px;color:var(--body-ink)}
 .sec ul li::before{content:"";position:absolute;left:4px;top:.72em;width:7px;height:7px;border-radius:2px;
   background:var(--gold-grad);transform:rotate(45deg);opacity:.8}
 .sec ol{counter-reset:li}
-.sec ol li{counter-increment:li;position:relative;padding-left:34px;font-size:14.5px;color:#3B372E}
+.sec ol li{counter-increment:li;position:relative;padding-left:34px;font-size:14.5px;color:var(--body-ink)}
 .sec ol li::before{content:counter(li,decimal-leading-zero);position:absolute;left:0;top:.1em;
   font-family:var(--num);font-size:12px;font-weight:800;color:var(--gold)}
 .trap-box{margin-top:10px;padding:16px 18px;border-radius:var(--r2);background:var(--rose-soft);
   border:1px solid rgba(180,91,82,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .trap-box b{color:var(--rose);font-size:13.5px;letter-spacing:.06em}
-.trap-box p{font-size:13.5px;margin-top:3px;color:#5C4A45}
+.trap-box p{font-size:13.5px;margin-top:3px;color:var(--body-ink)}
 .lesson-aside{position:sticky;top:calc(var(--nav-h) + 20px);display:flex;flex-direction:column;gap:16px}
 .pt-list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 .pt{padding:11px 13px;border-radius:13px;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.6)}
@@ -202,7 +202,7 @@
 .face.back{transform:rotateY(180deg)}
 .face .fk{font-size:11px;letter-spacing:.24em;color:var(--gold);font-weight:700}
 .face .fq{font-family:var(--serif);font-size:21px;line-height:1.6}
-.face .fa{font-size:15px;color:#3B372E;line-height:1.8;max-width:48ch}
+.face .fa{font-size:15px;color:var(--body-ink);line-height:1.8;max-width:48ch}
 .grade-row{display:flex;gap:12px;justify-content:center;opacity:0;pointer-events:none;transition:all .4s var(--ease);transform:translateY(8px)}
 .grade-row.show{opacity:1;pointer-events:auto;transform:none}
 .gbtn{padding:12px 26px;border-radius:999px;font-size:14px;font-weight:700;letter-spacing:.06em;transition:all .3s var(--ease);border:1.5px solid}
@@ -296,8 +296,7 @@ html[data-theme="dark"] .anno{background:rgba(255,255,255,.055);border-color:rgb
 .anno::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3.5px;border-radius:3px;background:var(--gold-grad)}
 .anno .tagline{display:inline-block;font-family:var(--serif);font-size:12px;font-weight:700;letter-spacing:.28em;
   color:var(--gold);margin-bottom:5px}
-.anno p{font-size:13.8px;line-height:1.75;color:#3B372E}
-html[data-theme="dark"] .anno p{color:#D5CCB4}
+.anno p{font-size:13.8px;line-height:1.75;color:var(--body-ink)}
 /* 判断题印章按钮 */
 .tfbtn{min-width:112px;padding:12px 18px;font-family:var(--serif);font-size:16px;letter-spacing:.35em;
   border:1.6px solid rgba(184,150,62,.4);border-radius:12px;position:relative}
