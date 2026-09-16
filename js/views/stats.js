@@ -41,7 +41,7 @@ VIEWS.stats = function(){
         <div class="card-title">${icon("trend")} 未来 7 天复习压力预报</div>
         <p class="tiny" style="margin-bottom:4px">柱高 = 当日到期卡片数。持续复习，柱子会越来越矮、间隔越来越长。</p>
         <div class="forecast">
-          ${fc.map((n,i)=>`<div class="fcol">
+          ${fc.map((n,i)=>`<div class="fcol" data-day="${i}" title="点击查看当天到期卡片">
             <span class="fn">${n||""}</span>
             <div class="fbar" style="height:${Math.max(4, n/maxF*100)}%;animation-delay:${i*0.07}s"></div>
             <span class="fd">${i===0?"今天":addDays(dayKey(),i).slice(5)}</span>
@@ -94,6 +94,23 @@ VIEWS.stats = function(){
       <p class="tiny" style="margin-top:10px">数据仅保存在本机浏览器（localStorage）。手机与电脑进度不通用：先在旧设备「导出」，再在新设备「导入」即可无缝接力。重置不可恢复。</p>
     </div>
   </div>`;
+  $$(".fcol", el).forEach(n=>n.addEventListener("click",()=>{
+    const i = +n.dataset.day;
+    const d = addDays(dayKey(), i);
+    const ids = Object.keys(S.srs).filter(id => S.srs[id].due === d && SRS.CARDS[id]);
+    modal(`<h3>${i===0?"今天":d} 到期 · ${ids.length} 张</h3>
+      <div style="max-height:52vh;overflow:auto;margin-top:10px;display:flex;flex-direction:column;gap:8px">
+      ${ids.length ? ids.map(id=>{
+        const c = SRS.CARDS[id];
+        const kind = c.kind==="point"?"要点":c.kind==="trap"?"辨析":"错题";
+        return `<div class="jr-item"><div class="between"><b style="font-size:13.5px">${esc(c.front)}</b>
+          <span class="tag gray">${kind}</span></div></div>`;
+      }).join("") : `<p class="muted small" style="text-align:center;padding:18px 0">这一天没有到期的卡片。</p>`}
+      </div>
+      <div class="row" style="justify-content:flex-end;margin-top:14px">
+        <button class="btn btn-gold btn-sm" id="mGo">去复习</button></div>`);
+    const g = $("#mGo", document); if(g) g.addEventListener("click",()=>{ location.hash = "#/review"; });
+  }));
   $("#exportBtn", el).addEventListener("click",()=>{
     const blob = new Blob([JSON.stringify(S,null,2)], {type:"application/json"});
     const a = document.createElement("a");
