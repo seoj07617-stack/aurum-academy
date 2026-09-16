@@ -21,11 +21,15 @@ VIEWS.quiz = function(arg){
     const pool = CURRICULUM.flatMap(s=>poolOfStage(s.id));
     cfg = { title:"综合毕业考 · 知行合一", items:sampleItems(pool, 20, 20260914), pass:0.85,
       back:"#/stage/s9", desc:"20 题 · 通过线 85%" };
-  } else if(arg === "wrong"){
-    const keys = Object.keys(S.wrong);
+  } else if(arg === "wrong" || (arg && arg.startsWith("wrong-"))){
+    const sid = arg.startsWith("wrong-") ? arg.slice(6) : null;
+    let keys = Object.keys(S.wrong);
+    if(sid) keys = keys.filter(k => { const w = S.wrong[k];
+      return w && LESSON[w.lesson] && LESSON[w.lesson].stage === sid; });
     if(!keys.length){ setTimeout(()=>go("#/wrong"),0); return document.createElement("div"); }
-    cfg = { title:"错题重练", items:keys.map(k=>{const w=S.wrong[k];
-      const q=LESSON[w.lesson].quiz[w.qi]; return {...q, lesson:w.lesson, qi:w.qi}; }),
+    cfg = { title: sid ? `${STAGE[sid].title} · 阶段错题重练` : "错题重练",
+      items: keys.map(k=>{ const w = S.wrong[k];
+        const q = LESSON[w.lesson].quiz[w.qi]; return { ...q, lesson: w.lesson, qi: w.qi }; }),
       pass:1.0, back:"#/wrong", desc:`${keys.length} 道错题 · 全对消灭`, wrongMode:true };
   } else if(arg && arg.startsWith("exam-")){
     const sid = arg.slice(5);
