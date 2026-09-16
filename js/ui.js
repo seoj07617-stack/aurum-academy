@@ -36,7 +36,25 @@ const icon = (n, cls="") => `<span class="ic ${cls}">${ICONS[n]||""}</span>`;
 const GOLD_DEFS = `<svg width="0" height="0" style="position:absolute"><defs>
 <linearGradient id="gold-grad-def" x1="0%" y1="0%" x2="100%" y2="100%">
 <stop offset="0%" stop-color="#8C6D2F"/><stop offset="50%" stop-color="#C9A227"/><stop offset="100%" stop-color="#E5CE8A"/>
-</linearGradient></defs></svg>`;
+</linearGradient>
+<radialGradient id="coinFace" cx="38%" cy="32%" r="85%">
+<stop offset="0%" stop-color="#F6E7B6"/><stop offset="62%" stop-color="#DDBB60"/><stop offset="100%" stop-color="#BE9A2F"/>
+</radialGradient>
+<linearGradient id="coinEdge" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#8C6D2F"/><stop offset="50%" stop-color="#EED9A0"/><stop offset="100%" stop-color="#8C6D2F"/>
+</linearGradient>
+</defs></svg>`;
+
+/* 铜钱徽标（天圆地方 · 中字贯穿） */
+const COIN_EMBLEM = `<svg viewBox="0 0 64 64" aria-hidden="true">
+<circle cx="32" cy="32" r="30" fill="url(#coinFace)" stroke="url(#coinEdge)" stroke-width="3"/>
+<circle cx="32" cy="32" r="26.2" fill="none" stroke="#8C6D2F" stroke-opacity=".38" stroke-width="1.3"/>
+<g fill="none" stroke="#7A5A16" stroke-width="4.2" stroke-linecap="round">
+<path d="M22.5 7.5v49M41.5 7.5v49"/><path d="M22.5 22.5h19M22.5 41.5h19"/>
+</g>
+<path d="M11.5 21.5A22.5 22.5 0 0 1 22 11" fill="none" stroke="rgba(255,255,255,.65)" stroke-width="2.6" stroke-linecap="round"/>
+</svg>`;
+function coinEmblem(){ return COIN_EMBLEM; }
 
 /* 环形进度 */
 function ring(pct, size=110, label="", sub="", sw=9){
