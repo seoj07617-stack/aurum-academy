@@ -66,6 +66,17 @@
 .journey{position:relative;padding:6px 0}
 .j-line{position:absolute;left:27px;top:30px;bottom:30px;width:2px;
   background:linear-gradient(180deg,rgba(201,162,39,.0),rgba(201,162,39,.45) 12%,rgba(201,162,39,.45) 88%,rgba(201,162,39,0))}
+/* 旅程钱纹串珠 */
+.j-line::after{content:"";position:absolute;left:-2.4px;right:-2.4px;top:0;bottom:0;
+  background:radial-gradient(circle,rgba(201,162,39,.6) 0 2.4px,transparent 3px);
+  background-size:100% 46px}
+/* 词汇表 */
+.glo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.term-card{padding:13px 15px;border-radius:14px;background:rgba(255,255,255,.45);
+  border:1px solid rgba(255,255,255,.65);transition:all .3s var(--ease)}
+.term-card:hover{background:rgba(255,255,255,.72);transform:translateY(-2px)}
+.term-card b{font-family:var(--serif);font-size:15px;color:var(--gold)}
+@media (max-width:760px){.glo-grid{grid-template-columns:1fr}}
 .stage-node{display:flex;gap:20px;position:relative;padding:10px 0}
 .stage-num{width:56px;height:56px;border-radius:50%;flex:none;display:grid;place-items:center;z-index:1;
   font-family:var(--serif);font-size:20px;font-weight:700;color:#fff;position:relative;
@@ -202,7 +213,8 @@
 .heat i.h1{background:rgba(201,162,39,.28)} .heat i.h2{background:rgba(201,162,39,.52)}
 .heat i.h3{background:rgba(201,162,39,.78);box-shadow:0 0 7px rgba(201,162,39,.5)} .heat i.h4{background:#A8842C}
 .forecast{display:flex;align-items:flex-end;gap:10px;height:120px;margin-top:14px}
-.forecast .fcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.forecast .fcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end;cursor:pointer;transition:transform .25s var(--ease)}
+.forecast .fcol:hover{transform:translateY(-3px)}
 .forecast .fbar{width:70%;max-width:38px;border-radius:8px 8px 4px 4px;background:var(--gold-grad);transform-origin:bottom;animation:barGrow .9s var(--ease) both;min-height:4px}
 .forecast .fd{font-size:10.5px;color:var(--ink3);font-family:var(--num)}
 .forecast .fn{font-size:11px;font-family:var(--num);font-weight:700;color:var(--ink2)}
@@ -235,11 +247,12 @@
     mask-image:radial-gradient(155px 110px at 90% 4%,rgba(0,0,0,.95),transparent 76%)}
   .stage-hero::after{width:210px;height:140px;opacity:.4;background-size:76px auto}
   .page-head::after{width:220px;height:130px;opacity:.36;background-size:80px auto}
-  /* 移动端悬浮铜钱（右上角，点按回首页） */
+  /* 移动端悬浮铜钱（右上角，点按回首页）+ 左上主题按钮 */
   .coin-float{display:block;position:fixed;top:12px;right:15px;z-index:70;width:32px;height:32px;
     filter:drop-shadow(0 3px 8px rgba(140,109,47,.4));
     -webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none;outline:none}
   .coin-float:active{transform:scale(.92);transition:transform .15s}
+  .m-theme{display:grid;position:fixed;top:10px;left:15px;z-index:70;width:32px;height:32px}
   .coin-float span{display:block;width:100%;height:100%;animation:floatY 3.8s ease-in-out infinite}
   .coin-float svg{width:100%;height:100%;display:block}
   .wrap{padding:0 16px}
