@@ -20,6 +20,13 @@
   font-size:13.5px;letter-spacing:.52em;color:var(--gold);opacity:.82;
   padding:14px 5px 6px;border-right:1px solid rgba(168,132,44,.35);
 }
+/* 朱砂印：全站唯一一点红（书画落款章法） */
+.v-motto .seal{
+  display:inline-block;margin-top:14px;padding:4px 3px;
+  background:#9E2B22;color:#F6F3EC;
+  font-size:11px;letter-spacing:.16em;line-height:1.15;border-radius:2px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.42),0 2px 6px rgba(158,43,34,.28);
+  transform:rotate(-2deg)}
 .hero-main h1{font-size:31px;margin:12px 0 6px}
 .hero-main h1 em{font-style:normal}
 .hero-sub{color:var(--ink2);font-size:14px;max-width:52ch}
@@ -126,6 +133,8 @@
 .lesson-main .hook{font-family:var(--serif);color:var(--gold);font-size:15.5px;margin-bottom:6px}
 .crumb{font-size:12px;color:var(--ink3);letter-spacing:.08em;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .sec{margin-top:26px}
+/* 中文正文栏宽约束：一行不超过约 40 字 */
+.sec p,.sec ul,.sec ol{max-width:44em}
 .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:10px}
 .sec-head .no{font-family:var(--num);font-size:13px;font-weight:800;color:var(--gold2);letter-spacing:.1em}
 .sec-head h3{font-size:18.5px}
@@ -184,10 +193,10 @@
 /* ================= 记忆复习（翻卡） ================= */
 .rev-wrap{max-width:640px;margin:0 auto;text-align:center}
 .rev-meta{display:flex;justify-content:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.flip-scene{perspective:1400px;margin-bottom:18px}
-.flip-card{position:relative;width:100%;min-height:300px;transform-style:preserve-3d;transition:transform .65s var(--ease);cursor:pointer}
+.flip-scene{perspective:1400px;margin-bottom:18px;display:grid}
+.flip-card{position:relative;width:100%;display:grid;transform-style:preserve-3d;transition:transform .65s var(--ease);cursor:pointer}
 .flip-card.flipped{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;
   border-radius:var(--r);padding:34px 30px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px}
 .face.front .glass-face{width:100%}
 .face.back{transform:rotateY(180deg)}
@@ -214,6 +223,7 @@
 .stat-cell span{font-size:11.5px;letter-spacing:.16em;color:var(--ink2);font-weight:600}
 .heat{display:grid;grid-template-rows:repeat(7,1fr);grid-auto-flow:column;gap:5px;margin-top:12px}
 .heat i{width:13px;height:13px;border-radius:4px;background:rgba(34,31,26,.07);transition:transform .2s}
+.heat i.hblank{visibility:hidden}
 .heat i:hover{transform:scale(1.25)}
 .heat i.h1{background:rgba(201,162,39,.28)} .heat i.h2{background:rgba(201,162,39,.52)}
 .heat i.h3{background:rgba(201,162,39,.78);box-shadow:0 0 7px rgba(201,162,39,.5)} .heat i.h4{background:#A8842C}
@@ -234,6 +244,30 @@
 .jr-item .d{font-family:var(--num);font-size:11px;color:var(--ink3);letter-spacing:.08em}
 
 /* ================= 响应式 ================= */
+@media (max-width:1140px){
+  .topnav .streak-chip{display:none}
+  .topnav .navlinks a{padding:7px 10px;font-size:13px}
+}
+@media (max-width:1000px){
+  .topnav .lv-chip{display:none}
+  .topnav .navlinks a{padding:7px 8px;font-size:12.5px;letter-spacing:0}
+  .topnav .inner{gap:12px}
+}
+@media (max-width:880px){
+  .topnav .navlinks{display:none}
+  main{padding-bottom:104px}
+  .botnav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:60;height:72px;
+    background:rgba(248,245,238,.72);-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%);
+    border-top:1px solid rgba(255,255,255,.7);box-shadow:0 -6px 30px rgba(90,74,34,.08);
+    justify-content:space-around;align-items:center;padding:0 6px;
+  }
+  html[data-theme="dark"] .botnav{background:rgba(24,21,16,.8);border-top-color:rgba(255,255,255,.07)}
+  .botnav a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--ink2);padding:6px 8px;border-radius:12px;transition:all .3s}
+  .botnav a.on{color:var(--gold)}
+  .botnav a.on .ic{transform:translateY(-1px)}
+  .botnav .ic{width:21px;height:21px}
+}
 @media (max-width:1020px){
   .lesson-layout{grid-template-columns:1fr}
   .lesson-aside{position:static}
@@ -244,8 +278,8 @@
 @media (max-width:760px){
   body{font-size:15px}
   .topnav{display:none}
-  .navlinks{display:none}
-  main{padding-top:54px;padding-bottom:110px}
+  main{padding-top:54px}
+  .v-motto{display:none}
   .v-motto{display:none}
   .hero-main::after{width:230px;height:150px;opacity:.3;background-size:82px auto;
     -webkit-mask-image:radial-gradient(155px 110px at 90% 4%,rgba(0,0,0,.95),transparent 76%);
@@ -265,15 +299,5 @@
   .q-card{padding:22px 20px}
   .stat-grid{grid-template-columns:1fr 1fr}
   .dojo-grid{grid-template-columns:1fr}
-  .botnav{
-    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:60;height:76px;
-    background:rgba(248,245,238,.72);-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%);
-    border-top:1px solid rgba(255,255,255,.7);box-shadow:0 -6px 30px rgba(90,74,34,.08);
-    justify-content:space-around;align-items:center;padding:0 6px;
-  }
-  .botnav a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--ink2);padding:6px 8px;border-radius:12px;transition:all .3s}
-  .botnav a.on{color:var(--gold)}
-  .botnav a.on .ic{transform:translateY(-1px)}
-  .botnav .ic{width:21px;height:21px}
   .heat i{width:11px;height:11px}
 }
