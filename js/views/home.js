@@ -15,7 +15,7 @@ VIEWS.home = function(){
   const tasks = [
     { ic:"book", t:"学习新课", s: nl ? `《${LESSON[nl].title}》 · ${LESSON[nl].mins} 分钟` : "全部课程已完成，进入复习循环",
       done: !nl, go: nl ? `#/lesson/${nl}` : "#/map" },
-    { ic:"target", t:"每日混测", s: (S.dailyMix && S.dailyMix.date === dayKey())
+    { ic:"target", t:"每日一卷", s: (S.dailyMix && S.dailyMix.date === dayKey())
         ? `已完成 · 今日最好 ${S.dailyMix.score}/${S.dailyMix.total}` : "5 题 · 来自已学课程",
       done: !!(S.dailyMix && S.dailyMix.date === dayKey()), go:"#/daily" },
     { ic:"zap", t:"记忆复习", s: due>0 ? `${due} 张记忆卡片到期` : "今日记忆已巩固",
