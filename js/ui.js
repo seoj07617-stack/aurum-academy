@@ -37,22 +37,28 @@ const GOLD_DEFS = `<svg width="0" height="0" style="position:absolute"><defs>
 <linearGradient id="gold-grad-def" x1="0%" y1="0%" x2="100%" y2="100%">
 <stop offset="0%" stop-color="#8C6D2F"/><stop offset="50%" stop-color="#C9A227"/><stop offset="100%" stop-color="#E5CE8A"/>
 </linearGradient>
-<radialGradient id="coinFace" cx="38%" cy="32%" r="85%">
-<stop offset="0%" stop-color="#F6E7B6"/><stop offset="62%" stop-color="#DDBB60"/><stop offset="100%" stop-color="#BE9A2F"/>
+<radialGradient id="coinFace" cx="36%" cy="30%" r="90%">
+<stop offset="0%" stop-color="#F8ECBF"/><stop offset="55%" stop-color="#E3C167"/><stop offset="88%" stop-color="#C89F35"/><stop offset="100%" stop-color="#AA8524"/>
 </radialGradient>
 <linearGradient id="coinEdge" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0%" stop-color="#8C6D2F"/><stop offset="50%" stop-color="#EED9A0"/><stop offset="100%" stop-color="#8C6D2F"/>
 </linearGradient>
 </defs></svg>`;
 
-/* 铜钱徽标（天圆地方 · 中字贯穿） */
+/* 铜钱徽标：外圆双环 + 中央方孔 + 四字钱文「知行合一」（通宝排布）+ 浮雕光影 */
 const COIN_EMBLEM = `<svg viewBox="0 0 64 64" aria-hidden="true">
-<circle cx="32" cy="32" r="30" fill="url(#coinFace)" stroke="url(#coinEdge)" stroke-width="3"/>
-<circle cx="32" cy="32" r="26.2" fill="none" stroke="#8C6D2F" stroke-opacity=".38" stroke-width="1.3"/>
-<g fill="none" stroke="#7A5A16" stroke-width="4.2" stroke-linecap="round">
-<path d="M22.5 7.5v49M41.5 7.5v49"/><path d="M22.5 22.5h19M22.5 41.5h19"/>
+<circle cx="32" cy="32" r="30" fill="url(#coinFace)" stroke="url(#coinEdge)" stroke-width="2.6"/>
+<circle cx="32" cy="32" r="27" fill="none" stroke="#8C6D2F" stroke-opacity=".5" stroke-width="1"/>
+<circle cx="32" cy="32" r="25.4" fill="none" stroke="#FFF6DC" stroke-opacity=".55" stroke-width=".8"/>
+<g fill="#6E5212" font-family="'Source Han Serif SC','Noto Serif SC','Songti SC',STSong,'SimSun',serif" font-weight="700" font-size="12.5" text-anchor="middle">
+<text x="32" y="20">知</text><text x="44.5" y="36.2">行</text><text x="32" y="53">合</text><text x="19.5" y="36.2">一</text>
 </g>
-<path d="M11.5 21.5A22.5 22.5 0 0 1 22 11" fill="none" stroke="rgba(255,255,255,.65)" stroke-width="2.6" stroke-linecap="round"/>
+<rect x="26" y="26" width="12" height="12" fill="rgba(122,90,22,.15)" stroke="#7A5A16" stroke-width="2.4"/>
+<path d="M10.5 24A23 23 0 0 1 24 10.6" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M53.5 40A23 23 0 0 1 40 53.4" fill="none" stroke="rgba(110,82,18,.32)" stroke-width="2.4" stroke-linecap="round"/>
+<g class="coin-shine">
+<path d="M32 7A25 25 0 0 1 57 32" fill="none" stroke="rgba(255,251,235,.85)" stroke-width="5.5" stroke-linecap="round"/>
+</g>
 </svg>`;
 function coinEmblem(){ return COIN_EMBLEM; }
 
