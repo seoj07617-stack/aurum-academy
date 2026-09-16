@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="知行金融学院 · Aurum Academy — 从宏观到微观、从知识到纪律的金融学习闭环系统">
+<meta name="theme-color" content="#A8842C">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<script>/* 防闪：渲染前恢复主题 */
+try{var __d=JSON.parse(localStorage.getItem("aurum_academy_v1"));if(__d&&__d.theme==="dark")document.documentElement.dataset.theme="dark";}catch(e){}
+</script>
 <title>知行金融学院 · Aurum Academy</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='f' cx='36%25' cy='30%25' r='90%25'%3E%3Cstop offset='0' stop-color='%23F8ECBF'/%3E%3Cstop offset='.55' stop-color='%23E3C167'/%3E%3Cstop offset='.88' stop-color='%23C89F35'/%3E%3Cstop offset='1' stop-color='%23AA8524'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23f)' stroke='%23A8842C' stroke-width='2.4'/%3E%3Ccircle cx='32' cy='32' r='27.2' fill='none' stroke='%238C6D2F' stroke-opacity='.42' stroke-width='1.1'/%3E%3Crect x='24.5' y='24.5' width='15' height='15' fill='%23D9B95C' stroke='%237A5A16' stroke-width='2.3'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/base.css">
@@ -31,8 +37,10 @@
       <a href="#/wrong" data-nav="wrong">错题本</a>
       <a href="#/dojo/check" data-nav="dojo">纪律工坊</a>
       <a href="#/stats" data-nav="stats">数据</a>
+      <a href="#/glossary" data-nav="glossary">词典</a>
     </div>
     <div class="nav-right">
+      <button class="icon-btn" id="themeBtn" title="切换日/夜模式" aria-label="切换日/夜模式"></button>
       <span class="streak-chip"><span class="fl"></span><span id="streakN">0</span> 天</span>
       <span class="lv-chip" id="lvChip">见习研究员</span>
     </div>
@@ -48,7 +56,8 @@
   <a href="#/stats" data-nav="stats"><span class="icn" data-ic="chart"></span>数据</a>
 </nav>
 
-<a class="coin-float" href="#/home" aria-label="返回首页"><span></span></a>
+<a class="coin-float" href="#/home" aria-label="返回首页"><span></span><b class="cf-streak" id="cfStreak"></b></a>
+<button class="icon-btn m-theme" id="mThemeBtn" aria-label="切换日/夜模式"></button>
 
 <main id="app" tabindex="-1"></main>
 <div id="toasts"></div>
@@ -82,6 +91,7 @@
 <script src="js/views/wrong.js"></script>
 <script src="js/views/stats.js"></script>
 <script src="js/views/dojo.js"></script>
+<script src="js/views/glossary.js"></script>
 <script>
 /* 顶部导航火苗 / 底部图标注入，铜钱徽标注入，然后启动 */
 document.querySelector(".streak-chip .fl").innerHTML =
@@ -91,6 +101,11 @@ document.querySelector(".coin-mark").innerHTML = coinEmblem();
 document.querySelector(".coin-float span").innerHTML = coinEmblem();
 document.querySelector(".foot-coin").innerHTML = coinEmblem();
 document.body.insertAdjacentHTML("afterbegin", GOLD_DEFS);
+document.getElementById("themeBtn").addEventListener("click", cycleTheme);
+document.getElementById("mThemeBtn").addEventListener("click", cycleTheme);
+if("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")){
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
 App.boot();
 </script>
 </body>
