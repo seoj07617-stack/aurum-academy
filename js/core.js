@@ -126,6 +126,13 @@ const App = {
     const h = (location.hash || "#/home").replace(/^#\/?/, "");
     const [name, arg, arg2] = h.split("/");
     const view = VIEWS[name] || VIEWS.home;
+    /* 标签页标题随页面同步 */
+    const T = { home:"首页", map:"知识地图", review:"记忆复习", wrong:"错题本", dojo:"纪律工坊", stats:"数据统计", glossary:"词汇表", stage:"阶段", lesson:"课程" };
+    let t = T[name] || "知行金融学院";
+    if(name==="stage" && STAGE[arg]) t = STAGE[arg].title;
+    if(name==="lesson" && LESSON[arg]) t = LESSON[arg].title;
+    if(name==="quiz") t = "测验中";
+    document.title = t + " · 知行金融学院";
     const app = $("#app");
     app.innerHTML = "";
     const el = view(arg, arg2) || document.createElement("div");
