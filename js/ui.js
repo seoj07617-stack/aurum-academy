@@ -37,23 +37,31 @@ const GOLD_DEFS = `<svg width="0" height="0" style="position:absolute"><defs>
 <linearGradient id="gold-grad-def" x1="0%" y1="0%" x2="100%" y2="100%">
 <stop offset="0%" stop-color="#8C6D2F"/><stop offset="50%" stop-color="#C9A227"/><stop offset="100%" stop-color="#E5CE8A"/>
 </linearGradient>
-<radialGradient id="coinFace" cx="36%" cy="30%" r="90%">
-<stop offset="0%" stop-color="#F8ECBF"/><stop offset="55%" stop-color="#E3C167"/><stop offset="88%" stop-color="#C89F35"/><stop offset="100%" stop-color="#AA8524"/>
+<radialGradient id="coinFace" cx="36%" cy="30%" r="92%">
+<stop offset="0%" stop-color="#FDFAF0"/><stop offset="16%" stop-color="#F8ECBF"/>
+<stop offset="55%" stop-color="#E3C167"/><stop offset="88%" stop-color="#C89F35"/>
+<stop offset="100%" stop-color="#A57F22"/>
 </radialGradient>
 <linearGradient id="coinEdge" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0%" stop-color="#8C6D2F"/><stop offset="50%" stop-color="#EED9A0"/><stop offset="100%" stop-color="#8C6D2F"/>
 </linearGradient>
 </defs></svg>`;
 
-/* 铜钱徽标 V3：极简形制——外圆内方，双环币缘，无文字，留白透气 */
+/* 铜钱徽标 V4·高级版：玑镂环纹表盘 + 方孔浮雕倒角 + 镜面高光 */
 const COIN_EMBLEM = `<svg viewBox="0 0 64 64" aria-hidden="true">
-<circle cx="32" cy="32" r="30" fill="url(#coinFace)" stroke="url(#coinEdge)" stroke-width="2.4"/>
-<circle cx="32" cy="32" r="27.2" fill="none" stroke="#8C6D2F" stroke-opacity=".42" stroke-width="1.1"/>
-<rect x="24.5" y="24.5" width="15" height="15" fill="rgba(112,84,20,.12)" stroke="#7A5A16" stroke-width="2.3"/>
-<path d="M12 25A21 21 0 0 1 25 12" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2.3" stroke-linecap="round"/>
-<path d="M52 39A21 21 0 0 1 39 52" fill="none" stroke="rgba(110,82,18,.30)" stroke-width="2.3" stroke-linecap="round"/>
+<circle cx="32" cy="32" r="30" fill="url(#coinFace)" stroke="url(#coinEdge)" stroke-width="2.2"/>
+<circle cx="32" cy="32" r="27.5" fill="none" stroke="#FFF9E6" stroke-opacity=".5" stroke-width="1"/>
+<circle cx="32" cy="32" r="26.4" fill="none" stroke="#8C6D2F" stroke-opacity=".34" stroke-width=".9"/>
+<circle cx="32" cy="32" r="24"   fill="none" stroke="#FFF6DC" stroke-opacity=".30" stroke-width=".7"/>
+<circle cx="32" cy="32" r="22.2" fill="none" stroke="#8C6D2F" stroke-opacity=".22" stroke-width=".7"/>
+<rect x="24.5" y="24.5" width="15" height="15" fill="rgba(88,64,14,.16)" stroke="#7A5A16" stroke-width="2.1"/>
+<path d="M25.4 38.6V25.4h13.2" fill="none" stroke="rgba(255,249,226,.85)" stroke-width="1.1" stroke-linecap="round"/>
+<path d="M38.6 25.4v13.2H25.4" fill="none" stroke="rgba(78,56,10,.5)" stroke-width="1.1" stroke-linecap="round"/>
+<path d="M13.5 24.5A20.5 20.5 0 0 1 24.5 13.5" fill="none" stroke="rgba(255,255,255,.82)" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M50.5 39.5A20.5 20.5 0 0 1 39.5 50.5" fill="none" stroke="rgba(96,70,14,.28)" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="20.5" cy="18.5" r="1.5" fill="rgba(255,255,255,.9)"/>
 <g class="coin-shine">
-<path d="M32 7A25 25 0 0 1 57 32" fill="none" stroke="rgba(255,251,235,.85)" stroke-width="5.5" stroke-linecap="round"/>
+<path d="M32 7A25 25 0 0 1 57 32" fill="none" stroke="rgba(255,251,235,.85)" stroke-width="5" stroke-linecap="round"/>
 </g>
 </svg>`;
 function coinEmblem(){ return COIN_EMBLEM; }
