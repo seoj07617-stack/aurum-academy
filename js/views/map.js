@@ -12,6 +12,7 @@ VIEWS.map = function(){
       <p class="muted" style="margin-top:6px;max-width:72ch">课程按依赖关系递进解锁：完成当前阶段全部课程并通过阶段测验，即开启下一阶段。
       每个阶段的金色圆点亮度，代表你对它的记忆掌握度——不复习，光会随时间衰减。</p>
       <div class="row" style="margin-top:12px">
+        <button class="btn btn-ghost btn-sm" data-go="#/practice/pattern">${icon("trend")} 实操训练</button>
         <button class="btn btn-ghost btn-sm" data-go="#/glossary">${icon("search")} 词汇表</button>
       </div>
     </div>
