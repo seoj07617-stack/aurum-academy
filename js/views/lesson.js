@@ -27,7 +27,7 @@ VIEWS.lesson = function(lid){
           <div class="sec-head"><span class="no">${String(i+1).padStart(2,"0")}</span><h3>${s.h}</h3></div>
           ${s.p?`<p>${s.p}</p>`:""}
           ${s.list?`<ul>${s.list.map(x=>`<li>${x}</li>`).join("")}</ul>`:""}
-          ${s.plain?`<div class="plain-box"><span class="ptag">打个比方</span><p>${s.plain}</p></div>`:""}
+          ${s.plain?`<div class="plain-box"><span class="ptag">譬 喻</span><p>${s.plain}</p></div>`:""}
         </div>`).join("")}
         <div class="trap-box">
           <b>⚠ 常见误区 · 逆向学习</b>
