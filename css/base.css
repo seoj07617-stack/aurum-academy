@@ -102,7 +102,48 @@ main{padding-top:calc(var(--nav-h) + 26px);padding-bottom:90px;min-height:70vh}
 .foot-motto{font-family:var(--serif);font-size:12.5px;letter-spacing:.42em;
   color:var(--gold);margin-bottom:8px;padding-left:.42em}
 
-/* ---------- 页面切换 ---------- */
+/* ---------- 夜读模式（黑金） ---------- */
+html[data-theme="dark"]{
+  --bg:#171511; --ink:#EAE2CC; --ink2:#A79D82; --ink3:#6F6850;
+  --gold-soft:rgba(201,162,39,.16);
+  --glass:rgba(34,30,22,.58); --glass2:rgba(26,23,16,.85);
+  --gbrd:rgba(255,255,255,.09); --gbrd2:rgba(201,162,39,.30);
+  --sh:0 10px 40px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.35);
+  --sh2:0 20px 64px rgba(0,0,0,.65);
+}
+html[data-theme="dark"] body{background:#171511}
+html[data-theme="dark"] .orb{opacity:.2}
+html[data-theme="dark"] .grain{opacity:.3}
+html[data-theme="dark"] .topnav{background:rgba(24,21,16,.74);border-bottom-color:rgba(255,255,255,.07)}
+html[data-theme="dark"] .botnav{background:rgba(24,21,16,.8);border-top-color:rgba(255,255,255,.07)}
+html[data-theme="dark"] .glass{box-shadow:var(--sh),inset 0 0 0 1px rgba(201,162,39,.14)}
+html[data-theme="dark"] .glass::before{background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)}
+html[data-theme="dark"] circle.ring-track{stroke:rgba(255,255,255,.12)}
+html[data-theme="dark"] .bar{background:rgba(255,255,255,.1)}
+html[data-theme="dark"] .heat i{background:rgba(255,255,255,.07)}
+html[data-theme="dark"] .opt{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
+html[data-theme="dark"] .opt:hover{background:rgba(255,255,255,.1);border-color:var(--gbrd2)}
+html[data-theme="dark"] .opt .key{background:rgba(255,255,255,.1)}
+html[data-theme="dark"] .q-why{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+html[data-theme="dark"] .chk{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .chk:hover{background:rgba(255,255,255,.09)}
+html[data-theme="dark"] .quote-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .task-row:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .mini-stage:hover{background:rgba(255,255,255,.05)}
+html[data-theme="dark"] .lesson-row{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .lesson-row:hover{background:rgba(255,255,255,.09);border-color:var(--gbrd2)}
+html[data-theme="dark"] .pn-nav a{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .seg{background:rgba(0,0,0,.3)}
+html[data-theme="dark"] .seg button.on{background:rgba(255,255,255,.92);color:#1D1C1A}
+html[data-theme="dark"] .inp{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:var(--ink)}
+html[data-theme="dark"] .inp:focus{background:rgba(255,255,255,.1);border-color:var(--gold2)}
+html[data-theme="dark"] .wrong-item,html[data-theme="dark"] .jr-item{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .plan-card{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .plan-card .logic{background:rgba(255,255,255,.05)}
+html[data-theme="dark"] .rc{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .face.front,html[data-theme="dark"] .face.back{background:var(--glass2)}
+html[data-theme="dark"] .pt{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .term-card{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.08)}
 #app{outline:none}
 .view{animation:viewIn .5s var(--ease) both}
 .st>*{animation:riseIn .55s var(--ease) both}
