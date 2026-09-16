@@ -45,17 +45,13 @@ const GOLD_DEFS = `<svg width="0" height="0" style="position:absolute"><defs>
 </linearGradient>
 </defs></svg>`;
 
-/* 铜钱徽标：外圆双环 + 中央方孔 + 四字钱文「知行合一」（通宝排布）+ 浮雕光影 */
+/* 铜钱徽标 V3：极简形制——外圆内方，双环币缘，无文字，留白透气 */
 const COIN_EMBLEM = `<svg viewBox="0 0 64 64" aria-hidden="true">
-<circle cx="32" cy="32" r="30" fill="url(#coinFace)" stroke="url(#coinEdge)" stroke-width="2.6"/>
-<circle cx="32" cy="32" r="27" fill="none" stroke="#8C6D2F" stroke-opacity=".5" stroke-width="1"/>
-<circle cx="32" cy="32" r="25.4" fill="none" stroke="#FFF6DC" stroke-opacity=".55" stroke-width=".8"/>
-<g fill="#6E5212" font-family="'Source Han Serif SC','Noto Serif SC','Songti SC',STSong,'SimSun',serif" font-weight="700" font-size="12.5" text-anchor="middle">
-<text x="32" y="20">知</text><text x="44.5" y="36.2">行</text><text x="32" y="53">合</text><text x="19.5" y="36.2">一</text>
-</g>
-<rect x="26" y="26" width="12" height="12" fill="rgba(122,90,22,.15)" stroke="#7A5A16" stroke-width="2.4"/>
-<path d="M10.5 24A23 23 0 0 1 24 10.6" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.4" stroke-linecap="round"/>
-<path d="M53.5 40A23 23 0 0 1 40 53.4" fill="none" stroke="rgba(110,82,18,.32)" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="32" cy="32" r="30" fill="url(#coinFace)" stroke="url(#coinEdge)" stroke-width="2.4"/>
+<circle cx="32" cy="32" r="27.2" fill="none" stroke="#8C6D2F" stroke-opacity=".42" stroke-width="1.1"/>
+<rect x="24.5" y="24.5" width="15" height="15" fill="rgba(112,84,20,.12)" stroke="#7A5A16" stroke-width="2.3"/>
+<path d="M12 25A21 21 0 0 1 25 12" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="2.3" stroke-linecap="round"/>
+<path d="M52 39A21 21 0 0 1 39 52" fill="none" stroke="rgba(110,82,18,.30)" stroke-width="2.3" stroke-linecap="round"/>
 <g class="coin-shine">
 <path d="M32 7A25 25 0 0 1 57 32" fill="none" stroke="rgba(255,251,235,.85)" stroke-width="5.5" stroke-linecap="round"/>
 </g>
