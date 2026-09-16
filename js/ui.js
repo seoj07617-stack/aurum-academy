@@ -92,21 +92,32 @@ ${COIN_RAYS}
 </svg>`;
 function coinEmblem(){ return COIN_EMBLEM; }
 
-/* 环形进度（铜钱形：外圆走进度，中央方孔） */
+/* 环形进度（铜钱形 V2：数字居于方孔之中，孔环之间留气口，钱印角点收细节） */
 function ring(pct, size=110, label="", sub="", sw=9){
   const r = (size - sw)/2, c = 2*Math.PI*r;
   const off = c * (1 - Math.max(0, Math.min(1, pct/100)));
-  const hs = Math.round(size * 0.16);   // 方孔半边长（钱孔）
-  const hcx = Math.round(size/2);
-  return `<div class="ring-wrap" style="width:${size}px;height:${size}px">
-    <svg width="${size}" height="${size}">
-      <circle class="ring-track" cx="${hcx}" cy="${hcx}" r="${r}" fill="none" stroke-width="${sw}"/>
-      <circle class="ring-val" cx="${hcx}" cy="${hcx}" r="${r}" fill="none" stroke-width="${sw}"
-        stroke-dasharray="${c}" stroke-dashoffset="${c}" data-off="${off}"/>
-      <rect class="ring-hole" x="${hcx-hs}" y="${hcx-hs}" width="${hs*2}" height="${hs*2}" rx="${Math.max(2,hs*0.2)}"
-        fill="none" stroke="rgba(168,132,44,.35)" stroke-width="1.6"/>
-    </svg>
-    <div class="ring-label"><b class="countup" data-to="${Math.round(pct)}">0</b><span>${label}</span>${sub?`<em style="font-style:normal;font-size:11px;color:var(--gold);font-weight:600">${sub}</em>`:""}</div>
+  const cx = size/2;
+  const hs = Math.round(size * 0.24);            /* 方孔半边：数字的家 */
+  const fs = Math.max(15, Math.round(size * 0.205)); /* 数字随环缩放 */
+  const dot = Math.max(1.1, size * 0.012);
+  const dp = hs + dot * 3.2;                      /* 角点距中心的偏移 */
+  const corners = [[dp,dp],[-dp,dp],[dp,-dp],[-dp,-dp]].map(p =>
+    `<circle cx="${cx+p[0]}" cy="${cx+p[1]}" r="${dot}" fill="#A8842C" fill-opacity=".5"/>`).join("");
+  return `
+  <div class="ring-block">
+    <div class="ring-wrap" style="width:${size}px;height:${size}px">
+      <svg width="${size}" height="${size}">
+        <circle class="ring-track" cx="${cx}" cy="${cx}" r="${r}" fill="none" stroke-width="${sw}"/>
+        <circle class="ring-val" cx="${cx}" cy="${cx}" r="${r}" fill="none" stroke-width="${sw}"
+          stroke-dasharray="${c}" stroke-dashoffset="${c}" data-off="${off}"/>
+        <circle cx="${cx}" cy="${cx}" r="${r - sw*0.85}" fill="none" stroke="#A8842C" stroke-opacity=".14" stroke-width="1"/>
+        <rect class="ring-hole" x="${cx-hs}" y="${cx-hs}" width="${hs*2}" height="${hs*2}"
+          rx="${(hs*0.16).toFixed(1)}" fill="none" stroke="url(#gold-grad-def)" stroke-width="1.6"/>
+        ${corners}
+      </svg>
+      <div class="ring-num" style="font-size:${fs}px"><b class="countup" data-to="${Math.round(pct)}">0</b></div>
+    </div>
+    <div class="ring-cap"><span>${label}</span>${sub?`<em>${sub}</em>`:""}</div>
   </div>`;
 }
 function mountAnimations(root=document){
