@@ -243,6 +243,20 @@
 .jr-item{padding:12px 15px;border-radius:13px;background:rgba(255,255,255,.42);border:1px solid rgba(255,255,255,.6);margin-bottom:9px;font-size:13.5px}
 .jr-item .d{font-family:var(--num);font-size:11px;color:var(--ink3);letter-spacing:.08em}
 
+/* ================= 实操训练 ================= */
+.kchart{width:100%;display:block;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.7);
+  border-radius:14px;padding:6px 0}
+.kchart .kgrid{stroke:rgba(34,31,26,.07)}
+html[data-theme="dark"] .kchart{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.1)}
+html[data-theme="dark"] .kchart .kgrid{stroke:rgba(255,255,255,.08)}
+.fin-t{border-radius:13px;overflow:hidden;border:1px solid rgba(255,255,255,.7);margin:8px 0 4px}
+html[data-theme="dark"] .fin-t{border-color:rgba(255,255,255,.12)}
+.fin-t table{width:100%;border-collapse:collapse;font-size:13.5px}
+.fin-t th{background:rgba(201,162,39,.14);color:var(--gold);text-align:left;padding:8px 14px;
+  font-family:var(--serif);font-size:12.5px;letter-spacing:.1em}
+.fin-t td{padding:7px 14px;border-top:1px solid rgba(140,109,47,.1)}
+.fin-t td:last-child{text-align:right;font-weight:600}
+
 /* ================= 响应式 ================= */
 @media (max-width:1140px){
   .topnav .streak-chip{display:none}
