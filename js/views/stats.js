@@ -95,6 +95,22 @@ VIEWS.stats = function(){
       </div>
       <p class="tiny" style="margin-top:10px">数据仅保存在本机浏览器（localStorage）。手机与电脑进度不通用：先在旧设备「导出」，再在新设备「导入」即可无缝接力。重置不可恢复。</p>
     </div>
+
+    <div class="glass glass-pad" style="margin-top:18px">
+      <div class="card-title">${icon("coins")} 云端备份（私有仓库同步）</div>
+      <p class="tiny" style="margin:4px 0 10px">备份写入你 GitHub 账号下的<b>私有仓库 aurum-sync</b>（仅自己可见）。换设备：新设备粘贴同一 Token → 从云端恢复。</p>
+      <div class="row" style="flex-wrap:wrap;gap:10px">
+        <input class="inp" id="syncToken" type="password" placeholder="${Sync.token() ? "令牌已设置（重新粘贴可更换）" : "粘贴 GitHub Token（需要 repo 权限）"}" style="max-width:300px">
+        <button class="btn btn-ghost btn-sm" id="syncSave">保存令牌</button>
+        <button class="btn btn-ghost btn-sm" id="syncClear">清除</button>
+      </div>
+      <div class="row" style="flex-wrap:wrap;gap:10px;margin-top:10px">
+        <button class="btn btn-gold btn-sm" id="syncPush">${icon("coins")} 备份到云端</button>
+        <button class="btn btn-ghost btn-sm" id="syncPull">${icon("refresh")} 从云端恢复</button>
+        <span class="tiny" id="syncInfo">${Sync.token() ? "令牌就绪" : "未设置令牌"}</span>
+      </div>
+      <p class="tiny" style="margin-top:10px">令牌只保存在本机浏览器，不进入备份内容。恢复会覆盖本机当前进度。</p>
+    </div>
   </div>`;
   $$(".fcol", el).forEach(n=>n.addEventListener("click",()=>{
     const i = +n.dataset.day;
@@ -144,6 +160,42 @@ VIEWS.stats = function(){
       <button class="btn btn-ghost btn-sm" id="mCancel">取消</button>
       <button class="btn btn-sm" id="mOk" style="background:var(--rose);color:#fff">确认重置</button></div>`);
     $("#mOk", m).addEventListener("click",()=>{ localStorage.removeItem(Store.KEY); location.reload(); });
+  });
+  /* 云端备份 */
+  $("#syncSave", el).addEventListener("click", async () => {
+    const v = $("#syncToken", el).value.trim();
+    if(!v){ toast("请先粘贴 Token"); return; }
+    Sync.setToken(v);
+    try { const login = await Sync.login();
+      $("#syncInfo", el).textContent = "令牌有效 · " + login;
+      toast("令牌已保存，账号：" + login, "gold");
+    } catch(err){ $("#syncInfo", el).textContent = "令牌校验失败"; toast("令牌校验失败：" + err.message); }
+  });
+  $("#syncClear", el).addEventListener("click", () => {
+    Sync.setToken(""); $("#syncInfo", el).textContent = "未设置令牌"; toast("令牌已清除");
+  });
+  $("#syncPush", el).addEventListener("click", async () => {
+    if(!Sync.token()){ toast("请先保存令牌"); return; }
+    $("#syncInfo", el).textContent = "备份中…";
+    try { const login = await Sync.push();
+      $("#syncInfo", el).textContent = "最近备份：" + dayKey();
+      toast("已备份到云端（" + login + "/aurum-sync）", "gold");
+    } catch(err){ $("#syncInfo", el).textContent = "备份失败"; toast("备份失败：" + err.message); }
+  });
+  $("#syncPull", el).addEventListener("click", async () => {
+    if(!Sync.token()){ toast("请先保存令牌"); return; }
+    const m = modal(`<h3>从云端恢复？</h3><p>将用云端备份<b>覆盖</b>本机当前学习进度，此操作不可撤销。</p>
+      <div class="row" style="justify-content:flex-end;margin-top:16px">
+      <button class="btn btn-ghost btn-sm" id="spNo">取消</button>
+      <button class="btn btn-gold btn-sm" id="spYes">确认恢复</button></div>`);
+    $("#spNo", m).addEventListener("click", ()=>m.remove());
+    $("#spYes", m).addEventListener("click", async () => {
+      m.remove(); $("#syncInfo", el).textContent = "恢复中…";
+      try { await Sync.pull(); toast("恢复成功，即将刷新", "gold");
+        setTimeout(()=>location.reload(), 800);
+      } catch(err){ $("#syncInfo", el).textContent = "恢复失败";
+        toast(err.message.includes("NOT_FOUND") ? "云端还没有备份——先在旧设备备份一次" : "恢复失败：" + err.message); }
+    });
   });
   mountAnimations(el);
   return el;
