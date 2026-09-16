@@ -32,6 +32,7 @@ VIEWS.map = function(){
             <h3>${st.num} · ${st.title}
               ${ex&&ex.pass?`<span class="tag done">${icon("check")} 测验 ${ex.best}%</span>`:""}
               ${!unlocked?`<span class="tag gray">${icon("lock")} 未解锁</span>`:""}
+              ${stageWeakness(st.id).danger?`<span class="tag rose">${icon("refresh")} 待加固</span>`:""}
             </h3>
             <p class="desc">${st.tagline} · ${st.intro}</p>
             <div class="stage-meta">
