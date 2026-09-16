@@ -4,6 +4,8 @@
          #/quiz/grad 毕业考    | #/quiz/wrong 错题重练
    ============================================================ */
 "use strict";
+/* 题号章：与实操训练（practice.js）统一的卷面视觉 */
+const QNUM = ["壹","贰","叁","肆","伍","陆","柒","捌","玖","拾"];
 function sampleItems(pool, n, seed){
   const rnd = mulberry32(seed);
   const arr = pool.slice();
@@ -62,8 +64,8 @@ VIEWS.quiz = function(arg){
       </div>
       <div class="q-dots">${cfg.items.map((_,i)=>
         `<span class="q-dot ${i===idx?"cur":i<idx?(cfg.items[i]._ok?"ok":"bad"):""}"></span>`).join("")}</div>
-      <div class="glass q-card">
-        <h2>${it.q}</h2>
+      <div class="glass q-card" style="position:relative">
+        <div class="q-stem"><span class="no">${QNUM[idx % 10]}</span><div class="txt">${it.q}</div></div>
         ${it.opts.map((o,i)=>`<div class="opt" data-i="${i}"><span class="key">${"ABCD"[i]}</span><span>${o}</span></div>`).join("")}
         <div id="why"></div>
         <div class="between" style="margin-top:18px">
@@ -84,7 +86,9 @@ VIEWS.quiz = function(arg){
         if(cfg.lesson) S.wrong[`${it.lesson}:${it.qi}`] = {lesson:it.lesson, qi:it.qi};
       }
       $$(".opt", el).forEach(x=>{ if(x!==o && +x.dataset.i!==it.a) x.classList.add("dim"); });
-      $("#why", el).innerHTML = `<div class="q-why ${ok?"good":"bad"}"><b>${ok?"✓ 回答正确":"✕ 回答错误 · 已加入错题本与复习循环"}</b><br>${it.why}</div>`;
+      $("#why", el).insertAdjacentHTML("beforeend",
+        `<span class="stamp ${ok?"ok":"no"}">${ok?"正确":"再想"}</span>
+         <div class="anno"><span class="tagline">讲 评</span><p>${ok?"":"已加入错题本与复习循环。"}${it.why}</p></div>`);
       $("#nextBtn", el).style.visibility = "";
       save();
     }));
