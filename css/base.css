@@ -181,3 +181,13 @@ html[data-theme="dark"] .v-motto .seal{box-shadow:inset 0 0 0 1px rgba(255,255,2
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* ---------- 钱纹流光（宝光巡游） ----------
+   三团金色柔光缓慢漂移+亮度呼吸，扫过钱纹暗纹时若有若无；夜间整体减半，克制不抢镜 */
+.coin-sheen{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:1}
+html[data-theme="dark"] .coin-sheen{opacity:.55}
+.coin-sheen i{position:absolute;border-radius:50%;mix-blend-mode:soft-light}
+.coin-sheen .sh-a{width:44vmax;height:44vmax;left:6%;top:10%;background:radial-gradient(circle,rgba(214,176,92,.17),transparent 62%);animation:sheenDriftA 28s ease-in-out infinite alternate,sheenPulse 11s ease-in-out infinite alternate}
+.coin-sheen .sh-b{width:52vmax;height:52vmax;right:4%;bottom:6%;background:radial-gradient(circle,rgba(214,176,92,.13),transparent 62%);animation:sheenDriftB 36s ease-in-out infinite alternate,sheenPulse 14s ease-in-out infinite alternate-reverse}
+.coin-sheen .sh-c{width:30vmax;height:30vmax;left:44%;top:52%;background:radial-gradient(circle,rgba(214,176,92,.11),transparent 60%);animation:sheenDriftC 23s ease-in-out infinite alternate,sheenPulse 9s ease-in-out infinite alternate}
+@media (prefers-reduced-motion:reduce){.coin-sheen i{animation:none}}
