@@ -1,5 +1,5 @@
 /* ============================================================
-   views/daily.js — 每日混测：从已学课程随机抽 5 题（当日同卷）
+   views/daily.js — 每日一卷：从已学课程随机抽 5 题（当日同卷）
    ============================================================ */
 "use strict";
 VIEWS.daily = function(){
@@ -14,7 +14,7 @@ VIEWS.daily = function(){
     <div class="wrap quiz-wrap st">
       <div class="glass glass-pad" style="padding:44px 30px;text-align:center">
         ${icon("target","empty")}
-        <h2 style="font-family:var(--serif);margin:6px 0">每日混测等你解锁</h2>
+        <h2 style="font-family:var(--serif);margin:6px 0">每日一卷等你解锁</h2>
         <p class="muted small">混测题目来自你已经学过的课程——先去完成第一课，明天的混测就会开张。</p>
         <button class="btn btn-gold" data-go="#/lesson/s0l1" style="margin-top:16px">去学第一课 ${icon("chevR")}</button>
       </div>
@@ -33,11 +33,11 @@ VIEWS.daily = function(){
     el.innerHTML = `
     <div class="wrap quiz-wrap st">
       <div class="glass q-result">
-        <div class="kicker" style="justify-content:center">每日混测 · ${t}</div>
+        <div class="kicker" style="justify-content:center">每日一卷 · ${t}</div>
         ${ring(pct, 150, correct >= 3 ? "通过" : "再接", correct + "/" + items.length)}
-        <h2 style="font-family:var(--serif);font-size:24px;margin:14px 0 6px">${correct >= 5 ? "满分收官！" : correct >= 3 ? "混测完成" : "今天手感欠佳"}</h2>
+        <h2 style="font-family:var(--serif);font-size:24px;margin:14px 0 6px">${correct >= 5 ? "满分收官！" : correct >= 3 ? "混测完成" : "今日欠火候"}</h2>
         <p class="muted small">${correct >= 3
-          ? "混测的意义在于对抗遗忘：答错的题已在错题本里等你。"
+          ? "此卷专为对抗遗忘：答错之题，已在错题本中等。"
           : "错一次恰恰是记忆最深的时机——错题本见。"}</p>
         <div class="row" style="justify-content:center;gap:12px;margin-top:18px;flex-wrap:wrap">
           <button class="btn btn-ghost" id="dReview">${icon("book")} 看错题本</button>
@@ -58,7 +58,7 @@ VIEWS.daily = function(){
     <div class="wrap quiz-wrap st">
       <div class="q-top">
         <div>
-          <div class="kicker" style="margin-bottom:4px">每日混测 · 今日五题</div>
+          <div class="kicker" style="margin-bottom:4px">每日一卷 · 今日五题</div>
           <span class="tiny">题自已学课程 · 当日同卷 · 第 ${idx+1}/${items.length} 题</span>
         </div>
         <a class="btn btn-ghost btn-sm" href="#/home">退出</a>
@@ -68,7 +68,7 @@ VIEWS.daily = function(){
         <div id="dAns"></div>
         <div class="between" style="margin-top:16px">
           <span class="tiny">已答对 ${correct} 题 · 答对 +3 XP</span>
-          <button class="btn btn-gold btn-sm" id="dNext" style="visibility:hidden">${idx===items.length-1?"查看结果":"下一题"} ${icon("chevR")}</button>
+          <button class="btn btn-gold btn-sm" id="dNext" style="visibility:hidden">${idx===items.length-1?"交 卷":"下一题"} ${icon("chevR")}</button>
         </div>
       </div>
     </div>`;
@@ -87,7 +87,7 @@ VIEWS.daily = function(){
     if(!prev || correct > prev.score){
       S.dailyMix = { date: t, score: correct, total: items.length };
     }
-    award(first ? correct * 3 + 10 : correct * 3, "每日混测");
+    award(first ? correct * 3 + 10 : correct * 3, "每日一卷");
     items.forEach(it => { if(it._ok === false){
       SRS.addWrongCard(it.lesson, it.qi);
       S.wrong[`${it.lesson}:${it.qi}`] = { lesson: it.lesson, qi: it.qi };
