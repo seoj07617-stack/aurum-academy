@@ -48,7 +48,7 @@ VIEWS.map = function(){
   </div>`;
   $$(".stage-node", el).forEach(n=>n.addEventListener("click",()=>{
     const sid = n.dataset.stage;
-    if(!stageUnlocked(sid)){ toast("完成上一阶段的全部课程并通过阶段测验后解锁",""); return; }
+    if(!stageUnlocked(sid)){ toast("修毕前阶课业并通过阶段测验，此阶自启",""); return; }
     go(`#/stage/${sid}`);
   }));
   mountAnimations(el);
