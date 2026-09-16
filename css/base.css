@@ -144,6 +144,20 @@ html[data-theme="dark"] .rc{background:rgba(255,255,255,.05);border-color:rgba(2
 html[data-theme="dark"] .face.front,html[data-theme="dark"] .face.back{background:var(--glass2)}
 html[data-theme="dark"] .pt{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
 html[data-theme="dark"] .term-card{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.08)}
+/* 暗色补漏：按钮 / 胶囊 / 标签 / 圆点 / 封印环 */
+html[data-theme="dark"] .btn-ghost{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.13);color:var(--ink)}
+html[data-theme="dark"] .btn-ghost:hover{background:rgba(255,255,255,.13)}
+html[data-theme="dark"] .icon-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.13);color:var(--ink2)}
+html[data-theme="dark"] .streak-chip{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.13)}
+html[data-theme="dark"] .tag.gray{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.13);color:var(--ink2)}
+html[data-theme="dark"] .q-dot{background:rgba(255,255,255,.16)}
+html[data-theme="dark"] .stage-node.locked .stage-num{background:rgba(255,255,255,.1)}
+html[data-theme="dark"] .stage-node.locked .stage-num .lockov{background:rgba(23,21,16,.72)}
+html[data-theme="dark"] .gbtn.g-forgot{background:rgba(180,91,82,.18)}
+html[data-theme="dark"] .gbtn.g-fuzzy{background:rgba(201,162,39,.14)}
+html[data-theme="dark"] .gbtn.g-know{background:rgba(42,122,104,.18)}
+html[data-theme="dark"] .heat i.hblank{visibility:hidden}
+html[data-theme="dark"] .v-motto .seal{box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 2px 8px rgba(0,0,0,.4)}
 #app{outline:none}
 .view{animation:viewIn .5s var(--ease) both}
 .st>*{animation:riseIn .55s var(--ease) both}
