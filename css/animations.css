@@ -19,3 +19,9 @@
 @keyframes dotPing{0%{transform:scale(1);opacity:.8}100%{transform:scale(2.4);opacity:0}}
 @keyframes barGrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @keyframes shakeX{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* ---------- 钱纹流光 ---------- */
+@keyframes sheenDriftA{from{transform:translate(0,0) scale(1)}to{transform:translate(9vmax,6vmax) scale(1.15)}}
+@keyframes sheenDriftB{from{transform:translate(0,0) scale(1)}to{transform:translate(-8vmax,5vmax) scale(.94)}}
+@keyframes sheenDriftC{from{transform:translate(0,0) scale(1)}to{transform:translate(6vmax,-7vmax) scale(1.18)}}
+@keyframes sheenPulse{from{opacity:.35}to{opacity:.8}}
