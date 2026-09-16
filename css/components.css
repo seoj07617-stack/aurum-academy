@@ -45,6 +45,17 @@
 .navlinks a:hover{color:var(--ink);background:rgba(255,255,255,.6)}
 .navlinks a.on{color:var(--gold);background:rgba(201,162,39,.12);font-weight:600}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.icon-btn{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;flex:none;
+  color:var(--ink2);background:rgba(255,255,255,.5);border:1px solid var(--gbrd);
+  transition:all .3s var(--ease)}
+.icon-btn:hover{color:var(--gold);transform:translateY(-1px)}
+.icon-btn .ic{width:17px;height:17px}
+.m-theme{display:none}
+/* 手机端铜钱角标：连续天数 */
+.cf-streak{position:absolute;top:-5px;right:-7px;min-width:17px;height:17px;padding:0 4px;
+  border-radius:9px;background:var(--gold-grad);color:#fff;font-size:10px;font-weight:800;
+  font-family:var(--num);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(160,124,44,.5);font-style:normal}
 .streak-chip{
   display:flex;align-items:center;gap:7px;padding:6px 13px 6px 9px;border-radius:999px;
   background:rgba(255,255,255,.55);border:1px solid var(--gbrd);font-size:13px;font-weight:600;
