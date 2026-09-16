@@ -69,8 +69,8 @@ VIEWS.quiz = function(arg){
         ${it.opts.map((o,i)=>`<div class="opt" data-i="${i}"><span class="key">${"ABCD"[i]}</span><span>${o}</span></div>`).join("")}
         <div id="why"></div>
         <div class="between" style="margin-top:18px">
-          <span class="tiny">已答对 ${correct} 题</span>
-          <button class="btn btn-gold" id="nextBtn" style="visibility:hidden">${idx===cfg.items.length-1?"查看结果":"下一题"} ${icon("chevR")}</button>
+          <span class="tiny">已对 ${correct} 题</span>
+          <button class="btn btn-gold" id="nextBtn" style="visibility:hidden">${idx===cfg.items.length-1?"交 卷":"下一题"} ${icon("chevR")}</button>
         </div>
       </div>
     </div>`;
@@ -95,10 +95,10 @@ VIEWS.quiz = function(arg){
     $("#nextBtn", el).addEventListener("click",()=>{ idx++;
       if(idx < cfg.items.length) renderQ(); else renderResult(); });
     $("#qExit", el).addEventListener("click",()=>{
-      modal(`<h3>退出本次测验？</h3><p>当前答题进度将丢失（已答错的题仍会收录进错题本与复习循环）。</p>
+      modal(`<h3>中途退卷？</h3><p>退卷则此卷进度作废；已答错之题，仍录入错题本与记忆循环。</p>
         <div class="row" style="justify-content:flex-end;margin-top:16px">
-        <button class="btn btn-ghost btn-sm" id="qxNo">继续答题</button>
-        <button class="btn btn-gold btn-sm" id="qxYes">确认退出</button></div>`);
+        <button class="btn btn-ghost btn-sm" id="qxNo">回卷续答</button>
+        <button class="btn btn-gold btn-sm" id="qxYes">退 卷</button></div>`);
       $("#qxNo", mask).addEventListener("click",()=>mask.remove());
       $("#qxYes", mask).addEventListener("click",()=>go(cfg.back));
     });
