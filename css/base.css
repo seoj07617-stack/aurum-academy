@@ -29,7 +29,7 @@ html{scroll-behavior:smooth}
 body{
   font-family:var(--sans);background:var(--bg);color:var(--ink);
   font-size:15.5px;line-height:1.78;letter-spacing:.012em;
-  -webkit-font-smoothing:antialiased;min-height:100vh;
+  -webkit-font-smoothing:antialiased;min-height:100vh;min-height:100dvh;
 }
 ::selection{background:rgba(201,162,39,.30)}
 a{color:inherit;text-decoration:none}
@@ -82,7 +82,7 @@ h1,h2,h3,.serif{font-family:var(--serif);font-weight:600;letter-spacing:.02em;li
 
 /* ---------- 布局 ---------- */
 .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
-main{padding-top:calc(var(--nav-h) + 26px);padding-bottom:90px;min-height:70vh}
+main{padding-top:calc(var(--nav-h) + env(safe-area-inset-top) + 26px);padding-bottom:calc(90px + env(safe-area-inset-bottom));min-height:70vh}
 .grid{display:grid;gap:18px}
 .g2{grid-template-columns:1fr 1fr} .g3{grid-template-columns:1fr 1fr 1fr}
 .row{display:flex;align-items:center;gap:10px}
@@ -166,7 +166,16 @@ html[data-theme="dark"] .v-motto .seal{box-shadow:inset 0 0 0 1px rgba(255,255,2
 .st>*:nth-child(5){animation-delay:.27s}.st>*:nth-child(6){animation-delay:.33s}
 .st>*:nth-child(7){animation-delay:.39s}.st>*:nth-child(8){animation-delay:.45s}
 
-@media (max-width:900px){.g3{grid-template-columns:1fr}.g2{grid-template-columns:1fr}}
+/* ---------- 响应式：平板保留栅格层次，手机降单列 + 安全区 ---------- */
+@media (max-width:900px) and (min-width:641px){
+  .g3{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .g2,.g3{grid-template-columns:1fr}
+  .wrap{padding:0 16px}
+  body{font-size:15px}
+  .footer-note{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
