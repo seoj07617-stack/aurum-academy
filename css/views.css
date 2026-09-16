@@ -151,6 +151,13 @@
   border:1px solid rgba(180,91,82,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .trap-box b{color:var(--rose);font-size:13.5px;letter-spacing:.06em}
 .trap-box p{font-size:13.5px;margin-top:3px;color:var(--body-ink)}
+/* 白话比方卡：初学者脚手架层（section.plain 字段） */
+.plain-box{margin-top:12px;padding:13px 16px 13px 18px;border-radius:14px;position:relative;
+  background:rgba(201,162,39,.07);border:1px dashed rgba(184,150,62,.45)}
+.plain-box .ptag{display:inline-block;font-family:var(--serif);font-size:12px;font-weight:700;letter-spacing:.28em;
+  color:var(--gold);margin-bottom:4px}
+.plain-box p{font-size:14.2px;line-height:1.85;color:var(--body-ink);margin-bottom:0;max-width:none}
+html[data-theme="dark"] .plain-box{background:rgba(201,162,39,.10);border-color:rgba(201,162,39,.35)}
 .lesson-aside{position:sticky;top:calc(var(--nav-h) + 20px);display:flex;flex-direction:column;gap:16px}
 .pt-list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 .pt{padding:11px 13px;border-radius:13px;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.6)}
