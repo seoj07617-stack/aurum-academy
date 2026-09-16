@@ -104,7 +104,19 @@ document.body.insertAdjacentHTML("afterbegin", GOLD_DEFS);
 document.getElementById("themeBtn").addEventListener("click", cycleTheme);
 document.getElementById("mThemeBtn").addEventListener("click", cycleTheme);
 if("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")){
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").then(reg => {
+      reg.addEventListener("updatefound", () => {
+        const nw = reg.installing;
+        if(!nw) return;
+        nw.addEventListener("statechange", () => {
+          if(nw.state === "installed" && navigator.serviceWorker.controller){
+            toast("✨ 新版本已就绪，刷新页面即可更新", "gold");
+          }
+        });
+      });
+    }).catch(()=>{});
+  });
 }
 App.boot();
 </script>
