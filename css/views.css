@@ -358,9 +358,9 @@ html[data-theme="dark"] .clock-q:hover{background:rgba(255,255,255,.1)}
 }
 @media (max-width:880px){
   .topnav .navlinks{display:none}
-  main{padding-bottom:104px}
+  main{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
   .botnav{
-    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:60;height:72px;
+    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:60;height:calc(72px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
     background:rgba(248,245,238,.72);-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%);
     border-top:1px solid rgba(255,255,255,.7);box-shadow:0 -6px 30px rgba(90,74,34,.08);
     justify-content:space-around;align-items:center;padding:0 6px;
@@ -381,7 +381,7 @@ html[data-theme="dark"] .clock-q:hover{background:rgba(255,255,255,.1)}
 @media (max-width:760px){
   body{font-size:15px}
   .topnav{display:none}
-  main{padding-top:54px}
+  main{padding-top:calc(54px + env(safe-area-inset-top))}
   .v-motto{display:none}
   .v-motto{display:none}
   .hero-main::after{width:230px;height:150px;opacity:.3;background-size:82px auto;
@@ -390,11 +390,11 @@ html[data-theme="dark"] .clock-q:hover{background:rgba(255,255,255,.1)}
   .stage-hero::after{width:210px;height:140px;opacity:.4;background-size:76px auto}
   .page-head::after{width:220px;height:130px;opacity:.36;background-size:80px auto}
   /* 移动端顶冠铜钱（顶部居中，点按回首页）+ 左上主题按钮 */
-  .coin-float{display:block;position:fixed;top:10px;left:50%;margin-left:-16px;z-index:70;width:32px;height:32px;
+  .coin-float{display:block;position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;margin-left:-16px;z-index:70;width:32px;height:32px;
     filter:drop-shadow(0 3px 8px rgba(140,109,47,.4));
     -webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none;outline:none}
   .coin-float:active{transform:scale(.92);transition:transform .15s}
-  .m-theme{display:grid;position:fixed;top:10px;left:15px;z-index:70;width:32px;height:32px}
+  .m-theme{display:grid;position:fixed;top:calc(10px + env(safe-area-inset-top));left:15px;z-index:70;width:32px;height:32px}
   .coin-float span{display:block;width:100%;height:100%;animation:floatY 3.8s ease-in-out infinite}
   .coin-float svg{width:100%;height:100%;display:block}
   .wrap{padding:0 16px}
