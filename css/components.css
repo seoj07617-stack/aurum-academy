@@ -116,14 +116,20 @@
 .ic{display:inline-flex;width:18px;height:18px;flex:none}
 .ic svg{width:100%;height:100%}
 
-/* ---------- 环形进度 ---------- */
+/* ---------- 环形进度（铜钱形） ---------- */
+.ring-block{display:inline-flex;flex-direction:column;align-items:center;gap:9px}
 .ring-wrap{position:relative;display:grid;place-items:center}
 .ring-wrap svg{transform:rotate(-90deg)}
 .ring-track{stroke:rgba(34,31,26,.09)}
 .ring-val{stroke:url(#gold-grad-def);stroke-linecap:round;transition:stroke-dashoffset 1.25s var(--ease)}
-.ring-label{position:absolute;text-align:center;line-height:1.25}
-.ring-label b{font-family:var(--num);font-size:26px;font-weight:700;letter-spacing:0}
-.ring-label span{display:block;font-size:11px;color:var(--ink2);letter-spacing:.12em;margin-top:2px}
+html[data-theme="dark"] .ring-track{stroke:rgba(255,255,255,.12)}
+.ring-hole{opacity:.75}
+.ring-num{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.ring-num b{font-family:var(--num);font-weight:700;letter-spacing:0;font-size:inherit;
+  color:var(--gold);line-height:1}
+.ring-cap{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+.ring-cap span{font-size:11.5px;letter-spacing:.16em;color:var(--ink2);font-weight:600}
+.ring-cap em{font-style:normal;font-size:11px;color:var(--gold);font-weight:600}
 
 /* ---------- 进度条 ---------- */
 .bar{height:7px;border-radius:99px;background:rgba(34,31,26,.08);overflow:hidden;position:relative}
