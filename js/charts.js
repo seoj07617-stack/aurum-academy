@@ -31,3 +31,27 @@ function finTable(rows, unit="亿元"){
   return `<div class="fin-t"><table><thead><tr><th>项目</th><th>金额（${unit}）</th></tr></thead>
   <tbody>${rows.map(r => `<tr><td>${esc(r[0])}</td><td class="num">${esc(String(r[1]))}</td></tr>`).join("")}</tbody></table></div>`;
 }
+
+/* 折线图：收益率曲线等（labels 与 series 等长） */
+function lineSVG(series, labels, w=360, h=190){
+  const padL = 20, padR = 20, padT = 18, padB = 30;
+  const lo = Math.min(...series), hi = Math.max(...series);
+  const span = (hi - lo) || 1;
+  const n = series.length;
+  const X = i => Math.round(padL + (w - padL - padR) * i / (n - 1));
+  const Y = v => Math.round(padT + (h - padT - padB) * (1 - (v - lo) / span));
+  let s = `<svg viewBox="0 0 ${w} ${h}" class="kchart" role="img" aria-label="曲线图">`;
+  for(let i = 1; i <= 3; i++){
+    const y = Math.round(padT + (h - padT - padB) * i / 4);
+    s += `<line class="kgrid" x1="${padL}" x2="${w-padR}" y1="${y}" y2="${y}"/>`;
+  }
+  const pts = series.map((v,i) => `${X(i)},${Y(v)}`).join(" ");
+  s += `<polyline points="${pts}" fill="none" stroke="url(#gold-grad-def)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+  series.forEach((v,i) => {
+    s += `<circle cx="${X(i)}" cy="${Y(v)}" r="3.5" fill="#C9A227"/>`;
+    if(labels[i]) s += `<text x="${X(i)}" y="${h-10}" text-anchor="middle" font-size="11" fill="#8C8574">${esc(labels[i])}</text>`;
+    s += `<text x="${X(i)}" y="${Y(v)-9}" text-anchor="middle" font-size="10.5" fill="#A8842C">${v}%</text>`;
+  });
+  s += `</svg>`;
+  return s;
+}
