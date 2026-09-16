@@ -28,7 +28,10 @@ const ICONS = {
   globe:  _svg('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/>'),
   layers: _svg('<path d="m12 3 9 5-9 5-9-5 9-5z"/><path d="m3.5 12.5 8.5 4.7 8.5-4.7M3.5 16.5 12 21.2l8.5-4.7"/>'),
   trend:  _svg('<path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/>'),
-  coins:  _svg('<ellipse cx="9" cy="7" rx="6" ry="3"/><path d="M3 7v4c0 1.7 2.7 3 6 3s6-1.3 6-3V7"/><path d="M3 11v4c0 1.7 2.7 3 6 3s6-1.3 6-3"/><path d="M15 9c3.3 0 6 1.3 6 3v5c0 1.7-2.7 3-6 3-2 0-3.8-.5-4.9-1.3"/>')
+  coins:  _svg('<ellipse cx="9" cy="7" rx="6" ry="3"/><path d="M3 7v4c0 1.7 2.7 3 6 3s6-1.3 6-3V7"/><path d="M3 11v4c0 1.7 2.7 3 6 3s6-1.3 6-3"/><path d="M15 9c3.3 0 6 1.3 6 3v5c0 1.7-2.7 3-6 3-2 0-3.8-.5-4.9-1.3"/>'),
+  moon:   _svg('<path d="M20.4 14.2A8.3 8.3 0 0 1 9.8 3.6 8.3 8.3 0 1 0 20.4 14.2z"/>'),
+  sun:    _svg('<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"/>'),
+  search: _svg('<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/>')
 };
 const icon = (n, cls="") => `<span class="ic ${cls}">${ICONS[n]||""}</span>`;
 
@@ -89,15 +92,19 @@ ${COIN_RAYS}
 </svg>`;
 function coinEmblem(){ return COIN_EMBLEM; }
 
-/* 环形进度 */
+/* 环形进度（铜钱形：外圆走进度，中央方孔） */
 function ring(pct, size=110, label="", sub="", sw=9){
   const r = (size - sw)/2, c = 2*Math.PI*r;
   const off = c * (1 - Math.max(0, Math.min(1, pct/100)));
+  const hs = Math.round(size * 0.16);   // 方孔半边长（钱孔）
+  const hcx = Math.round(size/2);
   return `<div class="ring-wrap" style="width:${size}px;height:${size}px">
     <svg width="${size}" height="${size}">
-      <circle class="ring-track" cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke-width="${sw}"/>
-      <circle class="ring-val" cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke-width="${sw}"
+      <circle class="ring-track" cx="${hcx}" cy="${hcx}" r="${r}" fill="none" stroke-width="${sw}"/>
+      <circle class="ring-val" cx="${hcx}" cy="${hcx}" r="${r}" fill="none" stroke-width="${sw}"
         stroke-dasharray="${c}" stroke-dashoffset="${c}" data-off="${off}"/>
+      <rect class="ring-hole" x="${hcx-hs}" y="${hcx-hs}" width="${hs*2}" height="${hs*2}" rx="${Math.max(2,hs*0.2)}"
+        fill="none" stroke="rgba(168,132,44,.35)" stroke-width="1.6"/>
     </svg>
     <div class="ring-label"><b class="countup" data-to="${Math.round(pct)}">0</b><span>${label}</span>${sub?`<em style="font-style:normal;font-size:11px;color:var(--gold);font-weight:600">${sub}</em>`:""}</div>
   </div>`;
@@ -127,15 +134,20 @@ function toast(msg, type=""){
 }
 const UI = { toast };
 
-/* 撒金花（庆祝） */
+/* 撒铜钱（庆祝）：evenodd 路径镂出真实方孔 */
 function confetti(n=26){
-  const colors = ["#C9A227","#E5CE8A","#A8842C","#8C6D2F","#F2E3B3"];
+  const colors = ["#C9A227","#E5CE8A","#A8842C","#F2E3B3"];
   for(let i=0;i<n;i++){
     const d = document.createElement("i");
-    const sz = 5 + Math.random()*7;
-    d.style.cssText = `position:fixed;z-index:300;top:-3vh;left:${Math.random()*100}vw;width:${sz}px;height:${sz*.6}px;
-      background:${colors[i%colors.length]};border-radius:${Math.random()>.5?"50%":"2px"};
-      pointer-events:none;animation:fallDown ${1.6+Math.random()*1.8}s ${Math.random()*.7}s cubic-bezier(.3,.4,.6,1) forwards`;
+    const sz = 7 + Math.random()*8;
+    d.style.cssText = `position:fixed;z-index:300;top:-4vh;left:${Math.random()*100}vw;width:${sz}px;height:${sz}px;
+      pointer-events:none;display:block;
+      animation:fallDown ${1.6+Math.random()*1.8}s ${Math.random()*.7}s cubic-bezier(.3,.4,.6,1) forwards`;
+    d.innerHTML = `<svg viewBox="0 0 64 64" width="${sz}" height="${sz}">
+      <path fill="${colors[i%colors.length]}" fill-opacity=".92" fill-rule="evenodd"
+        d="M32 4a28 28 0 1 0 0 56 28 28 0 1 0 0-56ZM24 24h16v16H24Z"/>
+      <path d="M12 24A21 21 0 0 1 24 12" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="3" stroke-linecap="round"/>
+    </svg>`;
     document.body.appendChild(d);
     setTimeout(()=>d.remove(), 4600);
   }
