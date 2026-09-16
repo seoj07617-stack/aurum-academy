@@ -11,21 +11,36 @@ function pracXP(ok){
   S.prac.n += 2; award(2, "实操训练");
 }
 
-/* 统一答题渲染：把 q 渲染进 mount，判分后回调 cb(ok) */
-function renderAnswer(mount, q, cb){
+/* 统一答题渲染：把 q 渲染进 mount，判分后回调 cb(ok)
+   视觉：题号章 + 金边选项卡 + 判卷印章 + 批注卡 + 深墨盘面卡 */
+const CNUM = ["壹","贰","叁","肆","伍","陆","柒","捌"];
+function stem(no, txt){ return `<div class="q-stem"><span class="no">${CNUM[no % 8]}</span><div class="txt">${txt}</div></div>`; }
+function renderAnswer(mount, q, cb, noIdx = 0){
+  let host = null;   /* 判卷章与批注的容器 */
+  function ensureHost(){
+    if(!host){
+      host = document.createElement("div");
+      host.style.position = "relative";
+      mount.appendChild(host);
+    }
+    return host;
+  }
   function grade(ok, why){
-    mount.innerHTML += `<div class="q-why ${ok?"good":"bad"}"><b>${ok?"✓ 回答正确":"✕ 回答错误"}</b><br>${q.why||""}</div>`;
+    const h = ensureHost();
+    h.insertAdjacentHTML("beforeend",
+      `<span class="stamp ${ok?"ok":"no"}">${ok?"正确":"再想"}</span>
+       <div class="anno"><span class="tagline">讲 评</span><p>${why || q.why || ""}</p></div>`);
     pracXP(ok); cb(ok);
   }
   const type = q.t || "mc";
   if(type === "mc"){
-    mount.innerHTML = `<b style="font-size:15.5px">${q.q}</b><div style="margin-top:8px">${
-      q.opts.map((o,i)=>`<div class="opt" data-i="${i}"><span class="key">${"ABCD"[i]}</span><span>${o}</span></div>`).join("")}</div>`;
+    mount.innerHTML = stem(noIdx, q.q) + `<div style="margin-top:12px">${
+      q.opts.map((o,i)=>`<div class="prac-opt" data-i="${i}"><span class="key">${"ABCD"[i]}</span><span>${o}</span></div>`).join("")}</div>`;
     let done = false;
-    $$(".opt", mount).forEach(o => o.addEventListener("click", () => {
+    $$(".prac-opt", mount).forEach(o => o.addEventListener("click", () => {
       if(done) return; done = true;
       const i = +o.dataset.i, ok = i === q.a;
-      $$(".opt", mount).forEach(x => {
+      $$(".prac-opt", mount).forEach(x => {
         if(+x.dataset.i === q.a) x.classList.add("right");
         else if(x === o) x.classList.add("wrong");
         else x.classList.add("dim");
@@ -34,10 +49,10 @@ function renderAnswer(mount, q, cb){
     }));
   }
   else if(type === "tf"){
-    mount.innerHTML = `<b style="font-size:15.5px">${q.q}</b>
-      <div class="row" style="margin-top:10px">
-        <button class="btn btn-ghost tfbtn" data-v="1">✓ 对</button>
-        <button class="btn btn-ghost tfbtn" data-v="0">✕ 错</button>
+    mount.innerHTML = stem(noIdx, q.q) + `
+      <div class="row" style="margin-top:14px">
+        <button class="btn btn-ghost tfbtn" data-v="1">对</button>
+        <button class="btn btn-ghost tfbtn" data-v="0">错</button>
       </div>`;
     let done = false;
     $$(".tfbtn", mount).forEach(b => b.addEventListener("click", () => {
@@ -49,9 +64,9 @@ function renderAnswer(mount, q, cb){
     }));
   }
   else if(type === "num"){
-    mount.innerHTML = `<b style="font-size:15.5px">${q.q}</b>
-      <div class="row" style="margin-top:10px">
-        <input class="inp num" id="numIn" inputmode="decimal" placeholder="输入数值" style="max-width:180px">
+    mount.innerHTML = stem(noIdx, q.q) + `
+      <div class="row" style="margin-top:12px">
+        <input class="inp num" id="numIn" inputmode="decimal" placeholder="输入数值" style="max-width:180px;font-size:16px">
         ${q.unit?`<span class="muted">${q.unit}</span>`:""}
         <button class="btn btn-gold btn-sm" id="numGo">提交</button>
       </div>`;
@@ -67,20 +82,21 @@ function renderAnswer(mount, q, cb){
     $("#numIn", mount).addEventListener("keydown", e => { if(e.key === "Enter") check(); });
   }
   else if(type === "click"){
-    mount.innerHTML = `<b style="font-size:15.5px">${q.q}</b>
-      <div style="margin-top:10px" id="clickChart">${klineSVG(q.cs)}</div>`;
+    mount.innerHTML = stem(noIdx, q.q) + `
+      <div style="margin-top:12px" id="clickChart">
+        <div class="chart-card"><span class="cap">练习盘 · 点击 K 线作答</span>${klineSVG(q.cs)}</div>
+      </div>`;
     let done = false;
-    const svg = $("svg.kchart", mount);
+    const svg = $("svg", mount);
     const candles = $$("rect", svg);
     candles.forEach((r, i) => {
       r.style.cursor = "pointer";
       r.addEventListener("click", () => {
         if(done) return; done = true;
         const ok = i === q.a;
-        r.setAttribute("stroke", ok ? "var(--down)" : "var(--rose)");
+        r.setAttribute("stroke", ok ? "#7BD3BC" : "#E9908A");
         r.setAttribute("stroke-width", "3");
-        if(!ok) candles[q.a].setAttribute("stroke", "var(--down)");
-        if(!ok) candles[q.a].setAttribute("stroke-width", "3");
+        if(!ok){ candles[q.a].setAttribute("stroke", "#7BD3BC"); candles[q.a].setAttribute("stroke-width", "3"); }
         grade(ok, q.why);
       });
     });
@@ -92,7 +108,7 @@ function renderAnswer(mount, q, cb){
       { id:"bl", name:"衰退", hint:"增长↓ 通胀↓" },
       { id:"br", name:"复苏", hint:"增长↑ 通胀↓" }
     ];
-    mount.innerHTML = `<b style="font-size:15.5px">${q.q}</b>
+    mount.innerHTML = stem(noIdx, q.q) + `
       <div class="clock-wrap">
         <div class="clock-axis-y">通胀 ↑</div>
         <div class="clock-grid">
@@ -112,16 +128,18 @@ function renderAnswer(mount, q, cb){
   }
   else if(type === "order"){
     let picks = [];
-    mount.innerHTML = `<b style="font-size:15.5px">${q.q}</b>
-      <div class="row" style="flex-wrap:wrap;margin-top:10px" id="ordWrap">
+    mount.innerHTML = stem(noIdx, q.q) + `
+      <div class="row" style="flex-wrap:wrap;margin-top:12px" id="ordWrap">
         ${[...q.items].sort(() => Math.random()-.5).map(n =>
-          `<button class="btn btn-ghost btn-sm orditem" data-n="${n}">${n}</button>`).join("")}
+          `<button class="btn btn-ghost btn-sm orditem" data-n="${n}"><span class="slot"></span>${n}</button>`).join("")}
       </div>
-      <div class="tiny" style="margin-top:8px">已选：<span id="ordPicks" class="num">0/${q.items.length}</span></div>`;
+      <div class="tiny" style="margin-top:8px">已选：<span id="ordPicks" class="num">0/${q.items.length}</span> · 点击顺序即排序</div>`;
     let done = false;
     $$(".orditem", mount).forEach(b => b.addEventListener("click", () => {
       if(done || b.disabled) return;
       b.disabled = true; b.style.opacity = .45;
+      const slot = $(".slot", b);
+      if(slot) slot.textContent = picks.length + 1;
       picks.push(b.dataset.n);
       $("#ordPicks", mount).textContent = picks.length + "/" + q.items.length;
       if(picks.length === q.items.length){
@@ -184,23 +202,24 @@ VIEWS.practice = function(mode){
         return;
       }
       const p = deck[pi], it = p.qs[qi];
+      const isClick = it.t === "click";
       body.innerHTML = `
       <div class="glass q-card">
         <div class="between" style="margin-bottom:10px">
-          <span class="tiny">形态 ${pi+1}/${deck.length} · ${p.name ? "" : ""}题 ${qi+1}/${p.qs.length} · 答对 ${score}</span>
-          <span class="tag">看图识形态</span>
+          <span class="tiny">形态 ${pi+1}/${deck.length} · 题 ${qi+1}/${p.qs.length} · 答对 ${score}</span>
+          <span class="tag">${isClick ? "点图作答" : "看图识形态"}</span>
         </div>
-        <div id="pChart">${klineSVG(p.cs)}</div>
+        ${isClick ? "" : `<div id="pChart"><div class="chart-card"><span class="cap">练习盘 · 形态辨认</span>${klineSVG(p.cs)}</div></div>`}
         <div style="margin-top:16px" id="pAns"></div>
         <div class="between" style="margin-top:16px">
           <span class="tiny">识形态 · 更要记纪律</span>
           <button class="btn btn-gold btn-sm" id="pNext" style="visibility:hidden">${(pi===deck.length-1&&qi===p.qs.length-1)?"看成绩":"下一题"} ${icon("chevR")}</button>
         </div>
       </div>`;
-      renderAnswer($("#pAns", body), it, ok => {
+      renderAnswer($("#pAns", body), isClick ? { ...it, cs: p.cs } : it, ok => {
         if(ok) score++;
         $("#pNext", body).style.visibility = "";
-      });
+      }, qi);
       $("#pNext", body).addEventListener("click", () => {
         qi++;
         if(qi >= deck[pi].qs.length){ pi++; qi = 0; }
@@ -249,7 +268,7 @@ VIEWS.practice = function(mode){
       c.qs.forEach((q, qi) => {
         renderAnswer($(`#caseQ${qi}`, body), q, ok => {
           picks[qi] = ok ? "✓" : "✗"; doneCount++;
-        });
+        }, qi);
       });
       $("#caseBack", body).addEventListener("click", renderList);
       $("#caseBack2", body).addEventListener("click", renderList);
@@ -300,7 +319,7 @@ VIEWS.practice = function(mode){
         if(ok){ streak++; best = Math.max(best, streak); }
         else streak = 0;
         $("#dNext", body).style.visibility = "";
-      });
+      }, ri);
       $("#dNext", body).addEventListener("click", () => { ri++; render(); });
     }
     newRound(); render();
@@ -344,7 +363,9 @@ VIEWS.practice = function(mode){
         return;
       }
       const it = deck[mi];
-      const chartHtml = it.chart ? lineSVG(it.chart.series, it.chart.labels) : "";
+      const chartHtml = it.chart
+        ? `<div class="chart-card"><span class="cap">练习盘 · 收益率曲线</span>${lineSVG(it.chart.series, it.chart.labels)}</div>`
+        : "";
       body.innerHTML = `
       <div class="glass q-card">
         <div class="between" style="margin-bottom:10px">
@@ -361,7 +382,7 @@ VIEWS.practice = function(mode){
       renderAnswer($("#macroAns", body), it, ok => {
         if(ok) score++;
         $("#xNext", body).style.visibility = "";
-      });
+      }, mi);
       $("#xNext", body).addEventListener("click", () => { mi++; render(); });
     }
     newDeck(); render();
