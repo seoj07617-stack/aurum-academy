@@ -10,6 +10,13 @@
   border-bottom:1px solid rgba(255,255,255,.65);
   box-shadow:0 4px 30px rgba(90,74,34,.06);
 }
+/* 织锦式钱纹镶边（传统「边饰」章法：纹样镶于边缘，主位留白） */
+.topnav::after{
+  content:"";position:absolute;left:0;right:0;bottom:-13px;height:13px;pointer-events:none;opacity:.8;
+  background-image:var(--coin-band);background-size:22px 13px;background-repeat:repeat-x;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
 .topnav .inner{max-width:1160px;margin:0 auto;height:100%;padding:0 24px;display:flex;align-items:center;gap:22px}
 .brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
 /* 铜钱徽标：方孔四字钱文，悬浮微动 + 掠面光泽 */
@@ -59,7 +66,8 @@
 .glass{
   background:var(--glass);
   -webkit-backdrop-filter:blur(26px) saturate(165%);backdrop-filter:blur(26px) saturate(165%);
-  border:1px solid var(--gbrd);border-radius:var(--r);box-shadow:var(--sh);
+  border:1px solid var(--gbrd);border-radius:var(--r);
+  box-shadow:var(--sh),inset 0 0 0 1px rgba(201,162,39,.10);
   position:relative;
 }
 .glass::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;border-radius:inherit;
