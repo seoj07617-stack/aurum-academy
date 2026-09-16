@@ -4,7 +4,10 @@
 
 /* ---------- 顶部玻璃导航 ---------- */
 .topnav{
-  position:fixed;top:0;left:0;right:0;z-index:50;height:var(--nav-h);
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  height:calc(var(--nav-h) + env(safe-area-inset-top));
+  /* 添加到主屏（standalone）后内容避开灵动岛/状态栏，玻璃区顺势延伸到状态栏背后 */
+  padding-top:env(safe-area-inset-top);
   background:rgba(248,245,238,.62);
   -webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);
   border-bottom:1px solid rgba(255,255,255,.65);
@@ -148,7 +151,7 @@ textarea.inp{resize:vertical;min-height:64px}
 label.fld{display:block;font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--ink2);margin:0 0 6px 2px}
 
 /* ---------- 提示 / 弹层 ---------- */
-#toasts{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none}
+#toasts{position:fixed;bottom:calc(26px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none}
 .toast{
   display:flex;align-items:center;gap:9px;padding:11px 20px;border-radius:999px;font-size:13.5px;font-weight:600;
   background:rgba(38,34,27,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:#F2EBD9;
