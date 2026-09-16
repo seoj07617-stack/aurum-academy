@@ -60,6 +60,18 @@ function stageInfo(sid){
 function nextLessonId(){ return ORDER.find(id => !LState(id).done && stageUnlocked(LESSON[id].stage)) || null; }
 function totalPct(){ const d = ORDER.filter(id=>LState(id).done).length; return Math.round(d/ORDER.length*100); }
 
+/* ---------- 薄弱诊断：错题与低分课程的阶段聚合 ---------- */
+function stageWeakness(sid){
+  const st = STAGE[sid]; if(!st) return { wrong:0, weak:0, danger:false };
+  let wrong = 0;
+  Object.keys(S.wrong).forEach(k => { const w = S.wrong[k];
+    if(w && LESSON[w.lesson] && LESSON[w.lesson].stage === sid) wrong++; });
+  let weak = 0;
+  st.lessons.forEach(l => { const s = LState(l.id);
+    if(s.done && s.best < 80) weak++; });
+  return { wrong, weak, danger: stageUnlocked(sid) && (wrong >= 3 || (weak >= 2 && wrong >= 1)) };
+}
+
 /* ---------- 经验 / 等级 / 打卡 ---------- */
 const LEVELS = [[0,"见习研究员"],[200,"初级分析师"],[500,"行业分析师"],[1000,"投资经理"],
                 [2000,"基金经理"],[4000,"投资总监"],[8000,"首席投资官"]];
@@ -127,7 +139,7 @@ const App = {
     const [name, arg, arg2] = h.split("/");
     const view = VIEWS[name] || VIEWS.home;
     /* 标签页标题随页面同步 */
-    const T = { home:"首页", map:"知识地图", review:"记忆复习", wrong:"错题本", dojo:"纪律工坊", stats:"数据统计", glossary:"词汇表", practice:"实操训练", stage:"阶段", lesson:"课程" };
+    const T = { home:"首页", map:"知识地图", review:"记忆复习", wrong:"错题本", dojo:"纪律工坊", stats:"数据统计", glossary:"词汇表", practice:"实操训练", daily:"每日混测", stage:"阶段", lesson:"课程" };
     let t = T[name] || "知行金融学院";
     if(name==="stage" && STAGE[arg]) t = STAGE[arg].title;
     if(name==="lesson" && LESSON[arg]) t = LESSON[arg].title;
