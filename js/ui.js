@@ -92,17 +92,19 @@ ${COIN_RAYS}
 </svg>`;
 function coinEmblem(){ return COIN_EMBLEM; }
 
-/* 环形进度（铜钱形 V2：数字居于方孔之中，孔环之间留气口，钱印角点收细节） */
+/* 环形进度（铜钱形 V3「花穿」：方孔转 45° 成菱孔——古钱真实铸法变体，
+   四角收圆、顶点外缀钱印点，数字居菱心（水平中线最宽处）） */
 function ring(pct, size=110, label="", sub="", sw=9){
   const r = (size - sw)/2, c = 2*Math.PI*r;
   const off = c * (1 - Math.max(0, Math.min(1, pct/100)));
   const cx = size/2;
-  const hs = Math.round(size * 0.24);            /* 方孔半边：数字的家 */
-  const fs = Math.max(15, Math.round(size * 0.205)); /* 数字随环缩放 */
+  const hs = Math.round(size * 0.21);              /* 菱孔半边（转45°后对角线=hs*2.83） */
+  const side = hs * 2;
+  const fs = Math.max(14, Math.round(size * 0.19));
   const dot = Math.max(1.1, size * 0.012);
-  const dp = hs + dot * 3.2;                      /* 角点距中心的偏移 */
-  const corners = [[dp,dp],[-dp,dp],[dp,-dp],[-dp,-dp]].map(p =>
-    `<circle cx="${cx+p[0]}" cy="${cx+p[1]}" r="${dot}" fill="#A8842C" fill-opacity=".5"/>`).join("");
+  const dp = hs * 1.52;                            /* 钱印点：菱形四顶点外侧 */
+  const pts = [[cx+dp,cx],[cx-dp,cx],[cx,cx+dp],[cx,cx-dp]].map(p =>
+    `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${dot}" fill="#A8842C" fill-opacity=".5"/>`).join("");
   return `
   <div class="ring-block">
     <div class="ring-wrap" style="width:${size}px;height:${size}px">
@@ -111,9 +113,10 @@ function ring(pct, size=110, label="", sub="", sw=9){
         <circle class="ring-val" cx="${cx}" cy="${cx}" r="${r}" fill="none" stroke-width="${sw}"
           stroke-dasharray="${c}" stroke-dashoffset="${c}" data-off="${off}"/>
         <circle cx="${cx}" cy="${cx}" r="${r - sw*0.85}" fill="none" stroke="#A8842C" stroke-opacity=".14" stroke-width="1"/>
-        <rect class="ring-hole" x="${cx-hs}" y="${cx-hs}" width="${hs*2}" height="${hs*2}"
-          rx="${(hs*0.16).toFixed(1)}" fill="none" stroke="url(#gold-grad-def)" stroke-width="1.6"/>
-        ${corners}
+        <rect class="ring-hole" x="${cx-hs}" y="${cx-hs}" width="${side}" height="${side}"
+          rx="${(hs*0.32).toFixed(1)}" fill="none" stroke="url(#gold-grad-def)" stroke-width="1.6"
+          transform="rotate(45 ${cx} ${cx})"/>
+        ${pts}
       </svg>
       <div class="ring-num" style="font-size:${fs}px"><b class="countup" data-to="${Math.round(pct)}">0</b></div>
     </div>
