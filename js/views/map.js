@@ -6,7 +6,7 @@ VIEWS.map = function(){
   const el = document.createElement("div");
   el.innerHTML = `
   <div class="wrap st">
-    <div style="margin-bottom:22px">
+    <div class="page-head">
       <div class="kicker">CURRICULUM · 九阶旅程</div>
       <h1 style="font-size:29px;margin-top:10px">知识地图：从宏观到知行合一</h1>
       <p class="muted" style="margin-top:6px;max-width:72ch">课程按依赖关系递进解锁：完成当前阶段全部课程并通过阶段测验，即开启下一阶段。
