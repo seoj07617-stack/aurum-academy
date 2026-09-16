@@ -107,9 +107,17 @@ function ensureDay(){
 
 /* ---------- 路由 ---------- */
 const VIEWS = {};
+/* ---------- 主题（夜读模式） ---------- */
+function applyTheme(){ document.documentElement.dataset.theme = (S.theme === "dark") ? "dark" : ""; }
+function cycleTheme(){
+  S.theme = (S.theme === "dark") ? "light" : "dark";
+  save(); applyTheme(); App.navChips();
+  UI.toast(S.theme === "dark" ? "夜读模式 · 黑金" : "日间模式 · 淡金", "");
+}
+
 const App = {
   boot(){
-    ensureDay(); SRS.buildCards();
+    ensureDay(); SRS.buildCards(); applyTheme();
     window.addEventListener("hashchange", () => App.route());
     App.route();
     App.navChips();
@@ -136,6 +144,10 @@ const App = {
     const sc = $("#streakN"); if(sc) sc.textContent = S.streak.n;
     const rc = $("#navDue"); if(rc){ const n = SRS.dueCount();
       rc.style.display = n>0 ? "" : "none"; rc.textContent = n; }
+    const cf = $("#cfStreak"); if(cf){ cf.textContent = S.streak.n;
+      cf.style.display = S.streak.n > 0 ? "" : "none"; }
+    const tb = $("#themeBtn"); if(tb) tb.innerHTML = icon(S.theme === "dark" ? "sun" : "moon");
+    const mt = $("#mThemeBtn"); if(mt) mt.innerHTML = icon(S.theme === "dark" ? "sun" : "moon");
   }
 };
 const go = p => App.go(p);
