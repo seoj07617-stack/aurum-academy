@@ -62,7 +62,7 @@ VIEWS.review = function(){
         <button class="gbtn g-fuzzy" data-g="3">模糊</button>
         <button class="gbtn g-know" data-g="5">记得</button>
       </div>
-      <p class="tiny" style="margin-top:14px">评分决定这张卡下次出现的时间：记得 → 间隔拉长，忘了 → 明天再见</p>
+      <p class="tiny" style="margin-top:14px">评分决定这张卡下次出现的时间：记得 → 间隔拉长，忘了 → 明天再见<br>快捷键：空格翻面 · 1 忘了 / 2 模糊 / 3 记得</p>
     </div>`;
     const fc = $("#fc", el);
     fc.addEventListener("click",()=>{
@@ -74,6 +74,21 @@ VIEWS.review = function(){
       SRS.grade(id, g); graded[g]++;
       idx++; renderCard(); App.navChips();
     }));
+    /* 键盘快捷键：空格/回车翻面，1/2/3 评分 */
+    if(window.__revKey) document.removeEventListener("keydown", window.__revKey);
+    window.__revKey = e => {
+      if(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+      const card = document.getElementById("fc");
+      if(!card) return;
+      const grades = document.getElementById("grades");
+      if(e.code === "Space" || e.key === "Enter"){
+        e.preventDefault();
+        if(!card.classList.contains("flipped")){ card.classList.add("flipped"); grades.classList.add("show"); }
+      } else if(["1","2","3"].includes(e.key) && grades && grades.classList.contains("show")){
+        grades.querySelectorAll(".gbtn")[["1","2","3"].indexOf(e.key)].click();
+      }
+    };
+    document.addEventListener("keydown", window.__revKey);
   }
 
   function renderSummary(){
