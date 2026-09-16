@@ -26,7 +26,7 @@ VIEWS.home = function(){
   <div class="wrap st">
     <div class="hero">
       <div class="glass hero-main">
-        <div class="v-motto" aria-hidden="true">知行合一</div>
+        <div class="v-motto" aria-hidden="true">知行合一<span class="seal">知行</span></div>
         <div class="kicker">知行金融学院 · AURUM ACADEMY</div>
         <h1>${greet()}，<span class="gold-text">${lv.name}</span></h1>
         <p class="hero-sub">宏观 → 微观 → 交易 → 纪律：已修 ${doneLessons}/${ORDER.length} 课，
