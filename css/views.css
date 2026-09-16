@@ -199,7 +199,9 @@
   main{padding-top:54px;padding-bottom:110px}
   /* 移动端悬浮铜钱（右上角，点按回首页） */
   .coin-float{display:block;position:fixed;top:12px;right:15px;z-index:70;width:32px;height:32px;
-    filter:drop-shadow(0 3px 8px rgba(140,109,47,.4))}
+    filter:drop-shadow(0 3px 8px rgba(140,109,47,.4));
+    -webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none;outline:none}
+  .coin-float:active{transform:scale(.92);transition:transform .15s}
   .coin-float span{display:block;width:100%;height:100%;animation:floatY 3.8s ease-in-out infinite}
   .coin-float svg{width:100%;height:100%;display:block}
   .wrap{padding:0 16px}
