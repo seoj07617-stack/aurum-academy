@@ -9,9 +9,11 @@ VIEWS.stats = function(){
   const cardsTotal = Object.keys(S.srs).filter(id=>SRS.CARDS[id]).length;
   const fc = SRS.forecast();
   const maxF = Math.max(1, ...fc);
-  /* 打卡热力图：最近 12 周 */
+  /* 打卡热力图：最近 12 周，按周一为列首对齐 */
   const today = new Date();
-  const cells = [];
+  const startD = new Date(today.getTime() - 83*864e5);
+  const weekOff = (startD.getDay() + 6) % 7;   /* 距周一的天数，用于首列补位 */
+  const cells = ['<i class="hblank"></i>'.repeat(weekOff)];
   for(let i=83;i>=0;i--){
     const d = new Date(today.getTime() - i*864e5);
     const k = dayKey(d);
