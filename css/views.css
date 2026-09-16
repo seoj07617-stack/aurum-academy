@@ -256,6 +256,19 @@ html[data-theme="dark"] .fin-t{border-color:rgba(255,255,255,.12)}
   font-family:var(--serif);font-size:12.5px;letter-spacing:.1em}
 .fin-t td{padding:7px 14px;border-top:1px solid rgba(140,109,47,.1)}
 .fin-t td:last-child{text-align:right;font-weight:600}
+/* 美林时钟象限 */
+.clock-wrap{margin-top:10px;max-width:420px}
+.clock-axis-y{writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-size:11px;
+  color:var(--ink2);letter-spacing:.2em;float:left;height:132px;line-height:26px}
+.clock-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-left:30px}
+.clock-q{border:1.5px solid var(--gbrd2);border-radius:12px;padding:12px 10px;cursor:pointer;
+  text-align:center;background:rgba(255,255,255,.4);transition:all .25s var(--ease)}
+html[data-theme="dark"] .clock-q{background:rgba(255,255,255,.05)}
+.clock-q:hover{background:rgba(255,255,255,.75);transform:scale(1.02)}
+html[data-theme="dark"] .clock-q:hover{background:rgba(255,255,255,.1)}
+.clock-q b{font-family:var(--serif);font-size:16px;color:var(--gold);display:block}
+.clock-q span{font-size:10.5px;color:var(--ink3)}
+.clock-axis-x{clear:both;text-align:center;font-size:11px;color:var(--ink2);letter-spacing:.2em;margin-top:6px}
 
 /* ================= 响应式 ================= */
 @media (max-width:1140px){
