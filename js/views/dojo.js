@@ -108,7 +108,7 @@ VIEWS.dojo = function(tab){
     $("#addPlan", body).addEventListener("click",()=>{
       const sym = $("#pSym",body).value.trim();
       const logic = $("#pLogic",body).value.trim();
-      if(!sym || !logic){ toast("标的与核心逻辑为必填项",""); return; }
+      if(!sym || !logic){ toast("标的与核心逻辑，二者必填",""); return; }
       const i=+$("#pIn",body).value, s=+$("#pSl",body).value, t=+$("#pTp",body).value;
       S.plans.unshift({ id:Date.now(), sym, dir:$("#pDir",body).value, logic,
         in:i||null, sl:s||null, tp:t||null, pos:+$("#pPos",body).value||null,
@@ -145,7 +145,7 @@ VIEWS.dojo = function(tab){
     </div>`;
     $("#addJ", body).addEventListener("click",()=>{
       const t = $("#jText",body).value.trim();
-      if(!t){ toast("写点什么再保存吧",""); return; }
+      if(!t){ toast("空空如也，落笔再存",""); return; }
       S.journal.unshift({ date:dayKey(), text:t, mood:$("#jMood",body).value, score:+$("#jScore",body).value });
       save(); award(10, "交易日志");
       go("#/dojo/x"); setTimeout(()=>go("#/dojo/journal"),0);
