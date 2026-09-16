@@ -12,13 +12,11 @@
 }
 .topnav .inner{max-width:1160px;margin:0 auto;height:100%;padding:0 24px;display:flex;align-items:center;gap:22px}
 .brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
-.brand .mark{
-  width:34px;height:34px;border-radius:11px;background:var(--gold-grad);
-  display:grid;place-items:center;color:#fff;font-family:var(--serif);font-size:17px;font-weight:700;
-  box-shadow:0 4px 14px rgba(160,124,44,.45),inset 0 1px 1px rgba(255,255,255,.55);
-  position:relative;overflow:hidden;
-}
-.brand .mark::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.5) 50%,transparent 70%);background-size:220% 100%;animation:shimmer 5.5s linear infinite}
+/* 铜钱徽标：天圆地方，中字贯穿，悬浮微动 */
+.coin-mark{width:38px;height:38px;flex:none;display:block;filter:drop-shadow(0 4px 10px rgba(160,124,44,.42))}
+.coin-mark svg{width:100%;height:100%;display:block;animation:floatY 3.8s ease-in-out infinite}
+.coin-mark:hover svg{animation-duration:1.8s}
+.coin-float{display:none}
 .brand b{font-family:var(--serif);font-size:17.5px;letter-spacing:.08em;font-weight:600}
 .brand i{font-style:normal;font-size:10px;letter-spacing:.3em;color:var(--gold);display:block;margin-top:-2px}
 .navlinks{display:flex;gap:4px;margin-left:6px}
