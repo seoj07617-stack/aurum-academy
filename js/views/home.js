@@ -80,6 +80,7 @@ VIEWS.home = function(){
         </div>
         <div class="row" style="flex-wrap:wrap;gap:10px">
           <button class="btn btn-gold btn-sm" data-go="#/map">${icon("map")} 继续旅程</button>
+          <button class="btn btn-ghost btn-sm" data-go="#/practice/pattern">${icon("trend")} 实操训练</button>
           <button class="btn btn-ghost btn-sm" data-go="#/dojo">${icon("shield")} 纪律工坊</button>
           <button class="btn btn-ghost btn-sm" data-go="#/stats">${icon("chart")} 数据统计</button>
         </div>
