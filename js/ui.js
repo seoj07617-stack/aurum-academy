@@ -47,14 +47,25 @@ const GOLD_DEFS = `<svg width="0" height="0" style="position:absolute"><defs>
 </linearGradient>
 </defs></svg>`;
 
-/* 铜钱徽标 V5·暗纹版：可见的玑镂环纹 + 章边放射刻纹 + 方孔浮雕倒角 */
-const COIN_TICKS = (() => {
+/* 铜钱徽标 V6·珠圈光芒版：外圈珍珠点环 + 内圈太阳芒纹（自方孔放射） */
+const COIN_RAYS = (() => {
   let s = "";
-  for(let i = 0; i < 32; i++){
-    const a = (i / 32) * Math.PI * 2;
-    const x1 = (32 + 22.2 * Math.cos(a)).toFixed(2), y1 = (32 + 22.2 * Math.sin(a)).toFixed(2);
-    const x2 = (32 + 25.4 * Math.cos(a)).toFixed(2), y2 = (32 + 25.4 * Math.sin(a)).toFixed(2);
-    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#7A5A16" stroke-opacity=".42" stroke-width="1"/>`;
+  for(let i = 0; i < 48; i++){
+    const a = (i / 48) * Math.PI * 2 + 0.065;
+    const long = i % 4 === 0;                      // 每四条一长芒，其余短芒
+    const r1 = long ? 12.4 : 14.2, r2 = long ? 19.6 : 18.2;
+    const x1 = (32 + r1 * Math.cos(a)).toFixed(2), y1 = (32 + r1 * Math.sin(a)).toFixed(2);
+    const x2 = (32 + r2 * Math.cos(a)).toFixed(2), y2 = (32 + r2 * Math.sin(a)).toFixed(2);
+    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#7A5A16" stroke-opacity=".4" stroke-width="${long ? 1 : .8}"/>`;
+  }
+  return s;
+})();
+const COIN_PEARLS = (() => {
+  let s = "";
+  for(let i = 0; i < 40; i++){
+    const a = (i / 40) * Math.PI * 2;
+    const x = (32 + 23.8 * Math.cos(a)).toFixed(2), y = (32 + 23.8 * Math.sin(a)).toFixed(2);
+    s += `<circle cx="${x}" cy="${y}" r=".95" fill="#7A5A16" fill-opacity=".52"/>`;
   }
   return s;
 })();
@@ -62,9 +73,10 @@ const COIN_EMBLEM = `<svg viewBox="0 0 64 64" aria-hidden="true">
 <circle cx="32" cy="32" r="30" fill="url(#coinFace)" stroke="url(#coinEdge)" stroke-width="2.2"/>
 <circle cx="32" cy="32" r="27.6" fill="none" stroke="#FFF9E6" stroke-opacity=".6" stroke-width="1.2"/>
 <circle cx="32" cy="32" r="26.3" fill="none" stroke="#7A5A16" stroke-opacity=".5" stroke-width="1.1"/>
-${COIN_TICKS}
+${COIN_PEARLS}
 <circle cx="32" cy="32" r="21.2" fill="none" stroke="#FFF6DC" stroke-opacity=".45" stroke-width="1"/>
 <circle cx="32" cy="32" r="20.2" fill="none" stroke="#7A5A16" stroke-opacity=".38" stroke-width=".9"/>
+${COIN_RAYS}
 <rect x="24.5" y="24.5" width="15" height="15" fill="rgba(88,64,14,.16)" stroke="#7A5A16" stroke-width="2.1"/>
 <path d="M25.4 38.6V25.4h13.2" fill="none" stroke="rgba(255,249,226,.85)" stroke-width="1.2" stroke-linecap="round"/>
 <path d="M38.6 25.4v13.2H25.4" fill="none" stroke="rgba(78,56,10,.5)" stroke-width="1.2" stroke-linecap="round"/>
