@@ -54,7 +54,7 @@ VIEWS.quiz = function(arg){
           <div class="kicker" style="margin-bottom:4px">${cfg.title}</div>
           <span class="tiny">${cfg.desc} · 第 ${idx+1}/${cfg.items.length} 题</span>
         </div>
-        <a class="btn btn-ghost btn-sm" href="${cfg.back}">退出</a>
+        <button class="btn btn-ghost btn-sm" id="qExit">退出</button>
       </div>
       <div class="q-dots">${cfg.items.map((_,i)=>
         `<span class="q-dot ${i===idx?"cur":i<idx?(cfg.items[i]._ok?"ok":"bad"):""}"></span>`).join("")}</div>
@@ -86,6 +86,14 @@ VIEWS.quiz = function(arg){
     }));
     $("#nextBtn", el).addEventListener("click",()=>{ idx++;
       if(idx < cfg.items.length) renderQ(); else renderResult(); });
+    $("#qExit", el).addEventListener("click",()=>{
+      modal(`<h3>退出本次测验？</h3><p>当前答题进度将丢失（已答错的题仍会收录进错题本与复习循环）。</p>
+        <div class="row" style="justify-content:flex-end;margin-top:16px">
+        <button class="btn btn-ghost btn-sm" id="qxNo">继续答题</button>
+        <button class="btn btn-gold btn-sm" id="qxYes">确认退出</button></div>`);
+      $("#qxNo", mask).addEventListener("click",()=>mask.remove());
+      $("#qxYes", mask).addEventListener("click",()=>go(cfg.back));
+    });
   }
 
   function renderResult(){
