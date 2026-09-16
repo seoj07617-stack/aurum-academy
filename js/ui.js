@@ -11,7 +11,7 @@ const ICONS = {
   chart:  _svg('<path d="M3 3v18h18"/><path d="M7.5 14v3M12 9.5V17M16.5 12v5"/>'),
   shield: _svg('<path d="M12 2l8 3v6c0 5-3.4 9-8 11-4.6-2-8-6-8-11V5l8-3z"/><path d="m9 12 2 2 4-4.5"/>'),
   flame:  _svg('<path d="M12 2.5c.8 3.4 4.6 4.6 4.6 9a4.6 4.6 0 0 1-9.2 0c0-2.4 1.6-3.5 1.6-6 1.2.9 2.4 1 3-3z"/>'),
-  lock:   _svg('<rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
+  lock:   _svg('<path d="M8.5 9.5V7.2a3.5 3.5 0 0 1 7 0v2.3"/><path d="M6.2 9.5h11.6l1 8.4a1.9 1.9 0 0 1-1.9 2.1H7.1a1.9 1.9 0 0 1-1.9-2.1l1-8.4z"/><circle cx="12" cy="13.6" r="1.25"/><path d="M12 14.9v1.9"/>'),
   check:  _svg('<path d="m4.5 12.5 5 5L20 6.5"/>'),
   x:      _svg('<path d="M6 6l12 12M18 6 6 18"/>'),
   chevR:  _svg('<path d="m9 5.5 6.5 6.5L9 18.5"/>'),
@@ -203,7 +203,7 @@ function stageBadge(st){
     <span class="dot" style="background:${st.hue}">${st.cn||"章"}</span>
     <div style="flex:1;min-width:0">
       <div class="between" style="gap:8px"><b style="font-size:13.5px">${st.title}</b>
-      <span class="pct num">${locked?"🔒":info.pct+"%"}</span></div>
+      <span class="pct num">${locked?icon("lock"):info.pct+"%"}</span></div>
       <div class="bar thin" style="margin-top:5px"><i data-w="${info.pct}"></i></div>
     </div></div>`;
 }
