@@ -47,16 +47,27 @@ const GOLD_DEFS = `<svg width="0" height="0" style="position:absolute"><defs>
 </linearGradient>
 </defs></svg>`;
 
-/* 铜钱徽标 V4·高级版：玑镂环纹表盘 + 方孔浮雕倒角 + 镜面高光 */
+/* 铜钱徽标 V5·暗纹版：可见的玑镂环纹 + 章边放射刻纹 + 方孔浮雕倒角 */
+const COIN_TICKS = (() => {
+  let s = "";
+  for(let i = 0; i < 32; i++){
+    const a = (i / 32) * Math.PI * 2;
+    const x1 = (32 + 22.2 * Math.cos(a)).toFixed(2), y1 = (32 + 22.2 * Math.sin(a)).toFixed(2);
+    const x2 = (32 + 25.4 * Math.cos(a)).toFixed(2), y2 = (32 + 25.4 * Math.sin(a)).toFixed(2);
+    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#7A5A16" stroke-opacity=".42" stroke-width="1"/>`;
+  }
+  return s;
+})();
 const COIN_EMBLEM = `<svg viewBox="0 0 64 64" aria-hidden="true">
 <circle cx="32" cy="32" r="30" fill="url(#coinFace)" stroke="url(#coinEdge)" stroke-width="2.2"/>
-<circle cx="32" cy="32" r="27.5" fill="none" stroke="#FFF9E6" stroke-opacity=".5" stroke-width="1"/>
-<circle cx="32" cy="32" r="26.4" fill="none" stroke="#8C6D2F" stroke-opacity=".34" stroke-width=".9"/>
-<circle cx="32" cy="32" r="24"   fill="none" stroke="#FFF6DC" stroke-opacity=".30" stroke-width=".7"/>
-<circle cx="32" cy="32" r="22.2" fill="none" stroke="#8C6D2F" stroke-opacity=".22" stroke-width=".7"/>
+<circle cx="32" cy="32" r="27.6" fill="none" stroke="#FFF9E6" stroke-opacity=".6" stroke-width="1.2"/>
+<circle cx="32" cy="32" r="26.3" fill="none" stroke="#7A5A16" stroke-opacity=".5" stroke-width="1.1"/>
+${COIN_TICKS}
+<circle cx="32" cy="32" r="21.2" fill="none" stroke="#FFF6DC" stroke-opacity=".45" stroke-width="1"/>
+<circle cx="32" cy="32" r="20.2" fill="none" stroke="#7A5A16" stroke-opacity=".38" stroke-width=".9"/>
 <rect x="24.5" y="24.5" width="15" height="15" fill="rgba(88,64,14,.16)" stroke="#7A5A16" stroke-width="2.1"/>
-<path d="M25.4 38.6V25.4h13.2" fill="none" stroke="rgba(255,249,226,.85)" stroke-width="1.1" stroke-linecap="round"/>
-<path d="M38.6 25.4v13.2H25.4" fill="none" stroke="rgba(78,56,10,.5)" stroke-width="1.1" stroke-linecap="round"/>
+<path d="M25.4 38.6V25.4h13.2" fill="none" stroke="rgba(255,249,226,.85)" stroke-width="1.2" stroke-linecap="round"/>
+<path d="M38.6 25.4v13.2H25.4" fill="none" stroke="rgba(78,56,10,.5)" stroke-width="1.2" stroke-linecap="round"/>
 <path d="M13.5 24.5A20.5 20.5 0 0 1 24.5 13.5" fill="none" stroke="rgba(255,255,255,.82)" stroke-width="2.2" stroke-linecap="round"/>
 <path d="M50.5 39.5A20.5 20.5 0 0 1 39.5 50.5" fill="none" stroke="rgba(96,70,14,.28)" stroke-width="2.2" stroke-linecap="round"/>
 <circle cx="20.5" cy="18.5" r="1.5" fill="rgba(255,255,255,.9)"/>
