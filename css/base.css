@@ -5,6 +5,7 @@
 :root{
   --bg:#F6F3EC;
   --ink:#221F1A; --ink2:#6E6A5E; --ink3:#ABA592;
+  --body-ink:#3B372E;  /* 课程正文色：写死会导致夜间看不清，全局变量化 */
   --gold:#A8842C; --gold2:#C9A227; --gold3:#E7D397;
   --gold-grad:linear-gradient(135deg,#8C6D2F 0%,#C9A227 48%,#E5CE8A 100%);
   --rose:#B45B52; --rose-soft:rgba(180,91,82,.10);
@@ -106,6 +107,7 @@ main{padding-top:calc(var(--nav-h) + env(safe-area-inset-top) + 26px);padding-bo
 html[data-theme="dark"]{
   --bg:#171511; --ink:#EAE2CC; --ink2:#A79D82; --ink3:#6F6850;
   --gold-soft:rgba(201,162,39,.16);
+  --body-ink:#D8CFB6;
   --glass:rgba(34,30,22,.58); --glass2:rgba(26,23,16,.85);
   --gbrd:rgba(255,255,255,.09); --gbrd2:rgba(201,162,39,.30);
   --sh:0 10px 40px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.35);
