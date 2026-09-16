@@ -15,6 +15,9 @@ VIEWS.home = function(){
   const tasks = [
     { ic:"book", t:"学习新课", s: nl ? `《${LESSON[nl].title}》 · ${LESSON[nl].mins} 分钟` : "全部课程已完成，进入复习循环",
       done: !nl, go: nl ? `#/lesson/${nl}` : "#/map" },
+    { ic:"target", t:"每日混测", s: (S.dailyMix && S.dailyMix.date === dayKey())
+        ? `已完成 · 今日最好 ${S.dailyMix.score}/${S.dailyMix.total}` : "5 题 · 来自已学课程",
+      done: !!(S.dailyMix && S.dailyMix.date === dayKey()), go:"#/daily" },
     { ic:"zap", t:"记忆复习", s: due>0 ? `${due} 张记忆卡片到期` : "今日记忆已巩固",
       done: due===0, go:"#/review" },
     { ic:"refresh", t:"错题重练", s: wrongN>0 ? `${wrongN} 道错题待消灭` : "错题本干净",
@@ -38,7 +41,7 @@ VIEWS.home = function(){
       </div>
       <div class="hero-side">
         <div class="glass today-ring">
-          ${ring(loopDone===3 ? 100 : Math.round(loopDone/3*100), 128, "今日闭环", loopDone===3?"已完成":"3 项任务")}
+          ${ring(loopDone===tasks.length ? 100 : Math.round(loopDone/tasks.length*100), 128, "今日闭环", `${loopDone}/${tasks.length} 项`)}
           <div class="row" style="gap:8px;margin-top:4px">
             <span class="tag">${icon("flame")} 连续 ${S.streak.n} 天</span>
             <span class="tag gray num">今日 ${S.xpToday}/30 XP</span>
