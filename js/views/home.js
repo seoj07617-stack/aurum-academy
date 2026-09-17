@@ -53,7 +53,7 @@ VIEWS.home = function(){
     <div class="glass loop-card">
       <div class="loop-head">
         <div class="card-title">${icon("refresh")} 今日学习闭环</div>
-        <span class="tiny">学 → 练 → 错 → 忆：完成三项即打卡</span>
+        <span class="tiny">学 → 练 → 错 → 忆：完成四项即打卡</span>
       </div>
       ${tasks.map(t=>`
       <div class="task-row ${t.done?"done":""}" data-go="${t.go}">
