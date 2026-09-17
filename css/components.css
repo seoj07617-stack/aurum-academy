@@ -183,7 +183,7 @@ label.fld{display:block;font-size:12px;font-weight:600;letter-spacing:.1em;color
 /* ---------- 分段控制（tabs） ---------- */
 .seg{display:inline-flex;padding:4px;gap:4px;border-radius:999px;background:rgba(34,31,26,.06);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.seg button{padding:7px 18px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink2);transition:all .3s var(--ease)}
+.seg button{padding:7px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink2);transition:all .3s var(--ease);white-space:nowrap}
 .seg button.on{background:rgba(255,255,255,.92);color:var(--ink);box-shadow:0 3px 12px rgba(90,74,34,.14)}
 
 /* ---------- 空状态 ---------- */
