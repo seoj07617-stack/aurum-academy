@@ -139,7 +139,7 @@ const App = {
     const [name, arg, arg2] = h.split("/");
     const view = VIEWS[name] || VIEWS.home;
     /* 标签页标题随页面同步 */
-    const T = { home:"首页", map:"知识地图", review:"记忆复习", wrong:"错题本", dojo:"纪律工坊", stats:"数据统计", glossary:"词汇表", practice:"实操训练", daily:"每日混测", stage:"阶段", lesson:"课程" };
+    const T = { home:"首页", map:"知识地图", review:"记忆复习", wrong:"错题本", dojo:"纪律工坊", stats:"数据统计", glossary:"词汇表", practice:"实操训练", daily:"每日一卷", stage:"阶段", lesson:"课程" };
     let t = T[name] || "知行金融学院";
     if(name==="stage" && STAGE[arg]) t = STAGE[arg].title;
     if(name==="lesson" && LESSON[arg]) t = LESSON[arg].title;
