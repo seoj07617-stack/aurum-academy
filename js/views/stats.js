@@ -107,7 +107,7 @@ VIEWS.stats = function(){
       <div class="row" style="flex-wrap:wrap;gap:10px;margin-top:10px">
         <button class="btn btn-gold btn-sm" id="syncPush">${icon("coins")} 备份到云端</button>
         <button class="btn btn-ghost btn-sm" id="syncPull">${icon("refresh")} 从云端恢复</button>
-        <span class="tiny" id="syncInfo">${Sync.token() ? "令牌就绪" : "未设置令牌"}</span>
+        <span class="tiny" id="syncInfo">${S.lastSync ? "最近备份：" + S.lastSync.d + " " + S.lastSync.at : (Sync.token() ? "令牌就绪" : "未设置令牌")}</span>
       </div>
       <p class="tiny" style="margin-top:10px">令牌只保存在本机浏览器，不进入备份内容。恢复会覆盖本机当前进度。</p>
     </div>
@@ -178,7 +178,7 @@ VIEWS.stats = function(){
     if(!Sync.token()){ toast("请先保存令牌"); return; }
     $("#syncInfo", el).textContent = "备份中…";
     try { const login = await Sync.push();
-      $("#syncInfo", el).textContent = "最近备份：" + dayKey();
+      $("#syncInfo", el).textContent = "最近备份：" + (S.lastSync ? S.lastSync.d + " " + S.lastSync.at : dayKey());
       toast("已备份到云端（" + login + "/aurum-sync）", "gold");
     } catch(err){ $("#syncInfo", el).textContent = "备份失败"; toast("备份失败：" + err.message); }
   });
