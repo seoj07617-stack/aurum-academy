@@ -45,25 +45,44 @@ const GOLD_DEFS = `<svg width="0" height="0" style="position:absolute"><defs>
 </radialGradient>
 </defs></svg>`;
 
-/* 铜钱徽标 V9·漆金版：黑漆圆底 + 鎏金双环 + 联珠纹 + 金线方孔（描金工艺） */
-const COIN_PEARLS9 = (() => {
+/* 铜钱徽标 V10·漆金描纹版：黑漆底 + 回纹带（雷纹边饰）+ 柿蒂纹拱卫方孔
+   识文描金双金工艺（亮金 E5CE8A 主线 / 暗金 A68B4A 层次）——纹样取自青铜器与铜镜传统 */
+const COIN_MEANDER = (() => {
   let s = "";
-  for(let i = 0; i < 24; i++){
-    const a = (i / 24) * Math.PI * 2;
-    const x = (32 + 24.2 * Math.cos(a)).toFixed(2), y = (32 + 24.2 * Math.sin(a)).toFixed(2);
-    s += `<circle cx="${x}" cy="${y}" r=".9" fill="#D9C089" fill-opacity=".5"/>`;
+  for(let i = 0; i < 20; i++){
+    const a = (i / 20) * Math.PI * 2;
+    const x1 = (32 + 23.6 * Math.cos(a)).toFixed(2), y1 = (32 + 23.6 * Math.sin(a)).toFixed(2);
+    const x2 = (32 + 25.8 * Math.cos(a)).toFixed(2), y2 = (32 + 25.8 * Math.sin(a)).toFixed(2);
+    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#E5CE8A" stroke-opacity=".42" stroke-width="1"/>`;
   }
   return s;
 })();
 const COIN_EMBLEM = `<svg viewBox="0 0 64 64" aria-hidden="true">
 <circle cx="32" cy="32" r="30" fill="url(#lacquerFace)" stroke="url(#gold-grad-def)" stroke-width="2"/>
-<circle cx="32" cy="32" r="27" fill="none" stroke="#E5CE8A" stroke-opacity=".4" stroke-width="1"/>
-${COIN_PEARLS9}
-<rect x="25" y="25" width="14" height="14" rx="2.5" fill="rgba(0,0,0,.38)" stroke="url(#gold-grad-def)" stroke-width="2.1"/>
-<path d="M26.2 37.8V26.2h11.6" fill="none" stroke="rgba(229,206,138,.65)" stroke-width="1.1" stroke-linecap="round"/>
-<path d="M37.8 26.2v11.6H26.2" fill="none" stroke="rgba(0,0,0,.55)" stroke-width="1.1" stroke-linecap="round"/>
+<circle cx="32" cy="32" r="27.2" fill="none" stroke="#E5CE8A" stroke-opacity=".38" stroke-width="1"/>
+<circle cx="32" cy="32" r="26" fill="none" stroke="#A68B4A" stroke-opacity=".5" stroke-width=".9"/>
+<circle cx="32" cy="32" r="23.4" fill="none" stroke="#A68B4A" stroke-opacity=".5" stroke-width=".9"/>
+${COIN_MEANDER}
+<rect x="25" y="25" width="14" height="14" rx="2" fill="rgba(0,0,0,.38)" stroke="url(#gold-grad-def)" stroke-width="2.1"/>
+<path d="M26.3 37.7V26.3h11.4" fill="none" stroke="rgba(229,206,138,.6)" stroke-width="1.1" stroke-linecap="round"/>
+<path d="M37.7 26.3v11.4H26.3" fill="none" stroke="rgba(0,0,0,.55)" stroke-width="1.1" stroke-linecap="round"/>
+<g fill="none" stroke="#E5CE8A" stroke-width="1.5" stroke-linecap="round">
+<path d="M27.8 23.6Q32 14.8 36.2 23.6"/>
+<path d="M27.8 23.6Q32 14.8 36.2 23.6" transform="rotate(90 32 32)"/>
+<path d="M27.8 23.6Q32 14.8 36.2 23.6" transform="rotate(180 32 32)"/>
+<path d="M27.8 23.6Q32 14.8 36.2 23.6" transform="rotate(270 32 32)"/>
+</g>
+<g fill="none" stroke="#A68B4A" stroke-width=".8" stroke-linecap="round" stroke-opacity=".9">
+<path d="M29 23.8Q32 17.6 35 23.8"/>
+<path d="M29 23.8Q32 17.6 35 23.8" transform="rotate(90 32 32)"/>
+<path d="M29 23.8Q32 17.6 35 23.8" transform="rotate(180 32 32)"/>
+<path d="M29 23.8Q32 17.6 35 23.8" transform="rotate(270 32 32)"/>
+</g>
+<circle cx="32" cy="14.6" r="1.1" fill="#D9C089" fill-opacity=".8"/>
+<circle cx="49.4" cy="32" r="1.1" fill="#D9C089" fill-opacity=".8"/>
+<circle cx="32" cy="49.4" r="1.1" fill="#D9C089" fill-opacity=".8"/>
+<circle cx="14.6" cy="32" r="1.1" fill="#D9C089" fill-opacity=".8"/>
 <path d="M13.5 24A19.5 19.5 0 0 1 24 13.5" fill="none" stroke="rgba(233,214,160,.55)" stroke-width="1.8" stroke-linecap="round"/>
-<circle cx="20" cy="17.5" r="1.4" fill="rgba(229,206,138,.8)"/>
 <g class="coin-shine">
 <path d="M32 7A25 25 0 0 1 57 32" fill="none" stroke="rgba(233,214,160,.6)" stroke-width="4.5" stroke-linecap="round"/>
 </g>
