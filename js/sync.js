@@ -40,6 +40,8 @@ const Sync = {
     await this.req(api, { method: "PUT",
       body: JSON.stringify({ message: "backup " + dayKey() + " " + new Date().toTimeString().slice(0,5),
         content, branch: "main", ...(sha ? { sha } : {}) }) });
+    S.lastSync = { d: dayKey(), at: new Date().toTimeString().slice(0,5) };
+    save();
     return this.login();
   },
   async pull(){
