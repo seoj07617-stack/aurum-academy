@@ -61,7 +61,7 @@ VIEWS.daily = function(){
           <div class="kicker" style="margin-bottom:4px">每日一卷 · 今日五题</div>
           <span class="tiny">题自已学课程 · 当日同卷 · 第 ${idx+1}/${items.length} 题</span>
         </div>
-        <a class="btn btn-ghost btn-sm" href="#/home">退出</a>
+        <button class="btn btn-ghost btn-sm" id="mixExit">退出</button>
       </div>
       <div class="q-dots">${items.map((_,i)=>`<span class="q-dot ${i===idx?"cur":i<idx?(items[i]._ok?"ok":"bad"):""}"></span>`).join("")}</div>
       <div class="glass q-card">
@@ -78,6 +78,14 @@ VIEWS.daily = function(){
       $("#dNext", el).style.visibility = "";
     }, idx);
     $("#dNext", el).addEventListener("click", () => { idx++; renderQ(); });
+    $("#mixExit", el).addEventListener("click", () => {
+      modal(`<h3>退出今日一卷？</h3><p>本卷进度将丢弃（已答错的题仍会收录进错题本与复习循环），明日更换新卷。</p>
+        <div class="row" style="justify-content:flex-end;margin-top:16px">
+        <button class="btn btn-ghost btn-sm" id="mxNo">继续作答</button>
+        <button class="btn btn-gold btn-sm" id="mxYes">确认退出</button></div>`);
+      $("#mxNo", mask).addEventListener("click", () => mask.remove());
+      $("#mxYes", mask).addEventListener("click", () => go("#/home"));
+    });
   }
 
   /* 完成记账：当日最好成绩 + XP + 错题收录 */
