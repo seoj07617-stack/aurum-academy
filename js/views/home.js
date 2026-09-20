@@ -32,8 +32,7 @@ VIEWS.home = function(){
         <div class="v-motto" aria-hidden="true">知行合一<span class="seal">知行</span></div>
         <div class="kicker">知行金融学院 · AURUM ACADEMY</div>
         <h1>${greet()}，<span class="gold-text">${lv.name}</span></h1>
-        <p class="hero-sub">宏观 → 微观 → 交易 → 纪律：已修 ${doneLessons}/${ORDER.length} 课，
-        平均掌握度 ${masteryAvg}%。${S.grad ? "恭喜，你已获得「知行合一」毕业徽章。" : "每天完成学习闭环，让知识长在复利曲线上。"}</p>
+        <p class="hero-sub">已完成 ${doneLessons}/${ORDER.length} 课 · 掌握度 ${masteryAvg}%。完成今日闭环，让知识长在复利曲线上。</p>
         <div class="quote-card">
           <span class="qm">“</span>
           <div><p>${qt}</p><cite>—— ${qa}</cite></div>
