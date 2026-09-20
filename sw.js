@@ -1,6 +1,6 @@
 /* 知行金融学院 · Service Worker：网络优先、缓存兜底（离线可用） */
 "use strict";
-const VER = "aurum-v6";
+const VER = "aurum-v7";
 const CORE = [
   "./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png",
   "./css/base.css", "./css/components.css", "./css/views.css", "./css/ai.css", "./css/animations.css",
