@@ -5,6 +5,21 @@
    ============================================================ */
 "use strict";
 const tnow = () => new Date().toTimeString().slice(0, 5);
+/* 首席研究员头像：漆金圆章 + 鎏金上行K线 */
+const AVA_SVG = `<svg viewBox="0 0 64 64" aria-hidden="true">
+<circle cx="32" cy="32" r="30" fill="#26221A" stroke="#C9A227" stroke-width="2.6"/>
+<circle cx="32" cy="32" r="26.5" fill="none" stroke="#E5CE8A" stroke-opacity=".35" stroke-width="1"/>
+<g stroke="#E5CE8A" stroke-width="1.5" stroke-linecap="round">
+<path d="M18 34V26"/><path d="M27 30V18"/><path d="M36 32V22"/><path d="M45 26V16"/>
+</g>
+<g fill="#E5CE8A">
+<rect x="15" y="28" width="6" height="8" rx="1"/>
+<rect x="24" y="22" width="6" height="9" rx="1"/>
+<rect x="33" y="25" width="6" height="8" rx="1"/>
+<rect x="42" y="18" width="6" height="9" rx="1"/>
+</g>
+<circle cx="46" cy="15" r="1.6" fill="#F0E4BC"/>
+</svg>`;
 const Ai = {
   PRESETS: [
     { name: "智谱 GLM（glm-4-flash 免费）", url: "https://open.bigmodel.cn/api/paas/v4/chat/completions", model: "glm-4-flash", hint: "bigmodel.cn 注册即送密钥" },
@@ -54,7 +69,39 @@ const Ai = {
     const concepts = [];
     CURRICULUM.forEach(st => st.lessons.forEach(l => (l.points || []).forEach(p => concepts.push(p.t))));
     L.push("【学院讲授过的概念】" + concepts.join("、"));
+    /* 长期记忆：山长/首席的备忘本 */
+    const mem = Ai.memLoad();
+    if(mem.length) L.push("【研究员备忘·关于学生的长期记忆】" + mem.join("；"));
     return L.join("\n");
+  },
+
+  memLoad(){ try { const a = JSON.parse(localStorage.getItem("aurum_ai_mem") || "[]"); return Array.isArray(a) ? a : []; } catch(e){ return []; } },
+  memSave(a){ try { localStorage.setItem("aurum_ai_mem", JSON.stringify(a.slice(-24))); } catch(e){} },
+  memClear(){ localStorage.removeItem("aurum_ai_mem"); },
+  /* 对话后自动提炼长期记忆（有密钥时静默执行） */
+  async remember(q, a){
+    const c = Ai.cfg(); if(!c.key) return;
+    const known = Ai.memLoad();
+    try {
+      const res = await fetch(c.url, { method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + c.key },
+        body: JSON.stringify({ model: c.model, stream: false, messages: [
+          { role: "system", content: "你是记忆提炼器。从对话中提取关于学生的长期有用信息（学习目标、薄弱概念、偏好、约束、承诺、疑问）。输出 JSON 数组（字符串数组，最多 2 条，每条不超过 24 字，第三人称）。没有新信息则输出 []。只输出 JSON，不要其他文字。已有记忆（勿重复）：[" + Ai.memLoad().join("；") + "]" },
+          { role: "user", content: "学生问：" + q.slice(0, 200) + "\n首席答：" + a.slice(0, 400) }
+        ] }) });
+      if(!res.ok) return;
+      const j = await res.json();
+      let txt = j.choices && j.choices[0] && j.choices[0].message ? j.choices[0].message.content : "[]";
+      txt = txt.replace(/^[^[]*/, "").replace(/[^\\\]]*$/, "").trim();
+      let arr;
+      try { arr = JSON.parse(txt); } catch(e){ return; }
+      if(!Array.isArray(arr)) return;
+      const mem = Ai.memLoad();
+      arr.filter(x => typeof x === "string" && x.trim()).slice(0, 2).forEach(x => {
+        if(!mem.some(m => m.includes(x.slice(0, 10)))) mem.push(x.trim().slice(0, 30));
+      });
+      Ai.memSave(mem);
+    } catch(e){}
   },
 
   SYS(){
@@ -79,8 +126,8 @@ const Ai = {
     mask.innerHTML = `
     <aside class="ai-drawer" role="dialog" aria-label="知行研究院">
       <header class="ai-head">
-        <span class="ai-seal">研</span>
-        <div class="ai-title"><b>首席研究员</b><span id="aiMode">知行研究院 · 只对你的功课负责</span></div>
+        <span class="ai-seal">${AVA_SVG}</span>
+        <div class="ai-title"><b>首席研究员</b><span id="aiMode"><i class="live"></i>知行研究院 · 只对你的功课负责</span></div>
         <button class="ai-gear" id="aiNew" title="新对话">${icon("edit")}</button>
         <button class="ai-gear" id="aiGear" title="设置">${icon("refresh")}</button>
         <button class="ai-x" id="aiClose">${icon("x")}</button>
@@ -110,6 +157,12 @@ const Ai = {
           <span class="tiny" id="aiHint"></span>
         </div>
         <p class="tiny" style="margin-top:8px">没有密钥？推荐智谱 bigmodel.cn 注册即送，glm-4-flash 模型免费。密钥与记忆只存本机。</p>
+        <hr style="border:none;border-top:1px solid rgba(201,162,39,.2);margin:12px 0 8px">
+        <div class="row" style="gap:8px">
+          <span class="fld" style="margin:0">研究员备忘（<span id="aiMemN">0</span> 条）</span>
+          <button class="btn btn-ghost btn-sm" id="aiMemClear" style="margin-left:auto">清除记忆</button>
+        </div>
+        <div id="aiMemList" style="margin-top:6px;font-size:11.5px;color:#C9B57A;line-height:1.9"></div>
       </div>
     </aside>`;
     document.body.appendChild(mask);
@@ -130,8 +183,11 @@ const Ai = {
     });
     $("#aiSave", mask).addEventListener("click", () => {
       Ai.saveCfg({ url: $("#aiUrl", mask).value.trim(), model: $("#aiModel", mask).value.trim(), key: $("#aiKey", mask).value.trim() });
-      toast("设置已存（仅本机）", "gold");
+      toast("AI 设置已保存（仅本机）", "gold");
       $("#aiSet", mask).hidden = true;
+    });
+    $("#aiMemClear", mask).addEventListener("click", () => {
+      Ai.memClear(); Ai.paintMem(); toast("研究员备忘已清空");
     });
     $$(".ai-chips button", mask).forEach(b => b.addEventListener("click", () => Ai.send(b.dataset.q)));
     $("#aiSend", mask).addEventListener("click", () => Ai.send());
@@ -165,6 +221,11 @@ const Ai = {
       $("#aiKey", mask).value = c.key || "";
       $("#aiHint", mask).textContent = "已存配置" + (c.key ? "（密钥就绪）" : "（无密钥 = 演示讲学）");
     }
+    const mem = Ai.memLoad();
+    $("#aiMemN", mask).textContent = mem.length;
+    $("#aiMemList", mask).innerHTML = mem.length
+      ? mem.map((m,i) => (i+1) + ". " + esc(m)).join("<br>")
+      : "（暂无记忆——随着对话，首席会自动记下关于你的关键信息）";
   },
   escClose(e){ if(e.key === "Escape") Ai.close(); },
   close(){
@@ -178,7 +239,7 @@ const Ai = {
     const me = who === "me";
     msgsEl.insertAdjacentHTML("beforeend",
       `<div class="ai-msg ${me?"me":"ai"}">
-         <div class="ava">${me ? "我" : "研"}</div>
+         <div class="ava">${me ? "我" : AVA_SVG}</div>
          <div class="ai-bubble ${me?"me":"ai"}"><div class="ai-txt">${esc(txt).replace(/\n/g, "<br>")}<span class="tstamp">${tnow()}</span></div></div>
        </div>`);
     msgsEl.scrollTop = msgsEl.scrollHeight;
@@ -187,6 +248,7 @@ const Ai = {
   async send(text){
     const mask = $("#aiMask"); if(!mask) return;
     const input = $("#aiIn", mask);
+    const c = Ai.cfg();
     const q = (text !== undefined ? text : input.value).trim();
     if(!q) return;
     if(text === undefined) input.value = "";
@@ -194,16 +256,16 @@ const Ai = {
     msgsScroll();
     const msgsEl = $("#aiMsgs", mask);
     msgsEl.insertAdjacentHTML("beforeend",
-      `<div class="ai-msg ai" id="aiThink"><div class="ava">研</div><div class="ai-bubble ai think"><span class="dots"><i></i><i></i><i></i></span></div></div>`);
+      `<div class="ai-msg ai" id="aiThink"><div class="ava">${AVA_SVG}</div><div class="ai-bubble ai think"><span class="dots"><i></i><i></i><i></i></span></div></div>`);
     msgsEl.scrollTop = msgsEl.scrollHeight;
     $("#aiSend", mask).disabled = true; input.disabled = true;
     let acc = "", streamUp = false;
     const mount = () => {
-      const t = $("#aiThink", mask); if(t) t.remove();
+      $("#aiThink", mask)?.remove();
       if(streamUp) return;
       streamUp = true;
       msgsEl.insertAdjacentHTML("beforeend",
-        `<div class="ai-msg ai"><div class="ava">研</div><div class="ai-bubble ai"><div class="ai-txt"><span id="aiStream"></span><span class="cur">▍</span></div></div></div>`);
+        `<div class="ai-msg ai"><div class="ava">${AVA_SVG}</div><div class="ai-bubble ai"><div class="ai-txt"><span id="aiStream"></span><span class="cur">▍</span></div></div></div>`);
       msgsEl.scrollTop = msgsEl.scrollHeight;
     };
     const onDelta = d => {
@@ -215,9 +277,9 @@ const Ai = {
       $("#aiThink", mask)?.remove();
       $("#aiSend", mask).disabled = false; input.disabled = false; input.focus();
       if(acc){ Ai.hist.push({ role: "user", content: q }, { role: "assistant", content: acc }); Ai.histSave(Ai.hist); }
+      if(cfg.key && acc){ Ai.remember(q, acc).catch(()=>{}); }
     };
     try {
-      const c = Ai.cfg();
       if(!c.key){
         $("#aiMode", mask).textContent = "演示讲学 · 设密钥后接真首席";
         const ans = Ai.demo(q);
