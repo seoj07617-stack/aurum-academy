@@ -1,10 +1,10 @@
 /* 知行金融学院 · Service Worker：网络优先、缓存兜底（离线可用） */
 "use strict";
-const VER = "aurum-v5";
+const VER = "aurum-v6";
 const CORE = [
   "./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png",
-  "./css/base.css", "./css/components.css", "./css/views.css", "./css/animations.css",
-  "./js/core.js", "./js/srs.js", "./js/sync.js", "./js/ui.js", "./js/charts.js",
+  "./css/base.css", "./css/components.css", "./css/views.css", "./css/ai.css", "./css/animations.css",
+  "./js/core.js", "./js/srs.js", "./js/sync.js", "./js/ai.js", "./js/ui.js", "./js/charts.js",
   "./js/data/foundations.js", "./js/data/macro.js", "./js/data/markets.js", "./js/data/company.js",
   "./js/data/technical.js", "./js/data/funds.js", "./js/data/models.js", "./js/data/discipline.js",
   "./js/data/portfolio.js", "./js/data/capstone.js", "./js/data/practice.js",
