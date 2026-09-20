@@ -4,6 +4,7 @@
    密钥只存本机 localStorage（aurum_ai），聊天记忆存 aurum_ai_hist
    ============================================================ */
 "use strict";
+const tnow = () => new Date().toTimeString().slice(0, 5);
 const Ai = {
   PRESETS: [
     { name: "智谱 GLM（glm-4-flash 免费）", url: "https://open.bigmodel.cn/api/paas/v4/chat/completions", model: "glm-4-flash", hint: "bigmodel.cn 注册即送密钥" },
@@ -139,9 +140,11 @@ const Ai = {
     });
     document.addEventListener("keydown", Ai.escClose);
     Ai.fillSet();
-    /* 恢复往讲 */
+    /* 恢复往讲（本次对话分隔线 + 头像消息） */
+    const msgs0 = $("#aiMsgs", mask);
+    msgs0.insertAdjacentHTML("beforeend", '<div class="ai-day"><span>本 次 对 话</span></div>');
     if(Ai.hist.length){
-      Ai.hist.slice(-10).forEach(m => Ai.paint(m.role === "user" ? "me" : "ai", m.content, m.role === "user" ? "学生" : "山长"));
+      Ai.hist.slice(-10).forEach(m => Ai.paint(m.role === "user" ? "me" : "ai", m.content));
     } else {
       Ai.welcome();
     }
@@ -172,8 +175,12 @@ const Ai = {
   paint(who, txt){
     const msgsEl = $("#aiMsgs", document.getElementById("aiMask"));
     if(!msgsEl) return;
+    const me = who === "me";
     msgsEl.insertAdjacentHTML("beforeend",
-      `<div class="ai-bubble ${who}"><span class="who">${who === "me" ? "学生" : "山长"}</span><div class="ai-txt">${esc(txt).replace(/\n/g, "<br>")}</div></div>`);
+      `<div class="ai-msg ${me?"me":"ai"}">
+         <div class="ava">${me ? "我" : "研"}</div>
+         <div class="ai-bubble ${me?"me":"ai"}"><div class="ai-txt">${esc(txt).replace(/\n/g, "<br>")}<span class="tstamp">${tnow()}</span></div></div>
+       </div>`);
     msgsEl.scrollTop = msgsEl.scrollHeight;
   },
 
@@ -187,21 +194,32 @@ const Ai = {
     msgsScroll();
     const msgsEl = $("#aiMsgs", mask);
     msgsEl.insertAdjacentHTML("beforeend",
-      `<div class="ai-bubble ai streaming" id="aiCur"><span class="who">山长</span><div class="ai-txt"><span id="aiStream"></span><span class="cur">▍</span></div></div>`);
+      `<div class="ai-msg ai" id="aiThink"><div class="ava">研</div><div class="ai-bubble ai think"><span class="dots"><i></i><i></i><i></i></span></div></div>`);
     msgsEl.scrollTop = msgsEl.scrollHeight;
     $("#aiSend", mask).disabled = true; input.disabled = true;
-    const streamEl = $("#aiStream", mask);
-    let acc = "";
-    const onDelta = d => { acc += d; streamEl.textContent = acc; msgsEl.scrollTop = msgsEl.scrollHeight; };
+    let acc = "", streamUp = false;
+    const mount = () => {
+      const t = $("#aiThink", mask); if(t) t.remove();
+      if(streamUp) return;
+      streamUp = true;
+      msgsEl.insertAdjacentHTML("beforeend",
+        `<div class="ai-msg ai"><div class="ava">研</div><div class="ai-bubble ai"><div class="ai-txt"><span id="aiStream"></span><span class="cur">▍</span></div></div></div>`);
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+    };
+    const onDelta = d => {
+      mount(); acc += d;
+      const el = $("#aiStream", mask); if(el) el.textContent = acc;
+      msgsEl.scrollTop = msgsEl.scrollHeight;
+    };
     const finish = () => {
-      const cur = $("#aiCur", mask); if(cur) cur.classList.remove("streaming");
+      $("#aiThink", mask)?.remove();
       $("#aiSend", mask).disabled = false; input.disabled = false; input.focus();
       if(acc){ Ai.hist.push({ role: "user", content: q }, { role: "assistant", content: acc }); Ai.histSave(Ai.hist); }
     };
     try {
       const c = Ai.cfg();
       if(!c.key){
-        $("#aiMode", mask).textContent = "演示讲学 · 设密钥后接真山长";
+        $("#aiMode", mask).textContent = "演示讲学 · 设密钥后接真首席";
         const ans = Ai.demo(q);
         let i = 0;
         const timer = setInterval(() => {
@@ -214,11 +232,11 @@ const Ai = {
       const histCtx = Ai.hist.slice(-12).map(m => ({ role: m.role, content: m.content }));
       const messages = [{ role: "system", content: Ai.SYS() }, ...histCtx, { role: "user", content: q }];
       await Ai.stream(messages, onDelta);
-      if(!acc) onDelta("（先生今日无言——请检查模型名与密钥）");
+      if(!acc) onDelta("（首席未作答——请检查模型名与密钥）");
       finish();
     } catch(err){
       if(err.name === "AbortError"){ finish(); return; }
-      onDelta("");
+      $("#aiThink", mask)?.remove();
       msgsEl.insertAdjacentHTML("beforeend",
         `<div class="ai-err">⚠ ${esc(err.message)}<br><span class="tiny">若为网络/跨域错误：换服务商（推荐智谱）或检查网络；401 为密钥无效。</span></div>`);
       msgsEl.scrollTop = msgsEl.scrollHeight;
