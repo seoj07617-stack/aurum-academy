@@ -1,5 +1,5 @@
 /* ============================================================
-   ai.js — 山长：知行金融学院掌院先生（AI 讲学）
+   ai.js — 首席研究员：知行金融学院 AI 顾问（黑金抽屉 · 流式 · 持久记忆）
    点击铜钱站标唤起；黑金抽屉；流式输出；持久记忆；全站档案注入
    密钥只存本机 localStorage（aurum_ai），聊天记忆存 aurum_ai_hist
    ============================================================ */
@@ -13,7 +13,9 @@ const Ai = {
   ],
   cfg(){ try { return JSON.parse(localStorage.getItem("aurum_ai") || "{}"); } catch(e){ return {}; } },
   saveCfg(c){ localStorage.setItem("aurum_ai", JSON.stringify(c)); },
-  histLoad(){ try { const a = JSON.parse(localStorage.getItem("aurum_ai_hist") || "[]"); return Array.isArray(a) ? a : []; } catch(e){ return []; } },
+  histLoad(){ try { const a = JSON.parse(localStorage.getItem("aurum_ai_hist") || "[]");
+      if(!Array.isArray(a)) return [];
+      return a; } catch(e){ return []; } },
   histSave(a){ try { localStorage.setItem("aurum_ai_hist", JSON.stringify(a.slice(-60))); } catch(e){} },
   hist: [],
   ctrl: null,
@@ -47,7 +49,7 @@ const Ai = {
     for(let i = 6; i >= 0; i--){ const k = addDays(dayKey(), -i); last7.push((S.days[k] || 0)); }
     L.push("【近7日学习强度 XP】" + last7.join(","));
     if(S.journal.length) L.push("【最近手记】" + esc(S.journal[0].text).slice(0, 40));
-    /* 课程概念索引：让山长知道学院教过什么 */
+    /* 课程概念索引：让研究员知道学院教过什么 */
     const concepts = [];
     CURRICULUM.forEach(st => st.lessons.forEach(l => (l.points || []).forEach(p => concepts.push(p.t))));
     L.push("【学院讲授过的概念】" + concepts.join("、"));
@@ -55,17 +57,15 @@ const Ai = {
   },
 
   SYS(){
-    return `你是「知行金融学院」的山长——古代书院掌院先生的身份，执掌这座金融学堂。学生称你「山长」或「先生」。
-你说话：半文半白、从容简练、偶有一句点睛的古语，但不掉书袋；对学生因材施教，先看功课再开方子。
-学院的课程体系（第〇至九阶段）：金融第一性原理→宏观经济→金融市场地图→行业与公司透视→技术分析→基金投资→交易模式图鉴→纪律与风控工程→组合与资产配置→知行合一（十条铁律、俗讲类比）。
-每课皆有三层：专业定义、俗讲类比、投资提醒。学生档案与学院概念索引附于下方，请务必据此个性化回答。
+    return `你是「知行金融学院·研究院」的首席研究员，学生的私人投资学习顾问。学院的课程体系（第〇至九阶段）：金融第一性原理→宏观经济→金融市场地图→行业与公司估值→技术分析→基金投资→交易模式→纪律与风控→资产配置→知行合一。
+你的风格：专业、直接、结论先行，像私人银行的研究总监做一对一辅导。学生会看到你的回答，称你「首席」。
 
-《山长教规》：
-1. 谈术语：先一句专业定义，再一个生活类比，再一句投资提醒。
-2. 谈方案：基于学生档案给具体到「哪一课、哪几天、每天多少分钟」的计划；先治薄弱，再图新进。
-3. 谈错题：点出错因归类（概念不清/纪律违规/粗心），开对应药方。
-4. 永不荐股、不预测涨跌、不谈具体标的买卖；强调纪律、仓位、长期主义。
-5. 中文作答；讲术语不超 250 字；给方案用清单，清单要有优先级。
+回答规则：
+1. 学生输入的多是金融术语或概念，按三层作答：一句准确定义 → 一个现代生活的类比 → 一句投资实操提醒。
+2. 中文，总长不超过 250 字；给方案时用清单并标注优先级。
+3. 一切基于下方学生档案：先给结论，再给依据，具体到课程名和天数。
+4. 红线：不荐股、不给具体标的买卖建议、不预测短期涨跌；始终强调纪律、仓位与长期主义。
+5. 若问题超出金融学习范畴，简短回应并引导回学习。
 
 ` + Ai.profile();
   },
@@ -76,23 +76,23 @@ const Ai = {
     const mask = document.createElement("div");
     mask.id = "aiMask"; mask.className = "ai-mask";
     mask.innerHTML = `
-    <aside class="ai-drawer" role="dialog" aria-label="山长讲学">
+    <aside class="ai-drawer" role="dialog" aria-label="知行研究院">
       <header class="ai-head">
-        <span class="ai-seal">山</span>
-        <div class="ai-title"><b>山长</b><span id="aiMode">掌院讲学 · 因材施教</span></div>
-        <button class="ai-gear" id="aiNew" title="另起一讲">${icon("edit")}</button>
+        <span class="ai-seal">研</span>
+        <div class="ai-title"><b>首席研究员</b><span id="aiMode">知行研究院 · 只对你的功课负责</span></div>
+        <button class="ai-gear" id="aiNew" title="新对话">${icon("edit")}</button>
         <button class="ai-gear" id="aiGear" title="设置">${icon("refresh")}</button>
         <button class="ai-x" id="aiClose">${icon("x")}</button>
       </header>
       <div class="ai-msgs" id="aiMsgs"></div>
       <div class="ai-chips" id="aiChips">
-        <button data-q="请先生看看我的功课，哪里薄弱？该怎么补？">看功课 · 开方子</button>
-        <button data-q="请先生赐我一份本周学习方案。">赐本周方案</button>
-        <button data-q="解释：久期">讲：久期</button>
-        <button data-q="我总拿不住盈利的单子，如何修？">拿不住盈利怎么办</button>
+        <button data-q="看看我的功课，我哪里薄弱？该怎么补？">诊断我的薄弱点</button>
+        <button data-q="生成本周学习计划">生成本周学习计划</button>
+        <button data-q="解释：久期">解释：久期</button>
+        <button data-q="我总是拿不住盈利的单子，怎么改？">拿不住盈利单怎么改</button>
       </div>
       <div class="ai-inputrow">
-        <textarea id="aiIn" rows="1" placeholder="学生，有何困惑？"></textarea>
+        <textarea id="aiIn" rows="1" placeholder="问我任何金融问题，或让我看你的功课"></textarea>
         <button class="btn btn-gold btn-sm" id="aiSend">${icon("chevR")}</button>
       </div>
       <div class="ai-set" id="aiSet" hidden>
@@ -149,7 +149,8 @@ const Ai = {
     setTimeout(() => $("#aiIn", mask).focus(), 300);
   },
   welcome(){
-    Ai.paint("ai", "学生，坐。\n院中四十二课、百廿记忆卡，皆为尔所备。老夫方才翻过你的功课——进度与错处俱在眼中。\n有惑即问；要方案，老夫按你的根基开方子。");
+    var weak = CURRICULUM.map(st => stageWeakness(st.id).danger ? st.title : "").filter(Boolean)[0] || "暂不明显";
+    Ai.paint("ai", "我是学院研究院的首席研究员，你的私人学习顾问。\n你的功课我刚看完：进度 " + totalPct() + "%，最薄弱处：「" + weak + "」。\n三个优先建议：① 重学答错的课程；② 清掉今日到期记忆卡；③ 每日一卷别断。\n术语解释、学习方案、错题复盘——直接问。");
   },
   fillSet(){
     const mask = $("#aiMask"); if(!mask) return;
@@ -254,11 +255,11 @@ const Ai = {
 
   demo(q){
     const weak = CURRICULUM.map(st => stageWeakness(st.id).danger ? st.title : "").filter(Boolean).join("、") || "尚无薄弱处——功课做得齐整";
-    if(/方案|计划|周/.test(q)) return "方案如下，写下便是——\n一、先补薄弱：" + weak + "，重学其错课，每日一课，课毕即测；\n二、每日一卷五题不辍，错者入错题本，三日一回头；\n三、记忆卡到期即清，不清不睡；\n四、周末半日，复盘一周错因，归类三等：概念不明者重学，纪律违规者罚俸（减一次实盘），粗心者抄铁律一遍。\n七日后再来见老夫，看进度说话。";
-    if(/薄弱|功课|错/.test(q)) return "老夫看了你的卷面：薄弱处在「" + weak + "」。错题不是耻辱，是路标——每一道都指着你还未真懂的概念。\n方子：先回课，再看俗讲，重做课后测验至八成；错题本三日后重练，全对方可销号。切记：懂了才做，做了才算懂。";
-    if(/久期/.test(q)) return "久期者，债券对利率之敏感度也。俗讲：债券如糖，利率是日头——日头越烈化得越快，久期便是量那『化速』的尺。投资含义：久期越长越怕加息，久期越短越扛跌；降息周期持长债者赢，加息周期持长债者伤。";
-    if(/拿不住|盈利/.test(q)) return "拿不住盈利，病根有二：一曰无纪律——没写移动止盈的规矩，全凭心跳；二曰眼浅——盯盘太勤，被波幅牵着走。\n方子：下单前先写好移动止盈线，浮盈回撤八个百分点即走；盘中不看盘，收盘后看一次。规矩立了，心就定了。";
-    return "（演示讲学）此乃离线演示。真正的山长需一枚密钥：点右上齿轮，选智谱 bigmodel.cn，glm-4-flash 免费即用。届时老夫会翻遍你的功课——四十二课、错题簿、记忆卡，一一过目，再给你开方子。";
+    if(/方案|计划|周/.test(q)) return "本周方案，四条，按优先级——\n一、先补薄弱：" + weak + "，重学对应课程，每日一课，课毕即测；\n二、每日一卷五题不辍，错题入本，三日一回头；\n三、记忆卡到期即清，不清不睡；\n四、周末半天复盘一周错因，归三类：概念不明→重学，纪律违规→记入日志，粗心→抄一遍检查清单。\n七日后再对一次数据，看执行说话。";
+    if(/薄弱|功课|错/.test(q)) return "我看了你的卷面：薄弱处在「" + weak + "」。错题不是污点，是路标——每一道都指着一个你还未真正理解的概念。\n处方：先回课程重学对应小节，再做课后测验至 80% 以上；错题本三日后重练，全对方可销号。切记：理解了才做，做了才算理解。";
+    if(/久期/.test(q)) return "久期：衡量债券对利率的敏感度。类比：债券像一块晒化的糖，利率是日头——日头越烈化得越快，久期就是「化速」的刻度。实操：久期越长对利率越敏感，降息周期持长债占优，加息周期长债承压。";
+    if(/拿不住|盈利/.test(q)) return "拿不住盈利，病根通常有二：一是没有移动止盈规则，全凭情绪；二是盯盘太勤，被日内波幅牵着走。\n处方：下单前先写好移动止盈线（如浮盈回撤 8% 即离场）；盘中不看盘，每日收盘后看一次。规则立了，心态自然稳。";
+    return "（演示模式）这是离线演示回答。接入真实 AI：点右上齿轮，选择服务商并粘贴密钥——推荐智谱 bigmodel.cn，glm-4-flash 模型免费。届时我会读取你的全部功课——42 课进度、错题簿、记忆卡——逐一分析后给你方案。";
   }
 };
 function msgsScroll(){ const m = document.getElementById("aiMask"); if(m){ const e = m.querySelector(".ai-msgs"); if(e) e.scrollTop = e.scrollHeight; } }
