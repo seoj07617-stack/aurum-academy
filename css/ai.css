@@ -1,0 +1,45 @@
+/* ============================================================
+   ai.css — AI 助教抽屉（黑金漆面）
+   ============================================================ */
+.ai-mask{position:fixed;inset:0;z-index:140;background:rgba(18,15,10,.45);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:fadeIn .3s var(--ease)}
+.ai-drawer{position:fixed;top:0;right:0;bottom:0;width:min(430px,96vw);z-index:150;
+  display:flex;flex-direction:column;padding-bottom:calc(10px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(40,35,26,.96),rgba(22,19,14,.98));
+  -webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);
+  border-left:1px solid rgba(201,162,39,.3);box-shadow:-24px 0 70px rgba(0,0,0,.4);
+  animation:slideInR .42s var(--ease)}
+@keyframes slideInR{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.ai-head{display:flex;align-items:center;gap:10px;padding:14px 14px 10px;border-bottom:1px solid rgba(201,162,39,.2)}
+.ai-seal{width:30px;height:30px;border-radius:9px;background:var(--gold-grad);color:#fff;
+  display:grid;place-items:center;font-family:var(--serif);font-weight:800;font-size:12px;flex:none}
+.ai-title{flex:1;line-height:1.2}
+.ai-title b{font-family:var(--serif);font-size:16px;color:#EAE2CC;display:block}
+.ai-title span{font-size:10.5px;color:#A79D82;letter-spacing:.08em}
+.ai-gear,.ai-x{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:none;
+  color:#A79D82;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);transition:all .25s}
+.ai-gear:hover,.ai-x:hover{color:#E5CE8A;border-color:rgba(201,162,39,.4)}
+.ai-gear .ic,.ai-x .ic{width:15px;height:15px}
+.ai-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.ai-msgs::-webkit-scrollbar{width:6px}
+.ai-msgs::-webkit-scrollbar-thumb{background:rgba(201,162,39,.3);border-radius:3px}
+.ai-bubble{max-width:88%;padding:10px 13px;border-radius:14px;font-size:13.8px;line-height:1.75;position:relative}
+.ai-bubble.me{align-self:flex-end;background:rgba(201,162,39,.16);border:1px solid rgba(201,162,39,.3);color:#EAE2CC;border-bottom-right-radius:4px}
+.ai-bubble.ai{align-self:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);color:#D8CFB8;border-bottom-left-radius:4px}
+.ai-bubble .who{display:block;font-size:9.5px;letter-spacing:.2em;color:#A79D82;margin-bottom:4px;font-weight:700}
+.ai-bubble .cur{animation:pulseSoft .8s infinite;color:#E5CE8A}
+.ai-chips{display:flex;gap:6px;padding:0 12px 8px;flex-wrap:wrap}
+.ai-chips button{font-size:11.5px;padding:5px 11px;border-radius:999px;color:#D9C089;
+  background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.25);cursor:pointer;transition:all .25s}
+.ai-chips button:hover{background:rgba(201,162,39,.22);color:#F0E4BC}
+.ai-inputrow{display:flex;gap:8px;padding:10px 12px 4px;align-items:flex-end}
+.ai-inputrow textarea{flex:1;resize:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;color:#EAE2CC;padding:9px 12px;font-family:inherit;font-size:13.5px;outline:none;max-height:96px;transition:border-color .25s}
+.ai-inputrow textarea:focus{border-color:rgba(201,162,39,.5)}
+.ai-set{padding:10px 14px 6px;border-top:1px solid rgba(201,162,39,.18);background:rgba(0,0,0,.25)}
+.ai-set .fld{color:#A79D82;font-size:10.5px;letter-spacing:.15em;margin:8px 0 3px}
+.ai-set .inp{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:#EAE2CC;font-size:12.5px}
+.ai-set select.inp option{background:#26221A;color:#EAE2CC}
+.ai-err{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:12.5px;line-height:1.7;
+  background:rgba(180,91,82,.14);border:1px solid rgba(180,91,82,.4);color:#E8C4BC}
