@@ -139,8 +139,8 @@ const Ai = {
     mask.innerHTML = `
     <aside class="ai-drawer" role="dialog" aria-label="Auron · 奥伦">
       <header class="ai-head">
-        <span class="ai-seal">${sealSVG("A")}</span>
-        <div class="ai-title"><b>Auron · 奥伦</b><span id="aiMode"><i class="live"></i>知行研究院 · 只对你的功课负责</span></div>
+        <span class="ai-seal">${AVA_SVG}</span>
+        <div class="ai-title"><b>Auron</b></div>
         <button class="ai-gear" id="aiNew" title="新对话">${icon("edit")}</button>
         <button class="ai-gear" id="aiGear" title="设置">${icon("refresh")}</button>
         <button class="ai-x" id="aiClose">${icon("x")}</button>
@@ -251,6 +251,10 @@ const Ai = {
     const m = document.getElementById("aiMask"); if(m) m.remove();
     document.removeEventListener("keydown", Ai.escClose);
   },
+  welcome(){
+    var weak = CURRICULUM.map(st => stageWeakness(st.id).danger ? st.title : "").filter(Boolean)[0] || "暂不明显";
+    Ai.paint("ai", "我是奥伦，学院研究院的首席研究员。\n你的功课我刚看完：进度 " + totalPct() + "%，最薄弱处：「" + weak + "」。\n术语解释、学习方案、错题复盘——直接问。");
+  },
   paint(who, txt){
     const msgsEl = $("#aiMsgs", document.getElementById("aiMask"));
     if(!msgsEl) return;
@@ -299,7 +303,6 @@ const Ai = {
     };
     try {
       if(!c.key){
-        $("#aiMode", mask).textContent = "演示讲学 · 设密钥后接真首席";
         const ans = Ai.demo(q);
         let i = 0;
         const timer = setInterval(() => {
