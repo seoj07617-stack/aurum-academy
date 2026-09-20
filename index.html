@@ -21,6 +21,7 @@ try{var __d=JSON.parse(localStorage.getItem("aurum_academy_v1"));if(__d&&__d.the
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/views.css">
+<link rel="stylesheet" href="css/ai.css">
 <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
@@ -63,7 +64,7 @@ try{var __d=JSON.parse(localStorage.getItem("aurum_academy_v1"));if(__d&&__d.the
   <a href="#/stats" data-nav="stats"><span class="icn" data-ic="chart"></span>数据</a>
 </nav>
 
-<a class="coin-float" href="#/home" aria-label="返回首页"><span></span><b class="cf-streak" id="cfStreak"></b></a>
+<a class="coin-float" href="#/home" id="coinFloatAi" title="AI 助教" aria-label="AI 助教"><span></span><b class="cf-streak" id="cfStreak"></b></a>
 <button class="icon-btn m-theme" id="mThemeBtn" aria-label="切换日/夜模式"></button>
 
 <main id="app" tabindex="-1"></main>
@@ -91,6 +92,7 @@ try{var __d=JSON.parse(localStorage.getItem("aurum_academy_v1"));if(__d&&__d.the
 <script src="js/srs.js"></script>
 <script src="js/sync.js"></script>
 <script src="js/charts.js"></script>
+<script src="js/ai.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/views/home.js"></script>
 <script src="js/views/map.js"></script>
@@ -112,6 +114,14 @@ document.querySelectorAll(".botnav .icn").forEach(n=>{ n.innerHTML = (ICONS[n.da
 document.querySelector(".coin-mark").innerHTML = coinEmblem();
 document.querySelector(".coin-float span").innerHTML = coinEmblem();
 document.querySelector(".foot-coin").innerHTML = coinEmblem();
+/* 铜钱站标 → AI 助教（拦截原跳转） */
+const coinAi = e => { e.preventDefault(); e.stopPropagation(); Ai.open(); };
+const cm = document.querySelector(".coin-mark");
+cm.style.cursor = "pointer"; cm.title = "AI 助教";
+cm.addEventListener("click", coinAi);
+const cf = document.querySelector(".coin-float");
+cf.style.cursor = "pointer"; cf.title = "AI 助教";
+cf.addEventListener("click", coinAi);
 document.body.insertAdjacentHTML("afterbegin", GOLD_DEFS);
 document.getElementById("themeBtn").addEventListener("click", cycleTheme);
 document.getElementById("mThemeBtn").addEventListener("click", cycleTheme);
