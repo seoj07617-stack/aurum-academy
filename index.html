@@ -114,16 +114,14 @@ document.querySelectorAll(".botnav .icn").forEach(n=>{ n.innerHTML = (ICONS[n.da
 document.querySelector(".coin-mark").innerHTML = coinEmblem();
 document.querySelector(".coin-float span").innerHTML = coinEmblem();
 document.querySelector(".foot-coin").innerHTML = coinEmblem();
-/* 铜钱站标 → Auron AI（拦截原跳转）+ 「问」字角标 */
+/* 铜钱站标 → Auron AI（拦截原跳转） */
 const coinAi = e => { e.preventDefault(); e.stopPropagation(); Ai.open(); };
 const cm = document.querySelector(".coin-mark");
 cm.style.cursor = "pointer"; cm.title = "Auron · AI 研究员";
 cm.addEventListener("click", coinAi);
-cm.insertAdjacentHTML("beforeend", '<span class="ai-hint">问</span>');
 const cf = document.querySelector(".coin-float");
 cf.style.cursor = "pointer"; cf.title = "Auron · AI 研究员";
 cf.addEventListener("click", coinAi);
-cf.querySelector("span").insertAdjacentHTML("beforeend", '<span class="ai-hint">问</span>');
 document.body.insertAdjacentHTML("afterbegin", GOLD_DEFS);
 document.getElementById("themeBtn").addEventListener("click", cycleTheme);
 document.getElementById("mThemeBtn").addEventListener("click", cycleTheme);
