@@ -25,7 +25,7 @@ VIEWS.glossary = function(){
           <input class="inp" id="gloSearch" placeholder="搜索术语或释义，如：久期、安全边际、再平衡…" value="${esc(kw)}">
         </div>
         <div class="row" style="margin-top:10px">
-          <button class="btn btn-ghost btn-sm" id="gloAi">${icon("coins")} AI 助教 · 深度释义</button>
+          <button class="btn btn-ghost btn-sm" id="gloAi">${icon("coins")} 问山长 · 深度释义</button>
         </div>
       </div>
       ${groups.map(g => `
