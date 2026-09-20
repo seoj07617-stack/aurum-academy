@@ -380,16 +380,17 @@ html[data-theme="dark"] .clock-q:hover{background:rgba(255,255,255,.1)}
 }
 @media (max-width:760px){
   body{font-size:15px}
+  /* iOS 聚焦自动放大修复：输入字号统一 16px */
+  .inp,.ai-inputrow textarea,input,select,textarea{font-size:16px !important}
   .topnav{display:none}
   main{padding-top:calc(54px + env(safe-area-inset-top))}
-  .v-motto{display:none}
   .v-motto{display:none}
   .hero-main::after{width:230px;height:150px;opacity:.3;background-size:82px auto;
     -webkit-mask-image:radial-gradient(155px 110px at 90% 4%,rgba(0,0,0,.95),transparent 76%);
     mask-image:radial-gradient(155px 110px at 90% 4%,rgba(0,0,0,.95),transparent 76%)}
   .stage-hero::after{width:210px;height:140px;opacity:.4;background-size:76px auto}
   .page-head::after{width:220px;height:130px;opacity:.36;background-size:80px auto}
-  /* 移动端顶冠铜钱（顶部居中，点按回首页）+ 左上主题按钮 */
+  /* 移动端顶冠铜钱（顶部居中，点按唤起 Auron）+ 左上主题按钮 */
   .coin-float{display:block;position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;margin-left:-16px;z-index:70;width:32px;height:32px;
     filter:drop-shadow(0 3px 8px rgba(140,109,47,.4));
     -webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none;outline:none}
