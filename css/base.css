@@ -190,4 +190,21 @@ html[data-theme="dark"] .coin-sheen{opacity:.55}
 .coin-sheen .sh-a{width:44vmax;height:44vmax;left:6%;top:10%;background:radial-gradient(circle,rgba(214,176,92,.17),transparent 62%);animation:sheenDriftA 28s ease-in-out infinite alternate,sheenPulse 11s ease-in-out infinite alternate}
 .coin-sheen .sh-b{width:52vmax;height:52vmax;right:4%;bottom:6%;background:radial-gradient(circle,rgba(214,176,92,.13),transparent 62%);animation:sheenDriftB 36s ease-in-out infinite alternate,sheenPulse 14s ease-in-out infinite alternate-reverse}
 .coin-sheen .sh-c{width:30vmax;height:30vmax;left:44%;top:52%;background:radial-gradient(circle,rgba(214,176,92,.11),transparent 60%);animation:sheenDriftC 23s ease-in-out infinite alternate,sheenPulse 9s ease-in-out infinite alternate}
+/* ---------- 全局滚动锁（抽屉/弹层打开时页面固定） ---------- */
+body.lock{overflow:hidden;touch-action:none}
+
 @media (prefers-reduced-motion:reduce){.coin-sheen i{animation:none}}
+
+/* ---------- 移动端修复 ----------
+   1) 巨型柔光在窄屏上会糊满上半屏——手机端收敛为单团小光
+   2) 锁定橡皮筋回弹与双向滚动溢出（页面固定） */
+@media (max-width:760px){
+  html,body{overscroll-behavior:none}
+  .coin-sheen i{width:34vmax;height:34vmax}
+  .coin-sheen .sh-a{left:-12%;top:-6%;animation:none;opacity:.6}
+  .coin-sheen .sh-b{right:-14%;bottom:4%;animation:none;opacity:.5}
+  .coin-sheen .sh-c{display:none}
+  .orb{filter:blur(46px)}
+  .orb-a,.orb-b{opacity:.38}
+  body.lock,html.lock{overflow:hidden;height:100%;touch-action:none}
+}
