@@ -134,6 +134,7 @@ const Ai = {
   open(prefill){
     if(document.getElementById("aiMask")) return;
     Ai.hist = Ai.histLoad();
+    document.body.classList.add("lock");
     const mask = document.createElement("div");
     mask.id = "aiMask"; mask.className = "ai-mask";
     mask.innerHTML = `
@@ -185,6 +186,39 @@ const Ai = {
       const lk = e.target.closest(".qlink");
       if(lk && lk.dataset.go){ go(lk.dataset.go); Ai.close(); return; }
       if(e.target === mask) Ai.close();
+    });
+    /* 手机端手势：抽屉内横向左划拖出即关闭（自动识别主方向，不干扰消息区滚动） */
+    const dr = mask.querySelector(".ai-drawer");
+    let sx = 0, sy = 0, axis = 0;
+    dr.addEventListener("touchstart", e => {
+      if(e.touches.length !== 1) return;
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY; axis = 0;
+      dr.style.transition = "none";
+    }, { passive: true });
+    dr.addEventListener("touchmove", e => {
+      if(axis === 2) return;
+      const dx = e.touches[0].clientX - sx, dy = e.touches[0].clientY - sy;
+      if(!axis){
+        if(Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+        axis = Math.abs(dx) > Math.abs(dy) ? 1 : 2;
+      }
+      if(axis === 1){
+        e.preventDefault();
+        const off = Math.max(0, dx);
+        dr.style.transform = "translateX(" + off + "px)";
+        dr.style.opacity = String(Math.max(.35, 1 - off / 500));
+      }
+    }, { passive: false });
+    dr.addEventListener("touchend", e => {
+      if(axis !== 1) return;
+      const dx = e.changedTouches[0].clientX - sx;
+      dr.style.transition = "transform .3s var(--ease),opacity .3s";
+      if(dx > 90){
+        dr.style.transform = "translateX(100%)"; dr.style.opacity = "0";
+        setTimeout(() => Ai.close(), 200);
+      } else {
+        dr.style.transform = ""; dr.style.opacity = "";
+      }
     });
     $("#aiClose", mask).addEventListener("click", () => Ai.close());
     $("#aiNew", mask).addEventListener("click", () => {
@@ -250,6 +284,7 @@ const Ai = {
     if(Ai.ctrl) Ai.ctrl.abort();
     const m = document.getElementById("aiMask"); if(m) m.remove();
     document.removeEventListener("keydown", Ai.escClose);
+    document.body.classList.remove("lock");
   },
   welcome(){
     var weak = CURRICULUM.map(st => stageWeakness(st.id).danger ? st.title : "").filter(Boolean)[0] || "暂不明显";
