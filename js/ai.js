@@ -1,11 +1,19 @@
 /* ============================================================
-   ai.js — 首席研究员：知行金融学院 AI 顾问（黑金抽屉 · 流式 · 持久记忆）
-   点击铜钱站标唤起；黑金抽屉；流式输出；持久记忆；全站档案注入
+   ai.js — Auron · 奥伦：知行金融学院研究院首席研究员（AI 顾问）
+   点击铜钱站标唤起；黑金抽屉；流式输出；持久对话记忆 + 研究员备忘
    密钥只存本机 localStorage（aurum_ai），聊天记忆存 aurum_ai_hist
    ============================================================ */
 "use strict";
 const tnow = () => new Date().toTimeString().slice(0, 5);
-/* 首席研究员头像：漆金圆章 + 鎏金上行K线 */
+
+/* 金印名章：深墨圆底 + 金双环 + 首字母 */
+const sealSVG = (letter) => `<svg viewBox="0 0 64 64" aria-hidden="true">
+<circle cx="32" cy="32" r="30" fill="#26221A" stroke="#C9A227" stroke-width="2.6"/>
+<circle cx="32" cy="32" r="25.5" fill="none" stroke="#E5CE8A" stroke-opacity=".4" stroke-width="1"/>
+<text x="32" y="44" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="36" font-weight="700" fill="#E5CE8A">${letter}</text>
+</svg>`;
+
+/* AI 消息头像：漆金K线圆章 */
 const AVA_SVG = `<svg viewBox="0 0 64 64" aria-hidden="true">
 <circle cx="32" cy="32" r="30" fill="#26221A" stroke="#C9A227" stroke-width="2.6"/>
 <circle cx="32" cy="32" r="26.5" fill="none" stroke="#E5CE8A" stroke-opacity=".35" stroke-width="1"/>
@@ -20,7 +28,12 @@ const AVA_SVG = `<svg viewBox="0 0 64 64" aria-hidden="true">
 </g>
 <circle cx="46" cy="15" r="1.6" fill="#F0E4BC"/>
 </svg>`;
+
+function msgsScroll(smooth){ const m = document.getElementById("aiMask"); if(m){ const e = m.querySelector(".ai-msgs"); if(e) e.scrollTo({ top: e.scrollHeight, behavior: smooth ? "smooth" : "auto" }); } }
+
 const Ai = {
+  NAME: "奥伦",
+  EN: "Auron",
   PRESETS: [
     { name: "智谱 GLM（glm-4-flash 免费）", url: "https://open.bigmodel.cn/api/paas/v4/chat/completions", model: "glm-4-flash", hint: "bigmodel.cn 注册即送密钥" },
     { name: "DeepSeek", url: "https://api.deepseek.com/chat/completions", model: "deepseek-chat", hint: "platform.deepseek.com" },
@@ -29,14 +42,13 @@ const Ai = {
   ],
   cfg(){ try { return JSON.parse(localStorage.getItem("aurum_ai") || "{}"); } catch(e){ return {}; } },
   saveCfg(c){ localStorage.setItem("aurum_ai", JSON.stringify(c)); },
-  histLoad(){ try { const a = JSON.parse(localStorage.getItem("aurum_ai_hist") || "[]");
-      if(!Array.isArray(a)) return [];
-      return a; } catch(e){ return []; } },
+  histLoad(){ try { const a = JSON.parse(localStorage.getItem("aurum_ai_hist") || "[]"); return Array.isArray(a) ? a : []; } catch(e){ return []; } },
   histSave(a){ try { localStorage.setItem("aurum_ai_hist", JSON.stringify(a.slice(-60))); } catch(e){} },
   hist: [],
   ctrl: null,
+  _lmap: null,
 
-  /* ---------- 学生档案：读取全站进度与内容（注入每次对话） ---------- */
+  /* ---------- 学生档案：实时注入每次对话 ---------- */
   profile(){
     const L = [];
     const done = ORDER.filter(id => LState(id).done).length;
@@ -65,13 +77,13 @@ const Ai = {
     for(let i = 6; i >= 0; i--){ const k = addDays(dayKey(), -i); last7.push((S.days[k] || 0)); }
     L.push("【近7日学习强度 XP】" + last7.join(","));
     if(S.journal.length) L.push("【最近手记】" + esc(S.journal[0].text).slice(0, 40));
-    /* 课程概念索引：让研究员知道学院教过什么 */
+    /* 长期记忆 */
+    const mem = Ai.memLoad();
+    if(mem.length) L.push("【研究员备忘·关于学生的长期记忆】" + mem.join("；"));
+    /* 课程概念索引 */
     const concepts = [];
     CURRICULUM.forEach(st => st.lessons.forEach(l => (l.points || []).forEach(p => concepts.push(p.t))));
     L.push("【学院讲授过的概念】" + concepts.join("、"));
-    /* 长期记忆：山长/首席的备忘本 */
-    const mem = Ai.memLoad();
-    if(mem.length) L.push("【研究员备忘·关于学生的长期记忆】" + mem.join("；"));
     return L.join("\n");
   },
 
@@ -105,15 +117,16 @@ const Ai = {
   },
 
   SYS(){
-    return `你是「知行金融学院·研究院」的首席研究员，学生的私人投资学习顾问。学院的课程体系（第〇至九阶段）：金融第一性原理→宏观经济→金融市场地图→行业与公司估值→技术分析→基金投资→交易模式→纪律与风控→资产配置→知行合一。
-你的风格：专业、直接、结论先行，像私人银行的研究总监做一对一辅导。学生会看到你的回答，称你「首席」。
+    return `你是「Auron · 奥伦」，知行金融学院研究院的首席研究员，学生的私人投资学习顾问。你的名字源自 Aurum（拉丁语「金」）。
+你的风格：专业、直接、结论先行，像私人银行的研究总监做一对一辅导。学生称你「奥伦」或「首席」。
 
 回答规则：
 1. 学生输入的多是金融术语或概念，按三层作答：一句准确定义 → 一个现代生活的类比 → 一句投资实操提醒。
 2. 中文，总长不超过 250 字；给方案时用清单并标注优先级。
 3. 一切基于下方学生档案：先给结论，再给依据，具体到课程名和天数。
 4. 红线：不荐股、不给具体标的买卖建议、不预测短期涨跌；始终强调纪律、仓位与长期主义。
-5. 若问题超出金融学习范畴，简短回应并引导回学习。
+5. 提到学院课程时，用《课程名》书名号格式。
+6. 若问题超出金融学习范畴，简短回应并引导回学习。
 
 ` + Ai.profile();
   },
@@ -124,24 +137,26 @@ const Ai = {
     const mask = document.createElement("div");
     mask.id = "aiMask"; mask.className = "ai-mask";
     mask.innerHTML = `
-    <aside class="ai-drawer" role="dialog" aria-label="知行研究院">
+    <aside class="ai-drawer" role="dialog" aria-label="Auron · 奥伦">
       <header class="ai-head">
-        <span class="ai-seal">${AVA_SVG}</span>
-        <div class="ai-title"><b>首席研究员</b><span id="aiMode"><i class="live"></i>知行研究院 · 只对你的功课负责</span></div>
+        <span class="ai-seal">${sealSVG("A")}</span>
+        <div class="ai-title"><b>Auron · 奥伦</b><span id="aiMode"><i class="live"></i>知行研究院 · 只对你的功课负责</span></div>
         <button class="ai-gear" id="aiNew" title="新对话">${icon("edit")}</button>
         <button class="ai-gear" id="aiGear" title="设置">${icon("refresh")}</button>
         <button class="ai-x" id="aiClose">${icon("x")}</button>
       </header>
-      <div class="ai-msgs" id="aiMsgs"></div>
+      <div class="ai-msgs" id="aiMsgs">
+        <div class="ai-day"><span>本 次 对 话</span></div>
+      </div>
       <div class="ai-chips" id="aiChips">
-        <button data-q="看看我的功课，我哪里薄弱？该怎么补？">诊断我的薄弱点</button>
-        <button data-q="生成本周学习计划">生成本周学习计划</button>
+        <button data-q="看看我的功课，我哪里薄弱？该怎么补？">诊断薄弱点</button>
+        <button data-q="生成本周学习计划">生成本周计划</button>
         <button data-q="解释：久期">解释：久期</button>
         <button data-q="我总是拿不住盈利的单子，怎么改？">拿不住盈利单怎么改</button>
       </div>
       <div class="ai-inputrow">
         <textarea id="aiIn" rows="1" placeholder="问我任何金融问题，或让我看你的功课"></textarea>
-        <button class="btn btn-gold btn-sm" id="aiSend">${icon("chevR")}</button>
+        <button class="btn btn-gold ai-send" id="aiSend">${icon("chevR")}</button>
       </div>
       <div class="ai-set" id="aiSet" hidden>
         <label class="fld">服务商</label>
@@ -162,17 +177,21 @@ const Ai = {
           <span class="fld" style="margin:0">研究员备忘（<span id="aiMemN">0</span> 条）</span>
           <button class="btn btn-ghost btn-sm" id="aiMemClear" style="margin-left:auto">清除记忆</button>
         </div>
-        <div id="aiMemList" style="margin-top:6px;font-size:11.5px;color:#C9B57A;line-height:1.9"></div>
+        <div id="aiMemList" class="ai-mem-list" style="margin-top:6px"></div>
       </div>
     </aside>`;
     document.body.appendChild(mask);
-    mask.addEventListener("click", e => { if(e.target === mask) Ai.close(); });
+    mask.addEventListener("click", e => {
+      const lk = e.target.closest(".qlink");
+      if(lk && lk.dataset.go){ go(lk.dataset.go); Ai.close(); return; }
+      if(e.target === mask) Ai.close();
+    });
     $("#aiClose", mask).addEventListener("click", () => Ai.close());
     $("#aiNew", mask).addEventListener("click", () => {
       Ai.hist = []; Ai.histSave(Ai.hist);
       $("#aiMsgs", mask).innerHTML = "";
       Ai.welcome();
-      toast("已另起一讲", "gold");
+      toast("新对话已开启", "gold");
     });
     $("#aiGear", mask).addEventListener("click", () => {
       const s = $("#aiSet", mask); s.hidden = !s.hidden; Ai.fillSet();
@@ -183,7 +202,7 @@ const Ai = {
     });
     $("#aiSave", mask).addEventListener("click", () => {
       Ai.saveCfg({ url: $("#aiUrl", mask).value.trim(), model: $("#aiModel", mask).value.trim(), key: $("#aiKey", mask).value.trim() });
-      toast("AI 设置已保存（仅本机）", "gold");
+      toast("设置已存（仅本机）", "gold");
       $("#aiSet", mask).hidden = true;
     });
     $("#aiMemClear", mask).addEventListener("click", () => {
@@ -196,7 +215,6 @@ const Ai = {
     });
     document.addEventListener("keydown", Ai.escClose);
     Ai.fillSet();
-    /* 恢复往讲（本次对话分隔线 + 头像消息） */
     const msgs0 = $("#aiMsgs", mask);
     msgs0.insertAdjacentHTML("beforeend", '<div class="ai-day"><span>本 次 对 话</span></div>');
     if(Ai.hist.length){
@@ -207,9 +225,13 @@ const Ai = {
     if(prefill){ $("#aiIn", mask).value = prefill; setTimeout(() => Ai.send(), 150); }
     setTimeout(() => $("#aiIn", mask).focus(), 300);
   },
-  welcome(){
-    var weak = CURRICULUM.map(st => stageWeakness(st.id).danger ? st.title : "").filter(Boolean)[0] || "暂不明显";
-    Ai.paint("ai", "我是学院研究院的首席研究员，你的私人学习顾问。\n你的功课我刚看完：进度 " + totalPct() + "%，最薄弱处：「" + weak + "」。\n三个优先建议：① 重学答错的课程；② 清掉今日到期记忆卡；③ 每日一卷别断。\n术语解释、学习方案、错题复盘——直接问。");
+  paintMem(){
+    const mask = $("#aiMask"); if(!mask) return;
+    const list = $("#aiMemList", mask), n = $("#aiMemN", mask);
+    if(!list || !n) return;
+    const mem = Ai.memLoad();
+    n.textContent = mem.length;
+    list.innerHTML = mem.length ? mem.map((m,i) => (i+1) + ". " + esc(m)).join("<br>") : "（暂无记忆——随着对话，奥伦会自动记下关于你的关键信息）";
   },
   fillSet(){
     const mask = $("#aiMask"); if(!mask) return;
@@ -221,11 +243,7 @@ const Ai = {
       $("#aiKey", mask).value = c.key || "";
       $("#aiHint", mask).textContent = "已存配置" + (c.key ? "（密钥就绪）" : "（无密钥 = 演示讲学）");
     }
-    const mem = Ai.memLoad();
-    $("#aiMemN", mask).textContent = mem.length;
-    $("#aiMemList", mask).innerHTML = mem.length
-      ? mem.map((m,i) => (i+1) + ". " + esc(m)).join("<br>")
-      : "（暂无记忆——随着对话，首席会自动记下关于你的关键信息）";
+    Ai.paintMem();
   },
   escClose(e){ if(e.key === "Escape") Ai.close(); },
   close(){
@@ -252,9 +270,9 @@ const Ai = {
     const q = (text !== undefined ? text : input.value).trim();
     if(!q) return;
     if(text === undefined) input.value = "";
-    Ai.paint("me", q);
-    msgsScroll();
     const msgsEl = $("#aiMsgs", mask);
+    msgsEl.insertAdjacentHTML("beforeend",
+      `<div class="ai-msg me"><div class="ava">我</div><div class="ai-bubble me"><div class="ai-txt">${esc(q)}<span class="tstamp">${tnow()}</span></div></div></div>`);
     msgsEl.insertAdjacentHTML("beforeend",
       `<div class="ai-msg ai" id="aiThink"><div class="ava">${AVA_SVG}</div><div class="ai-bubble ai think"><span class="dots"><i></i><i></i><i></i></span></div></div>`);
     msgsEl.scrollTop = msgsEl.scrollHeight;
@@ -277,7 +295,7 @@ const Ai = {
       $("#aiThink", mask)?.remove();
       $("#aiSend", mask).disabled = false; input.disabled = false; input.focus();
       if(acc){ Ai.hist.push({ role: "user", content: q }, { role: "assistant", content: acc }); Ai.histSave(Ai.hist); }
-      if(cfg.key && acc){ Ai.remember(q, acc).catch(()=>{}); }
+      if(c.key && acc){ Ai.remember(q, acc).catch(()=>{}); }
     };
     try {
       if(!c.key){
