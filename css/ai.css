@@ -100,3 +100,6 @@
 .ai-set select.inp option{background:#26221A;color:#EAE2CC}
 .ai-err{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:12.5px;line-height:1.7;
   background:rgba(180,91,82,.14);border:1px solid rgba(180,91,82,.4);color:#E8C4BC}
+.ai-seal svg,.ava svg{width:100%;height:100%;display:block}
+.ai-seal{padding:2px}
+.ai-mem-list{font-size:11.5px;color:#C9B57A;line-height:1.9;margin-top:6px}
