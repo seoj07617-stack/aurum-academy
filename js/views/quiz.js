@@ -79,7 +79,7 @@ VIEWS.quiz = function(arg){
       if(answered) return; answered = true;
       const i = +o.dataset.i, ok = i===it.a;
       cfg.items[idx]._ok = ok;
-      if(ok){ correct++; o.classList.add("right"); }
+      if(ok){ correct++; o.classList.add("right"); if(window.FX) FX.fly(o); } /* 答对：飞星反馈 */
       else { o.classList.add("wrong"); wrongList.push(it);
         $$(".opt", el)[it.a].classList.add("right");
         if(cfg.lesson || cfg.exam) SRS.addWrongCard(it.lesson, it.qi);

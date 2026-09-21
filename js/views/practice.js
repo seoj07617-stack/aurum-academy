@@ -30,7 +30,7 @@ function renderAnswer(mount, q, cb, noIdx = 0){
     h.insertAdjacentHTML("beforeend",
       `<span class="stamp ${ok?"ok":"no"}">${ok?"正确":"再想"}</span>
        <div class="anno"><span class="tagline">讲 评</span><p>${why || q.why || ""}</p></div>`);
-    pracXP(ok); cb(ok);
+    pracXP(ok); if(ok && window.FX) FX.fly(h.querySelector(".stamp")); cb(ok); /* 答对：飞星反馈 */
   }
   const type = q.t || "mc";
   if(type === "mc"){

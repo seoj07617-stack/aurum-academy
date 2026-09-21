@@ -25,3 +25,35 @@
 @keyframes sheenDriftB{from{transform:translate(0,0) scale(1)}to{transform:translate(-8vmax,5vmax) scale(.94)}}
 @keyframes sheenDriftC{from{transform:translate(0,0) scale(1)}to{transform:translate(6vmax,-7vmax) scale(1.18)}}
 @keyframes sheenPulse{from{opacity:.35}to{opacity:.8}}
+
+/* ============================================================
+   以下为 fx.js 动效模块专用（大标题滚动折叠 / 答对抛物线飞星）
+   ============================================================ */
+/* 折叠中的大标题：只动 transform/opacity 合成属性 */
+.fx-foldable{will-change:transform,opacity;transform-origin:left center}
+/* 导航底色随折叠进度加浓：--fx-k 由 fx.js 与标题同帧写入（0→1），日/夜主题分别取基色 */
+.topnav.fx-drive{background:rgba(248,245,238,calc(.62 + .33*var(--fx-k,0)))}
+html[data-theme="dark"] .topnav.fx-drive{background:rgba(24,21,16,calc(.74 + .21*var(--fx-k,0)))}
+/* 导航中央迷你标题：标题收进导航时反相浮现；
+   仅 ≤880px（navlinks 隐藏、导航中央留白）显示，避免桌面端与导航链接重叠 */
+.nav-mini-title{
+  display:none;position:absolute;z-index:1;
+  left:0;right:0;top:calc(env(safe-area-inset-top) + (var(--nav-h) - 20px)/2);
+  height:20px;line-height:20px;width:max-content;margin:auto;text-align:center;
+  font-family:var(--serif);font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--ink);
+  opacity:0;pointer-events:none;white-space:nowrap;
+}
+@media (max-width:880px){
+  .nav-mini-title{display:block}
+}
+/* 答对飞星：外层 .fx-fly 管横向 linear 匀速，内层 .fx-fly-y 管纵向 ease-out */
+.fx-fly{
+  position:fixed;z-index:320;left:0;top:0;width:0;height:0;
+  pointer-events:none;will-change:transform;
+  filter:drop-shadow(0 2px 8px rgba(140,109,47,.45));
+}
+.fx-fly-y{display:block;will-change:transform}
+.fx-fly-y svg{display:block;transform:translate(-50%,-50%)}   /* 图标中心对准起点坐标 */
+/* 落点「连续天数」徽章轻微缩放脉冲一次 */
+@keyframes fxPulse{0%{transform:scale(1)}35%{transform:scale(1.16)}100%{transform:scale(1)}}
+.fx-pulse{animation:fxPulse .38s var(--ease)}
