@@ -1,4 +1,4 @@
-# 知行金融学院 本地预览服务（零依赖，纯 PowerShell）
+﻿# 知行金融学院 本地预览服务（零依赖，纯 PowerShell）
 # 用法：右键本文件 -> 使用 PowerShell 运行；或命令行执行 .\serve.ps1
 # 打开 http://localhost:8080/  即可本地学习（Ctrl+C 关闭）
 $port = 8080
