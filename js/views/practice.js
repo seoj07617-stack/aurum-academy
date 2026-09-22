@@ -446,6 +446,7 @@ VIEWS.practice = function(mode){
       const host = $("#tcChart", body);
       host.innerHTML = "";
       if(!window.LightweightCharts){ host.innerHTML = `<p class="muted small" style="padding:20px">图表引擎加载失败。</p>`; return; }
+      try{
       chart = LightweightCharts.createChart(host, {
         width: host.clientWidth, height: 340,
         layout:{ background:{ type:"solid", color:"#151310" }, textColor:"#C9B57A", fontSize:11 },
@@ -463,6 +464,7 @@ VIEWS.practice = function(mode){
       const onRz = () => { if(chart) chart.applyOptions({ width:host.clientWidth }); };
       window.removeEventListener("resize", window._tcRz || (()=>{}));
       window._tcRz = onRz; window.addEventListener("resize", onRz);
+      }catch(err){ host.innerHTML = `<p class="muted small" style="padding:20px">图表初始化失败（${err && err.message || "未知"}），其他训练不受影响。</p>`; }
     }
     function renderTasks(cs){
       const st = stats(cs);

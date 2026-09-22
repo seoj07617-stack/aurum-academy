@@ -1,6 +1,6 @@
 /* 知行金融学院 · Service Worker：离线缓存 + network-first 版本管理 */
 "use strict";
-const VER = "aurum-v13";
+const VER = "aurum-v14";
 const CORE = [
   "./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png",
   "./css/base.css", "./css/components.css", "./css/views.css", "./css/ai.css", "./css/animations.css",
@@ -24,15 +24,33 @@ self.addEventListener("activate", e => {
 });
 self.addEventListener("fetch", e => {
   if(e.request.method !== "GET" || !e.request.url.startsWith(self.location.origin)) return;
+  const req = e.request;
+  /* 页面导航：网络优先（保证能发现新版本），失败回缓存 */
+  if(req.mode === "navigate"){
+    e.respondWith(
+      fetch(req).then(res => {
+        if(res && res.ok){
+          const cp = res.clone();
+          caches.open(VER).then(c => c.put(req, cp)).catch(()=>{});
+        }
+        return res;
+      }).catch(() =>
+        caches.match(req, { ignoreSearch: true }).then(r => r || caches.match("./index.html"))
+      )
+    );
+    return;
+  }
+  /* 静态资源：缓存优先秒开，后台静默拉新版本更新缓存（国内网络波动下不再白屏） */
   e.respondWith(
-    fetch(e.request).then(res => {
-      if(res && res.ok){
-        const cp = res.clone();
-        caches.open(VER).then(c => c.put(e.request, cp)).catch(()=>{});
-      }
-      return res;
-    }).catch(() =>
-      caches.match(e.request, { ignoreSearch: true }).then(r => r || caches.match("./index.html"))
-    )
+    caches.match(req, { ignoreSearch: true }).then(hit => {
+      const net = fetch(req).then(res => {
+        if(res && res.ok){
+          const cp = res.clone();
+          caches.open(VER).then(c => c.put(req, cp)).catch(()=>{});
+        }
+        return res;
+      }).catch(() => hit);
+      return hit || net;
+    })
   );
 });
