@@ -158,9 +158,9 @@ function renderAnswer(mount, q, cb, noIdx = 0){
 }
 
 VIEWS.practice = function(mode){
-  mode = ["pattern","report","drill","macro","terminal"].includes(mode) ? mode : "pattern";
+  mode = ["pattern","report","drill","macro","market","terminal"].includes(mode) ? mode : "pattern";
   const el = document.createElement("div");
-  const TABS = [["pattern","形态速认"],["report","财报诊室"],["drill","计算特训"],["macro","宏观图表"],["terminal","行情终端"]];
+  const TABS = [["pattern","形态速认"],["report","财报诊室"],["drill","计算特训"],["macro","宏观图表"],["market","实盘复盘"],["terminal","行情终端"]];
 
   el.innerHTML = `
   <div class="wrap st">
@@ -389,6 +389,150 @@ VIEWS.practice = function(mode){
   }
 
   /* ---------- 行情终端：lightweight-charts 可交互盘面（剧本合成数据，形态还原真实行情） ---------- */
+  if(mode === "market"){
+    /* === 实盘复盘 · KLineChart 真实行情（v22 B任务）=== */
+    const CD = window.CHART_DATA || {};
+    const KEYS = Object.keys(CD);
+    let kc = null, curSym = KEYS[0], quiz = null, qi = 0, qScore = 0, cutIdx = -1, qMeta = null;
+    const ind = { MA: true, BOLL: false, MACD: false, RSI: false };
+
+    function emaArr(v, n){ const k = 2/(n+1); const o = []; let e = v[0]; for(let i=0;i<v.length;i++){ e = i? v[i]*k + e*(1-k) : v[i]; o.push(e); } return o; }
+    function maArr(v, n){ const o = []; let s = 0; for(let i=0;i<v.length;i++){ s += v[i]; if(i>=n) s -= v[i-n]; o.push(i>=n-1? s/n : null); } return o; }
+    function rsiArr(cl, n){ const o = new Array(cl.length).fill(null); if(cl.length <= n) return o; let ag = 0, al = 0; for(let i=1;i<=n;i++){ const d = cl[i]-cl[i-1]; ag += Math.max(d,0); al += Math.max(-d,0); } ag /= n; al /= n; o[n] = al===0? 100 : 100-100/(1+ag/al); for(let i=n+1;i<cl.length;i++){ const d = cl[i]-cl[i-1]; ag = (ag*(n-1)+Math.max(d,0))/n; al = (al*(n-1)+Math.max(-d,0))/n; o[i] = al===0? 100 : 100-100/(1+ag/al); } return o; }
+    function macdArr(cl){ const e12 = emaArr(cl,12), e26 = emaArr(cl,26); const dif = cl.map((_,i)=>e12[i]-e26[i]); const dea = emaArr(dif,9); return { dif, dea }; }
+    function fmtV(v){ return v>=1e8? (v/1e8).toFixed(1)+"亿" : v>=1e4? (v/1e4).toFixed(1)+"万" : String(v); }
+    function fmtD(ts){ const d = new Date(ts); return (d.getMonth()+1)+"月"+d.getDate()+"日"; }
+    window.__mkq = makeQuiz; /* 测试钩子 */
+
+    function makeQuiz(bars, t){
+      const cl = bars.slice(0, t+1).map(x=>x.close);
+      const pool = [];
+      const md = macdArr(cl);
+      let sig = 0, cross = 0;
+      for(let i = Math.max(1, t-29); i <= t; i++){
+        const p = md.dif[i-1]-md.dea[i-1], n2 = md.dif[i]-md.dea[i];
+        if(p <= 0 && n2 > 0){ sig = 1; cross++; } else if(p >= 0 && n2 < 0){ sig = -1; cross++; }
+      }
+      if(cross > 0) pool.push({ q:"截至出题日，MACD(12,26,9) 最近 30 个交易日发出的信号是？",
+        opts: sig>0? ["金叉（DIF 上穿 DEA）","死叉（DIF 下穿 DEA）"] : ["死叉（DIF 下穿 DEA）","金叉（DIF 上穿 DEA）"], a:0,
+        why:"出题日 DIF="+md.dif[t].toFixed(4)+"，DEA="+md.dea[t].toFixed(4)+"，30 日内出现 "+cross+" 次交叉，最近一次是"+(sig>0?"金叉——多头动能转强。":"死叉——空头动能占优。")+"提醒：指标是行情的记录，不是行情的预言；它只负责描述，不负责承诺。" });
+      const rs = rsiArr(cl, 14), r = rs[t];
+      if(r != null){
+        const zone = r>=70? 0 : r<=30? 1 : 2;
+        pool.push({ q:"截至出题日，RSI(14) 处于什么状态？", opts:["超买区（≥70）","超卖区（≤30）","中性区（30~70）"], a:zone,
+          why:"出题日 RSI(14) = "+r.toFixed(1)+"。"+(zone===0?"短期涨得急，情绪偏热——这不是卖出指令，是提醒你别人可能正在贪婪（钟摆不会永远停在一端）。":zone===1?"短期跌得狠，情绪偏冷——恐惧里常有便宜货，但接飞刀之前先等右侧信号。":"不上不下，处于指标失效区——这时候别拿它当决策依据。") });
+      }
+      const m5 = maArr(cl,5), m20 = maArr(cl,20);
+      if(m20[t] != null){
+        const up = m5[t] > m20[t];
+        pool.push({ q:"截至出题日，短周期均线的位置关系是？", opts:["MA5 在 MA20 上方（短期偏强）","MA5 在 MA20 下方（短期偏弱）"], a: up?0:1,
+          why:"出题日 MA5="+m5[t].toFixed(3)+"，MA20="+m20[t].toFixed(3)+"。"+(up?"短周期成本线站上长周期成本线，短期趋势向上——均线是趋势的影子，只描述、不预测。":"短周期成本线跌破长周期成本线，短期趋势转弱——此时更该做的是核对纪律线，而不是猜底。") });
+      }
+      if(t >= 6){
+        const v = bars[t].volume, v5 = (bars[t-1].volume+bars[t-2].volume+bars[t-3].volume+bars[t-4].volume+bars[t-5].volume)/5;
+        const ratio = v/v5;
+        const st = ratio>1.5? 0 : ratio<0.6? 1 : 2;
+        pool.push({ q:"出题日当天的量能状态是（对比前五日均量）？", opts:["明显放量（>1.5 倍）","明显缩量（<0.6 倍）","大致持平（0.6~1.5 倍）"], a:st,
+          why:"当日成交量 "+fmtV(v)+"，前五日均量 "+fmtV(v5)+"，量比 "+ratio.toFixed(2)+"。"+(st===0?"放量 = 分歧加大，位置决定意义：低位放量与高位放量含义完全相反。":st===1?"缩量 = 观望，多空都懒得出手，此时价格信号的含金量要打折。":"量能平稳，当日没有额外的资金信号，把注意力放回价格结构。") });
+      }
+      return pool.sort(()=>Math.random()-.5).slice(0, 2);
+    }
+
+    function drawChart(upto){
+      const host = $("#mkChart", body);
+      if(!host) return;
+      host.innerHTML = "";
+      if(kc){ try{ klinecharts.dispose(kc); }catch(e){} kc = null; }
+      if(!window.klinecharts){ host.innerHTML = '<p class="muted small" style="padding:20px">KLineChart 引擎未加载，读图挑战不受影响。</p>'; return; }
+      const d = CD[curSym]; if(!d) return;
+      const bars = upto? d.bars.slice(0, upto) : d.bars;
+      try{
+        kc = klinecharts.init(host, { styles: {
+          grid:{ vertLines:{ color:"rgba(201,162,39,.07)" }, horzLines:{ color:"rgba(201,162,39,.07)" } },
+          candle:{ bar:{ upColor:"#C0392B", downColor:"#1E8449", noChangeColor:"#8C8470" } },
+          xAxis:{ axisLine:{ color:"rgba(201,162,39,.25)" }, tickText:{ color:"#C9B57A", textSize:10 } },
+          yAxis:{ axisLine:{ color:"rgba(201,162,39,.25)" }, tickText:{ color:"#C9B57A", textSize:10 } },
+          separator:{ color:"rgba(201,162,39,.12)" },
+          crosshair:{ horizontal:{ line:{ color:"rgba(229,206,138,.4)" } }, vertical:{ line:{ color:"rgba(229,206,138,.4)" } } }
+        }});
+        kc.setSymbol({ ticker: d.sym, pricePrecision: 3, volumePrecision: 0 });
+        kc.setPeriod({ span: 1, type: "day" });
+        kc.setDataLoader({ getBars: ({ callback }) => { callback(bars); } });
+        if(ind.MA) try{ kc.createIndicator({ name:"MA", paneId:"candle_pane" }, true); }catch(e){}
+        if(ind.BOLL) try{ kc.createIndicator({ name:"BOLL", paneId:"candle_pane" }, true); }catch(e){}
+        if(ind.MACD) try{ kc.createIndicator("MACD"); }catch(e){}
+        if(ind.RSI) try{ kc.createIndicator("RSI"); }catch(e){}
+      }catch(err){ host.innerHTML = '<p class="muted small" style="padding:20px">图表初始化失败（'+(err && err.message || "未知")+'），读图挑战不受影响。</p>'; }
+      const rz = () => { if(kc) try{ kc.resize(); }catch(e){} };
+      window.removeEventListener("resize", window._mkRz || (()=>{}));
+      window._mkRz = rz; window.addEventListener("resize", rz);
+    }
+
+    function syncChips(){
+      $$("#mkSyms .btn", body).forEach(b => { b.style.borderColor = b.dataset.s===curSym? "#C9A227" : ""; b.style.color = b.dataset.s===curSym? "#C9A227" : ""; });
+      $$("#mkInds .btn", body).forEach(b => { const on = !!ind[b.dataset.i]; b.style.borderColor = on? "#C9A227" : ""; b.style.color = on? "#C9A227" : ""; });
+    }
+
+    function startQuiz(){
+      const d = CD[curSym]; const bars = d.bars;
+      const lo = 200, hi = Math.min(bars.length-70, 560);
+      cutIdx = lo + Math.floor(Math.random()*(hi-lo));
+      drawChart(cutIdx+1);
+      quiz = makeQuiz(bars, cutIdx);
+      qi = 0; qScore = 0;
+      qMeta = { date: fmtD(bars[cutIdx].timestamp), close: bars[cutIdx].close };
+      $("#mkDesc", body).innerHTML = '<span class="tagline">出题日</span> '+qMeta.date+'（收盘 '+qMeta.close.toFixed(3)+'）。'+fmtD(bars[cutIdx].timestamp)+' 之后的走势已藏起——请基于眼前的信息作答，别用「后来我知道」的上帝视角。';
+      nextQ();
+    }
+
+    function nextQ(){
+      if(qi >= quiz.length){
+        const d = CD[curSym]; const bars = d.bars;
+        const after = bars.slice(cutIdx+1, cutIdx+61);
+        let peak = -1e9, mdd = 0;
+        const base = bars[cutIdx].close, last = after.length? after[after.length-1].close : base;
+        after.forEach(k => { peak = Math.max(peak, k.high); mdd = Math.max(mdd, (peak-k.low)/peak*100); });
+        const chg = after.length? (last/base-1)*100 : 0;
+        drawChart(0);
+        try{ if(kc) kc.scrollToDataIndex(cutIdx); }catch(e){}
+        $("#mkDesc", body).innerHTML = '<span class="tagline">事后复盘</span> 出题日 '+qMeta.date+'（收盘 '+qMeta.close.toFixed(3)+'），之后 60 个交易日：区间涨跌 '+(chg>=0?"+":"")+chg.toFixed(1)+'%，期间最大回撤 '+mdd.toFixed(1)+'%。现在图已恢复全程——看看你当时看到的和后来发生的，差了多少是运气，差了多少是认知。';
+        $("#mkQ", body).innerHTML = '<div class="glass glass-pad" style="text-align:center;padding:20px"><div class="kicker" style="justify-content:center">本轮读图成绩</div><h2 style="font-family:var(--serif);font-size:24px;margin:8px 0">'+qScore+' / '+quiz.length+'</h2><p class="muted small">对错不重要——重要的是答完回头看行情时，你有没有更冷静一点。</p></div>';
+        $("#mkGo", body).innerHTML = '<button class="btn btn-gold" id="mkAgain">'+icon("refresh")+' 再来一题</button>';
+        $("#mkAgain", body).addEventListener("click", ()=>{ startQuiz(); });
+        return;
+      }
+      $("#mkQ", body).innerHTML = '<div id="mkMount"></div><div class="between" style="margin-top:10px"><span class="tiny">第 '+(qi+1)+' 题 / 共 '+quiz.length+' 题</span><button class="btn btn-gold btn-sm" id="mkNext" style="visibility:hidden">下一题 '+icon("chevR")+'</button></div>';
+      renderAnswer($("#mkMount", body), quiz[qi], ok => { if(ok) qScore++; $("#mkNext", body).style.visibility = ""; }, qi);
+      $("#mkNext", body).addEventListener("click", ()=>{ qi++; nextQ(); });
+    }
+
+    body.innerHTML = `
+    <div class="glass q-card">
+      <div class="card-title">${icon("trend")} 实盘复盘 · 真实行情读图</div>
+      <p class="muted small" style="margin:6px 0 10px">真实历史日 K（新浪财经，未复权，仅供复盘学习）。先切标的看盘，再点「出题」——系统随机藏起出题日之后的走势，用你学过的指标读图作答。</p>
+      <div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:10px" id="mkSyms">
+        ${KEYS.map(k=>`<button class="btn btn-ghost btn-sm" data-s="${k}">${CD[k].name}</button>`).join("")}
+      </div>
+      <div class="chart-card" style="padding:6px"><div id="mkChart" style="width:100%;height:360px"></div></div>
+      <p class="tiny muted" style="margin:10px 0 0" id="mkDesc">红涨绿跌 · MA 已叠加 · 可缩放平移。点下方指标名开合。</p>
+      <div class="row" style="gap:8px;flex-wrap:wrap;margin:10px 0" id="mkInds">
+        ${["MA","BOLL","MACD","RSI"].map(x=>`<button class="btn btn-ghost btn-sm" data-i="${x}">${x}</button>`).join("")}
+      </div>
+      <div style="margin-top:8px" id="mkQ"></div>
+      <div class="between" style="margin-top:10px" id="mkGo"><button class="btn btn-gold" id="mkStart">${icon("target")} 出题 · 藏起未来考考你</button></div>
+    </div>`;
+    drawChart(0); syncChips();
+    $$("#mkSyms .btn", body).forEach(b => b.addEventListener("click", () => { curSym = b.dataset.s; drawChart(0); syncChips(); }));
+    $$("#mkInds .btn", body).forEach(b => b.addEventListener("click", () => {
+      const k = b.dataset.i;
+      if(k === "MA"){ ind.MA = true; ind.BOLL = false; }
+      else if(k === "BOLL"){ ind.BOLL = true; ind.MA = false; }
+      else ind[k] = !ind[k];
+      drawChart(cutIdx >= 0 && quiz && qi < quiz.length ? cutIdx+1 : 0); syncChips();
+    }));
+    $("#mkStart", body).addEventListener("click", startQuiz);
+  }
+
   if(mode === "terminal"){
     function rng(seed){
       return function(){ seed|=0; seed=seed+0x6D2B79F5|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; };
