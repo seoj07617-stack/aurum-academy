@@ -196,7 +196,7 @@ window.makeDrill = function(){
     return { opts: arr, a: arr.indexOf(fmt(correct)) };
   }
   const asNum = Math.random() < 0.6;   /* 60% 数值填空，40% 选择 */
-  const kind = Math.floor(Math.random() * 4);
+  const kind = Math.floor(Math.random() * 5);
   if(kind === 0){
     const r = [4, 5, 6, 8, 9, 12][Math.floor(Math.random()*6)];
     const y = Math.round(72 / r);
@@ -224,6 +224,21 @@ window.makeDrill = function(){
     const o = mc(pos, [-pos*0.4, -pos*0.2, pos*0.2, pos*0.4].map(v=>+v.toFixed(1)), v => v + " 万");
     return { t:"mc", q:`总资金 ${cap} 万，单笔风险上限 2%，止损距离 ${stop}%。最大仓位约为多少万元？`, opts:o.opts, a:o.a,
       why:`风险预算 ÷ 止损距离 = 仓位。` };
+  }
+  if(kind === 4){
+    /* 复利终值：优先用 FinanceJS.FV 计算（vendor 库），异常回退自算 */
+    const p = [1, 2, 5, 10][Math.floor(Math.random()*4)];
+    const r = [5, 6, 7, 8][Math.floor(Math.random()*4)];
+    const y = [10, 20, 30][Math.floor(Math.random()*3)];
+    let fv = null;
+    try{ if(window.Finance) fv = new window.Finance().FV(r, p, y); }catch(e){}
+    if(fv === null || !isFinite(fv)) fv = +(p * Math.pow(1 + r/100, y)).toFixed(2);
+    const ans = +fv.toFixed(1);
+    const dbl = Math.round(72 / r);
+    const why = `${p} 万 × (1+${r}%)^${y} ≈ ${ans} 万。按 72 法则约 ${dbl} 年翻一倍，${y} 年约翻 ${Math.round(y/dbl)} 倍——复利只有两个旋钮：时间和利率，缺一个都转不起来。`;
+    if(asNum) return { t:"num", q:`本金 ${p} 万，年化 ${r}%，按年复利滚 ${y} 年。终值约多少万元？（填数字，容差 ±1）`, ans, tol:1, unit:"万", why };
+    const o = mc(ans, [-ans*0.45, -ans*0.25, ans*0.3, ans*0.6].map(v=>+v.toFixed(1)), v => v + " 万");
+    return { t:"mc", q:`本金 ${p} 万，年化 ${r}%，按年复利滚 ${y} 年，终值约为？`, opts:o.opts, a:o.a, why };
   }
   const entry = 10, risk = [0.4, 0.5, 0.8, 1][Math.floor(Math.random()*4)];
   const k = [1, 1.5, 2, 3][Math.floor(Math.random()*4)];

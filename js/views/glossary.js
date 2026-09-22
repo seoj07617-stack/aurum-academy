@@ -1,34 +1,25 @@
 /* ============================================================
    views/glossary.js — 金融词汇表：全部要点卡按阶段浏览/搜索
+   2026-09-22 拾壹修复：搜索改为局部重渲染（结果区独立），
+   不再重建搜索框本身——修复手机端输入一字母焦点即丢、
+   中文输入法被打断导致的「搜不了」；120ms 防抖。
    ============================================================ */
 "use strict";
 VIEWS.glossary = function(){
   const el = document.createElement("div");
-  let kw = "";
+  let kw = "", timer = null;
 
-  function render(){
+  function resultsHTML(){
     const k = kw.trim().toLowerCase();
     const groups = CURRICULUM.map(st => ({
       st, terms: st.lessons.flatMap(l => l.points.map(p => ({ t:p.t, d:p.d, lesson:l.title })))
         .filter(p => !k || p.t.toLowerCase().includes(k) || p.d.toLowerCase().includes(k))
     })).filter(g => g.terms.length);
     const total = groups.reduce((a,g)=>a+g.terms.length,0);
-
-    el.innerHTML = `
-    <div class="wrap st">
-      <div class="page-head">
-        <div class="kicker">GLOSSARY · 词汇</div>
-        <h1 style="font-size:27px;margin-top:8px">金融词汇表 <span class="gold-text num" style="font-size:19px">${total}</span></h1>
-        <p class="muted small" style="margin-top:4px">全部课程要点卡的总集——复习循环之外，随手查阅。</p>
-        <div class="row" style="margin-top:14px;max-width:420px">
-          <span class="ic" style="color:var(--ink3)">${ICONS.search}</span>
-          <input class="inp" id="gloSearch" placeholder="搜索术语或释义，如：久期、安全边际、再平衡…" value="${esc(kw)}">
-        </div>
-        <div class="row" style="margin-top:10px">
-          <!-- AI 助教暂时下线：<button class="btn btn-ghost btn-sm" id="gloAi">${icon("coins")} 问山长 · 深度释义</button> -->
-        </div>
-      </div>
-      ${groups.map(g => `
+    if(!groups.length){
+      return `<div class="glass glass-pad empty">${icon("search")}<p>没有匹配「${esc(kw)}」的术语。<br>试试别的关键词，或去学新课解锁更多词条。</p></div>`;
+    }
+    return groups.map(g => `
       <div style="margin-bottom:22px">
         <div class="row" style="gap:10px;margin-bottom:10px">
           <span class="dot" style="width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font-family:var(--serif);font-size:12px;font-weight:700;color:#fff;background:${g.st.hue}">${g.st.cn}</span>
@@ -45,19 +36,40 @@ VIEWS.glossary = function(){
             <p class="small muted" style="margin-top:3px;line-height:1.7">${esc(p.d)}</p>
           </div>`).join("")}
         </div>
-      </div>`).join("") || `
-      <div class="glass glass-pad empty">${icon("search")}<p>没有匹配「${esc(kw)}」的术语。<br>试试别的关键词，或去学新课解锁更多词条。</p></div>`}
-    </div>`;
-    const inp = $("#gloSearch", el);
-    inp.addEventListener("input", e=>{
-      const v = e.target.value;
-      const pos = e.target.selectionStart;
-      kw = v; render();
-      const n = $("#gloSearch", el);
-      n.focus(); n.setSelectionRange(pos, pos);
-    });
-    /* AI 助教暂时下线，入口监听一并摘除 */
+      </div>`).join("");
   }
-  render();
+  function countOf(){
+    const k = kw.trim().toLowerCase();
+    return CURRICULUM.reduce((a,st)=>a+st.lessons.reduce((b,l)=>b+l.points.filter(p=>!k||p.t.toLowerCase().includes(k)||p.d.toLowerCase().includes(k)).length,0),0);
+  }
+  function refresh(){
+    const box = $("#gloResults", el), cnt = $("#gloCount", el), clr = $("#gloClear", el);
+    if(box) box.innerHTML = resultsHTML();
+    if(cnt) cnt.textContent = countOf();
+    if(clr) clr.style.visibility = kw ? "visible" : "hidden";
+  }
+
+  el.innerHTML = `
+    <div class="wrap st">
+      <div class="page-head">
+        <div class="kicker">GLOSSARY · 词汇</div>
+        <h1 style="font-size:27px;margin-top:8px">金融词汇表 <span class="gold-text num" style="font-size:19px" id="gloCount"></span></h1>
+        <p class="muted small" style="margin-top:4px">全部课程要点卡的总集——复习循环之外，随手查阅。</p>
+        <div class="row" style="margin-top:14px;max-width:420px;position:relative">
+          <span class="ic" style="color:var(--ink3)">${ICONS.search}</span>
+          <input class="inp" id="gloSearch" placeholder="搜索术语或释义，如：久期、安全边际、再平衡…" autocomplete="off" value="${esc(kw)}">
+          <button class="icon-btn" id="gloClear" title="清空" style="position:absolute;right:8px;width:26px;height:26px;visibility:hidden">${icon("refresh")}</button>
+        </div>
+      </div>
+      <div id="gloResults"></div>
+    </div>`;
+  const inp = $("#gloSearch", el);
+  inp.addEventListener("input", () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { kw = inp.value; refresh(); }, 120);
+  });
+  inp.addEventListener("keydown", e => { if(e.key === "Enter"){ clearTimeout(timer); kw = inp.value; refresh(); } });
+  $("#gloClear", el).addEventListener("click", () => { kw = ""; inp.value = ""; refresh(); inp.focus(); });
+  refresh();
   return el;
 };

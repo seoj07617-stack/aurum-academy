@@ -41,6 +41,8 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       <line x1="${g.x0}" y1="${yTick(60)}" x2="${g.x0+g.w}" y2="${yTick(60)}"/>
       <line x1="${g.x0}" y1="${yTick(40)}" x2="${g.x0+g.w}" y2="${yTick(40)}"/>
     </g>
+    <line x1="452" y1="29" x2="452" y2="262" stroke="rgba(158,43,34,.28)" stroke-width="1" stroke-dasharray="4 4"/>
+    <text x="452" y="24" text-anchor="middle" fill="#9E2B22" font-size="11.5" font-weight="700">第 20 年 · 分水岭</text>
     <path d="${c3}" fill="none" stroke="#8B7D5E" stroke-width="2" stroke-dasharray="5 4"/>
     <path d="${c2}" fill="none" stroke="#A68B4A" stroke-width="2.4"/>
     <path d="${c1}" fill="none" stroke="#9E2B22" stroke-width="3"/>

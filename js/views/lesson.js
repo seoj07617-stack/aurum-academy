@@ -59,12 +59,19 @@ VIEWS.lesson = function(lid){
   </div>`;
   $("#toQuiz", el).addEventListener("click",()=>go(`#/quiz/${lid}`));
   $$("[data-go]",el).forEach(n=>n.addEventListener("click",()=>go(n.dataset.go)));
-  /* 引导问题手绘高亮（RoughNotation，进入页面一次） */
+  /* 手绘标注：引导语高亮 + 本课要点术语下划线（RoughNotation，失败静默） */
   setTimeout(()=>{
     try{
       const hk = $(".hook", el);
       if(hk && window.RoughNotation){
         RoughNotation.annotate(hk, { type:"highlight", color:"rgba(201,162,39,.22)", animate:true, iterations:1, padding:3 }).show();
+      }
+      if(window.RoughNotation){
+        $$(".pt-list .pt b", el).forEach((b, i) => {
+          setTimeout(() => {
+            try{ RoughNotation.annotate(b, { type:"underline", color:"#C9A227", strokeWidth:1.6, padding:2, animate:true, iterations:2 }).show(); }catch(e){}
+          }, 500 + i * 180);
+        });
       }
     }catch(e){}
   }, 600);
