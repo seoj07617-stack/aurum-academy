@@ -25,7 +25,7 @@ VIEWS.glossary = function(){
           <input class="inp" id="gloSearch" placeholder="搜索术语或释义，如：久期、安全边际、再平衡…" value="${esc(kw)}">
         </div>
         <div class="row" style="margin-top:10px">
-          <button class="btn btn-ghost btn-sm" id="gloAi">${icon("coins")} 问山长 · 深度释义</button>
+          <!-- AI 助教暂时下线：<button class="btn btn-ghost btn-sm" id="gloAi">${icon("coins")} 问山长 · 深度释义</button> -->
         </div>
       </div>
       ${groups.map(g => `
@@ -56,9 +56,7 @@ VIEWS.glossary = function(){
       const n = $("#gloSearch", el);
       n.focus(); n.setSelectionRange(pos, pos);
     });
-    $("#gloAi", el).addEventListener("click", () => {
-      Ai.open(kw.trim() ? "解释：" + kw.trim() : "");
-    });
+    /* AI 助教暂时下线，入口监听一并摘除 */
   }
   render();
   return el;

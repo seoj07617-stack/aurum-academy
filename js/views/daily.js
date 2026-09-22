@@ -7,7 +7,10 @@ VIEWS.daily = function(){
   const t = dayKey();
   const doneIds = ORDER.filter(id => LState(id).done);
   const pool = [];
-  doneIds.forEach(id => LESSON[id].quiz.forEach((q, qi) => pool.push({ ...q, t:"mc", lesson:id, qi })));
+  doneIds.forEach(id => {
+    LESSON[id].quiz.forEach((q, qi) => pool.push({ ...q, t: q.t || "mc", lesson:id, qi }));
+    bankOf(id).forEach((q, i) => pool.push({ ...q, lesson:id, qi:100+i }));
+  });
 
   if(!pool.length){
     el.innerHTML = `

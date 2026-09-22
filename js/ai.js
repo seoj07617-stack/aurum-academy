@@ -49,7 +49,7 @@ const Ai = {
     const wrongs = Object.keys(S.wrong).map(k => S.wrong[k]).slice(0, 8);
     if(wrongs.length){
       L.push("【近期错题】" + wrongs.map(w => {
-        const q = LESSON[w.lesson] && LESSON[w.lesson].quiz[w.qi];
+        const q = quizOf(w.lesson, w.qi);
         return q ? q.q.slice(0, 26) : "";
       }).filter(Boolean).join("；"));
     }

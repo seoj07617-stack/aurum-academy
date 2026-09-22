@@ -14,7 +14,10 @@ function sampleItems(pool, n, seed){
 }
 function poolOfStage(sid){
   const out = [];
-  STAGE[sid].lessons.forEach(l => l.quiz.forEach((q,qi)=>out.push({...q, lesson:l.id, qi})));
+  STAGE[sid].lessons.forEach(l => {
+    l.quiz.forEach((q,qi)=>out.push({...q, lesson:l.id, qi}));
+    bankOf(l.id).forEach((q,i)=>out.push({...q, lesson:l.id, qi:100+i}));
+  });
   return out;
 }
 VIEWS.quiz = function(arg){
@@ -31,7 +34,7 @@ VIEWS.quiz = function(arg){
     if(!keys.length){ setTimeout(()=>go("#/wrong"),0); return document.createElement("div"); }
     cfg = { title: sid ? `${STAGE[sid].title} · 阶段错题重练` : "错题重练",
       items: keys.map(k=>{ const w = S.wrong[k];
-        const q = LESSON[w.lesson].quiz[w.qi]; return { ...q, lesson: w.lesson, qi: w.qi }; }),
+        const q = quizOf(w.lesson, w.qi); return { ...q, lesson: w.lesson, qi: w.qi }; }),
       pass:1.0, back:"#/wrong", desc:`${keys.length} 道错题 · 全对消灭`, wrongMode:true };
   } else if(arg && arg.startsWith("exam-")){
     const sid = arg.slice(5);
@@ -42,8 +45,10 @@ VIEWS.quiz = function(arg){
       pass:0.75, back:`#/stage/${sid}`, exam:sid, desc:"8 题 · 通过线 75%" };
   } else if(arg && LESSON[arg]){
     const l = LESSON[arg];
-    cfg = { title:`${l.title} —— 课后测验`, items:l.quiz.map((q,qi)=>({...q, lesson:l.id, qi})),
-      pass:0.6, back:`#/lesson/${l.id}`, lesson:l.id, desc:`${l.quiz.length} 题 · 通过线 60%` };
+    const items = [...l.quiz.map((q,qi)=>({...q, lesson:l.id, qi})),
+                   ...bankOf(l.id).map((q,i)=>({...q, lesson:l.id, qi:100+i}))];
+    cfg = { title:`${l.title} —— 课后测验`, items,
+      pass:0.6, back:`#/lesson/${l.id}`, lesson:l.id, desc:`${items.length} 题 · 通过线 60%` };
   }
   if(!cfg){ setTimeout(()=>go("#/home"),0); return document.createElement("div"); }
 

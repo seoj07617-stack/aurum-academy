@@ -42,7 +42,7 @@ VIEWS.wrong = function(){
         <button class="btn btn-ghost btn-sm" data-gow="wrong-${g.st.id}">${icon("refresh")} 重练本组</button>
       </div>
       ${g.items.map(k=>{
-        const w = S.wrong[k]; const q = LESSON[w.lesson].quiz[w.qi];
+        const w = S.wrong[k]; const q = quizOf(w.lesson, w.qi);
         return `<div class="wrong-item">
           <div class="between">
             <span class="tiny">${LESSON[w.lesson].title}</span>
