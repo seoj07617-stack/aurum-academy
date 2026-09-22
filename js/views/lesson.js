@@ -31,6 +31,7 @@ VIEWS.lesson = function(lid){
           ${s.list?`<ul>${s.list.map(x=>`<li>${x}</li>`).join("")}</ul>`:""}
           ${s.case?`<div class="case-box"><span class="ctag">案 例</span><p>${s.case}</p></div>`:""}
           ${s.plain?`<div class="plain-box"><span class="ptag">俗 讲</span><p>${s.plain}</p></div>`:""}
+          ${window.DEEP&&DEEP[s.h]?`<details class="deep-box"><summary><span class="dtag">深 讲</span>多讲几句 · 为什么与怎么用</summary><div class="deep-body">${DEEP[s.h].split("\n").filter(Boolean).map(x=>`<p>${x}</p>`).join("")}</div></details>`:""}
         </div>`).join("")}
         <div class="trap-box">
           <b>⚠ 常见误区 · 逆向学习</b>

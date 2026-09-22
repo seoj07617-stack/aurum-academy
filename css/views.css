@@ -475,3 +475,14 @@ html[data-theme="dark"] .lesson-fig{filter:none}
 @media(max-width:640px){
   .term-more .seg p{font-size:12.5px;line-height:1.7}
 }
+
+/* ===== v17 深讲 ===== */
+.deep-box{margin-top:10px;border:1px solid rgba(201,162,39,.45);border-radius:10px;background:rgba(201,162,39,.06);overflow:hidden}
+.deep-box summary{list-style:none;cursor:pointer;padding:10px 14px;display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:12.5px;font-weight:700;color:var(--gold,#8a6d1f)}
+.deep-box summary::-webkit-details-marker{display:none}
+.deep-box summary::after{content:"+";margin-left:auto;font-size:16px;line-height:1;color:var(--gold,#8a6d1f)}
+.deep-box[open] summary::after{content:"\2212"}
+.dtag{flex:none;font-size:11px;letter-spacing:.18em;color:#fff;background:var(--gold,#C9A227);border-radius:4px;padding:2px 8px}
+.deep-body{padding:2px 14px 12px;border-top:1px dashed rgba(201,162,39,.35)}
+.deep-body p{margin:9px 0 0;font-family:var(--sans);font-size:13.5px;line-height:1.95;color:var(--ink,#3B372E)}
+@media(max-width:640px){.deep-body p{font-size:13px;line-height:1.85}.deep-box summary{padding:9px 12px}}
