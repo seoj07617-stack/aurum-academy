@@ -1,10 +1,10 @@
 /* 知行金融学院 · Service Worker：离线缓存 + network-first 版本管理 */
 "use strict";
-const VER = "aurum-v14";
+const VER = "aurum-v15";
 const CORE = [
   "./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png",
   "./css/base.css", "./css/components.css", "./css/views.css", "./css/ai.css", "./css/animations.css",
-  "./js/vendor/lightweight-charts.js", "./js/vendor/rough-notation.js", "./js/vendor/financejs.js", "./js/figs.js", "./js/core.js", "./js/quizbank.js", "./js/srs.js", "./js/sync.js", "./js/ai.js", "./js/ui.js", "./js/charts.js",
+  "./js/vendor/lightweight-charts.js", "./js/vendor/rough-notation.js", "./js/vendor/financejs.js", "./js/glossary_extra1.js", "./js/glossary_extra2.js", "./js/figs.js", "./js/core.js", "./js/quizbank.js", "./js/srs.js", "./js/sync.js", "./js/ai.js", "./js/ui.js", "./js/charts.js",
   "./js/data/foundations.js", "./js/data/macro.js", "./js/data/markets.js", "./js/data/company.js",
   "./js/data/technical.js", "./js/data/funds.js", "./js/data/models.js", "./js/data/discipline.js",
   "./js/data/portfolio.js", "./js/data/capstone.js", "./js/data/practice.js",
