@@ -444,3 +444,20 @@ html[data-theme="dark"] .steps-box li b{background:rgba(95,191,154,.25);color:#7
 .fig-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .lesson-fig{min-width:560px;max-width:none}
 html[data-theme="dark"] .lesson-fig{filter:none}
+
+/* ===== v13 · 手机端修复二轮 ===== */
+/* 财报表列宽撑破时横向滑动而非截断 */
+.fin-t{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tag{white-space:nowrap}
+/* PC 窄区间 8 个导航项防挤压 */
+@media (max-width:1140px) and (min-width:881px){
+  .navlinks a{padding:6px 9px;font-size:12.5px}
+}
+@media (max-width:640px){
+  .fin-t table{font-size:12.5px}
+  .fin-t th,.fin-t td{padding:6px 10px}
+  .clock-grid{margin-left:22px;gap:5px}
+  .clock-q{padding:9px 6px}
+  .clock-q b{font-size:13.5px}
+  .clock-q span{font-size:10.5px}
+}

@@ -58,7 +58,7 @@ VIEWS.glossary = function(){
         <div class="row" style="margin-top:14px;max-width:420px;position:relative">
           <span class="ic" style="color:var(--ink3)">${ICONS.search}</span>
           <input class="inp" id="gloSearch" placeholder="搜索术语或释义，如：久期、安全边际、再平衡…" autocomplete="off" value="${esc(kw)}">
-          <button class="icon-btn" id="gloClear" title="清空" style="position:absolute;right:8px;width:26px;height:26px;visibility:hidden">${icon("refresh")}</button>
+          <button class="icon-btn" id="gloClear" title="清空" style="position:absolute;right:8px;width:26px;height:26px;visibility:hidden">${icon("x")}</button>
         </div>
       </div>
       <div id="gloResults"></div>
