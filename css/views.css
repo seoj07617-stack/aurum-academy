@@ -405,3 +405,28 @@ html[data-theme="dark"] .clock-q:hover{background:rgba(255,255,255,.1)}
   .dojo-grid{grid-template-columns:1fr}
   .heat i{width:11px;height:11px}
 }
+
+/* ================= 课程详细化：图解 / 案例 / 分步（2026-09-22 V2） ================= */
+.fig-wrap{margin:14px 0 8px;padding:14px 10px 6px;border:1px solid rgba(201,162,39,.24);border-radius:12px;
+  background:linear-gradient(180deg,rgba(255,255,255,.65),rgba(201,162,39,.05));position:relative}
+.fig-wrap::after{content:"图 解";position:absolute;top:-1px;right:14px;padding:2px 8px;border-radius:0 0 8px 8px;
+  font-size:9.5px;letter-spacing:.25em;background:var(--gold-grad);color:#141210;font-weight:700}
+html[data-theme="dark"] .fig-wrap{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(201,162,39,.07));
+  border-color:rgba(201,162,39,.3)}
+.lesson-fig{width:100%;height:auto;display:block}
+.case-box{margin:14px 0 4px;padding:13px 15px 11px;border-radius:12px;position:relative;
+  background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.3);border-left:3px solid var(--gold)}
+.ctag,.stag{display:inline-block;font-size:9.5px;letter-spacing:.3em;padding:2px 7px 2px 9px;border-radius:6px;
+  font-weight:700;margin-bottom:6px;font-family:var(--serif)}
+.ctag{background:var(--gold-grad);color:#141210}
+.case-box p{margin:2px 0 0;font-size:14.2px;line-height:1.85}
+html[data-theme="dark"] .case-box{background:rgba(201,162,39,.1);border-color:rgba(201,162,39,.34)}
+.steps-box{margin:14px 0 4px;padding:13px 15px 11px;border-radius:12px;
+  background:rgba(95,191,154,.08);border:1px solid rgba(95,191,154,.32);border-left:3px solid #5FBF9A}
+.stag{background:linear-gradient(180deg,#7ED4B0,#5FBF9A);color:#0E241C}
+.steps-box ol{margin:4px 0 0;padding:0;list-style:none}
+.steps-box li{position:relative;padding-left:32px;margin:9px 0;line-height:1.75}
+.steps-box li b{position:absolute;left:0;top:3px;width:21px;height:21px;border-radius:50%;display:grid;
+  place-items:center;background:rgba(95,191,154,.2);color:#3F8F72;font-family:var(--num);font-size:11.5px}
+html[data-theme="dark"] .steps-box{background:rgba(95,191,154,.09)}
+html[data-theme="dark"] .steps-box li b{background:rgba(95,191,154,.25);color:#7ED4B0}

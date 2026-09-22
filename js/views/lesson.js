@@ -26,7 +26,10 @@ VIEWS.lesson = function(lid){
         <div class="sec">
           <div class="sec-head"><span class="no">${String(i+1).padStart(2,"0")}</span><h3>${s.h}</h3></div>
           ${s.p?`<p>${s.p}</p>`:""}
+          ${s.fig&&window.FIGS&&FIGS[s.fig]?`<div class="fig-wrap">${FIGS[s.fig]}</div>`:""}
+          ${s.steps?`<div class="steps-box"><span class="stag">分 步</span><ol>${s.steps.map(x=>`<li><b>${x[0]}</b>${x.slice(1)}</li>`).join("")}</ol></div>`:""}
           ${s.list?`<ul>${s.list.map(x=>`<li>${x}</li>`).join("")}</ul>`:""}
+          ${s.case?`<div class="case-box"><span class="ctag">案 例</span><p>${s.case}</p></div>`:""}
           ${s.plain?`<div class="plain-box"><span class="ptag">俗 讲</span><p>${s.plain}</p></div>`:""}
         </div>`).join("")}
         <div class="trap-box">
@@ -56,5 +59,14 @@ VIEWS.lesson = function(lid){
   </div>`;
   $("#toQuiz", el).addEventListener("click",()=>go(`#/quiz/${lid}`));
   $$("[data-go]",el).forEach(n=>n.addEventListener("click",()=>go(n.dataset.go)));
+  /* 引导问题手绘高亮（RoughNotation，进入页面一次） */
+  setTimeout(()=>{
+    try{
+      const hk = $(".hook", el);
+      if(hk && window.RoughNotation){
+        RoughNotation.annotate(hk, { type:"highlight", color:"rgba(201,162,39,.22)", animate:true, iterations:1, padding:3 }).show();
+      }
+    }catch(e){}
+  }, 600);
   return el;
 };

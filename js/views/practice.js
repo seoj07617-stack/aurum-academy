@@ -158,9 +158,9 @@ function renderAnswer(mount, q, cb, noIdx = 0){
 }
 
 VIEWS.practice = function(mode){
-  mode = ["pattern","report","drill","macro"].includes(mode) ? mode : "pattern";
+  mode = ["pattern","report","drill","macro","terminal"].includes(mode) ? mode : "pattern";
   const el = document.createElement("div");
-  const TABS = [["pattern","形态速认"],["report","财报诊室"],["drill","计算特训"],["macro","宏观图表"]];
+  const TABS = [["pattern","形态速认"],["report","财报诊室"],["drill","计算特训"],["macro","宏观图表"],["terminal","行情终端"]];
 
   el.innerHTML = `
   <div class="wrap st">
@@ -386,6 +386,139 @@ VIEWS.practice = function(mode){
       $("#xNext", body).addEventListener("click", () => { mi++; render(); });
     }
     newDeck(); render();
+  }
+
+  /* ---------- 行情终端：lightweight-charts 可交互盘面（剧本合成数据，形态还原真实行情） ---------- */
+  if(mode === "terminal"){
+    function rng(seed){
+      return function(){ seed|=0; seed=seed+0x6D2B79F5|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; };
+    }
+    function makeCandles(anchors, seed){
+      const rand = rng(seed);
+      const N = anchors[anchors.length-1][0];
+      const closes = new Array(N+1);
+      for(let i=0;i<anchors.length-1;i++){
+        const i0=anchors[i][0], p0=anchors[i][1], i1=anchors[i+1][0], p1=anchors[i+1][1];
+        for(let j=i0;j<=i1;j++){
+          const t=(j-i0)/(i1-i0);
+          const e=t*t*(3-2*t);
+          const edge=(j===i0||j===i1)?0.2:1;
+          closes[j]=p0+(p1-p0)*e+(rand()-0.5)*p0*0.03*edge;
+        }
+      }
+      const out=[]; const d0=new Date(2019,0,2); let prev=closes[0];
+      for(let i=0;i<=N;i++){
+        const c=closes[i], o=prev;
+        const hi=Math.max(o,c)*(1+rand()*0.018), lo=Math.min(o,c)*(1-rand()*0.018);
+        const day=new Date(d0.getTime()+i*864e5);
+        out.push({ time:day.toISOString().slice(0,10), open:+o.toFixed(2), high:+hi.toFixed(2), low:+lo.toFixed(2), close:+c.toFixed(2) });
+        prev=c;
+      }
+      return out;
+    }
+    /* 从蜡烛数组派生确定性答案 */
+    function stats(cs){
+      const first=cs[0].close, last=cs[cs.length-1].close;
+      let peak=-1e9, mdd=0;
+      cs.forEach(k=>{
+        peak=Math.max(peak,k.high);
+        mdd=Math.max(mdd,(peak-k.low)/peak*100);
+      });
+      return { chg:(last/first-1)*100, mdd };
+    }
+    const SCRIPTS=[
+      { name:"酱香白马 · 慢牛与筑顶", seed:42, anchors:[[0,100],[30,118],[60,142],[85,205],[100,238],[112,215],[124,176],[130,182]],
+        shape:"高位宽幅震荡筑顶（双头结构），随后破位下行", task:"最后 20 根 K 线里，盘面给出的最重要的信号是什么？",
+        opts:["高位双头 + 破位，趋势反转信号","缩量回调，健康洗盘","三角形整理，即将向上突破","底部吸筹形态"], a:0,
+        why:"价格两次冲击 240 一线无力创新高（双头），随后跌破颈线——顶部结构的教科书特征。此时纪律动作是执行离场规则，而不是幻想「洗盘」。" },
+      { name:"杠杆疯牛 · 冲顶与崩塌", seed:7, anchors:[[0,100],[28,104],[48,128],[62,188],[74,226],[84,138],[94,104],[100,112]],
+        shape:"末端垂直加速赶顶后崩盘（杠杆牛熊）", task:"行情末段（最后 25 根）的加速上涨随后急跌，最合理的定性是？",
+        opts:["垂直加速 = 情绪赶顶，随后的下跌是杠杆出清","正常的中途换手","价值回归的缓慢修正","洗盘结束，即将新高"], a:0,
+        why:"斜率突然变陡的赶顶段是典型的情绪定价：融资盘接力推高，一但增速放缓便互相踩踏。事后看每一轮疯牛的最后一程都长这样。" },
+      { name:"财务暴雷 · 断崖闪崩", seed:99, anchors:[[0,100],[40,132],[55,140],[60,92],[70,71],[80,78],[88,74]],
+        shape:"高位横盘后向下跳空断崖（利空暴露）", task:"第 55~62 根之间连续大阴线的断崖，最可能对应的事件是？",
+        opts:["突发重大利空（业绩造假/债务违约被坐实）","大盘正常波动","技术性回调后将继续原趋势","庄家洗盘吸筹"], a:0,
+        why:"缓涨两年、几天跌没——价格对「确定性坏消息」的定价是一步到位的。它教的纪律是：不下注于你无法验证的报表；分散持仓，让任何一根断崖都砍不死你。" },
+    ];
+    let cur = 0, chart = null, series = null, tasks = [], ti = 0, score = 0;
+
+    function draw(cs){
+      const host = $("#tcChart", body);
+      host.innerHTML = "";
+      if(!window.LightweightCharts){ host.innerHTML = `<p class="muted small" style="padding:20px">图表引擎加载失败。</p>`; return; }
+      chart = LightweightCharts.createChart(host, {
+        width: host.clientWidth, height: 340,
+        layout:{ background:{ type:"solid", color:"#151310" }, textColor:"#C9B57A", fontSize:11 },
+        grid:{ vertLines:{ color:"rgba(201,162,39,.08)" }, horzLines:{ color:"rgba(201,162,39,.08)" } },
+        rightPriceScale:{ borderColor:"rgba(201,162,39,.2)" },
+        timeScale:{ borderColor:"rgba(201,162,39,.2)", timeVisible:false },
+        crosshair:{ mode:0, vertLine:{ color:"rgba(229,206,138,.4)", labelBackgroundColor:"#8C6D2F" }, horzLine:{ color:"rgba(229,206,138,.4)", labelBackgroundColor:"#8C6D2F" } }
+      });
+      series = chart.addCandlestickSeries({
+        upColor:"#C0392B", downColor:"#1E8449", borderVisible:false,
+        wickUpColor:"#C0392B", wickDownColor:"#1E8449"
+      });
+      series.setData(cs);
+      chart.timeScale().fitContent();
+      const onRz = () => { if(chart) chart.applyOptions({ width:host.clientWidth }); };
+      window.removeEventListener("resize", window._tcRz || (()=>{}));
+      window._tcRz = onRz; window.addEventListener("resize", onRz);
+    }
+    function renderTasks(cs){
+      const st = stats(cs);
+      const sc = SCRIPTS[cur];
+      tasks = [
+        { t:"num", q:"这段行情首尾的区间涨跌幅约为多少？（按百分数填，如 45 代表 +45%，容差 ±3）", ans:+st.chg.toFixed(1), tol:3,
+          why:"首根收盘 " + cs[0].close + " → 末根收盘 " + cs[cs.length-1].close + "。先看全局再谈细节：区间涨幅是一切故事的骨架。" },
+        { t:"num", q:"这段行情的最大回撤约为多少？（从区间最高点跌到其后最低点的最大幅度，填正数百分数，容差 ±3）", ans:+st.mdd.toFixed(1), tol:3,
+          why:"最大回撤 = 峰值到其后谷底的最大跌幅。它是复利曲线的杀手（第〇阶段讲过），也是仓位管理的标尺。" },
+        { t:"mc", q:sc.task, opts:sc.opts, a:sc.a, why:sc.why }
+      ].sort(() => Math.random()-.5);
+      ti = 0; score = 0;
+      const rt = () => {
+        if(ti >= tasks.length){
+          $("#tAns", body).innerHTML = `<div class="glass glass-pad" style="text-align:center;padding:22px">
+            <div class="kicker" style="justify-content:center">本段复盘成绩</div>
+            <h2 style="font-family:var(--serif);font-size:24px;margin:8px 0">${score} / ${tasks.length}</h2>
+            <p class="muted small">换一段行情，再走一遍。盘面万变，纪律不变。</p></div>`;
+          return;
+        }
+        $("#tAns", body).innerHTML = `<div id="tMount"></div><div class="between" style="margin-top:12px">
+          <span class="tiny">任务 ${ti+1}/${tasks.length}</span>
+          <button class="btn btn-gold btn-sm" id="tNext" style="visibility:hidden">${ti===tasks.length-1?"看成绩":"下一个任务"} ${icon("chevR")}</button></div>`;
+        renderAnswer($("#tMount", body), tasks[ti], ok => {
+          if(ok) score++;
+          $("#tNext", body).style.visibility = "";
+        }, ti);
+        $("#tNext", body).addEventListener("click", () => { ti++; rt(); });
+      };
+      rt();
+    }
+    function openScript(i){
+      cur = i;
+      const sc = SCRIPTS[i];
+      const cs = makeCandles(sc.anchors, sc.seed);
+      $$("#tSel option", body).forEach((o,j) => o.selected = j===i);
+      draw(cs);
+      renderTasks(cs);
+    }
+    body.innerHTML = `
+    <div class="glass q-card">
+      <div class="between" style="margin-bottom:12px;flex-wrap:wrap;gap:10px">
+        <div style="flex:1;min-width:0">
+          <div class="card-title">${icon("target")} 行情终端 · 真实形态复盘</div>
+          <p class="muted small" style="margin-top:4px">可以缩放、平移的盘面——先用眼睛看清一段行情，再回答问题。滚动缩放，按住拖动平移。</p>
+        </div>
+        <select class="inp" id="tSel" style="max-width:230px;margin-left:12px">
+          ${SCRIPTS.map((s,i)=>`<option value="${i}">${s.name}</option>`).join("")}
+        </select>
+      </div>
+      <div class="chart-card" style="padding:6px"><div id="tcChart" style="width:100%"></div></div>
+      <div style="margin-top:16px" id="tAns"></div>
+    </div>`;
+    $("#tSel", body).addEventListener("change", e => openScript(+e.target.value));
+    /* 元素入 DOM 后再建图表：lightweight-charts 依赖容器宽度，未渲染时 clientWidth=0 会导致盘面空白 */
+    requestAnimationFrame(() => openScript(0));
   }
 
   return el;
