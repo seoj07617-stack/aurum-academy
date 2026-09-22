@@ -1,4 +1,4 @@
-# 推送修复版 serve.ps1 到远端仓库（防止其他会话再次用旧版覆盖本地）
+﻿# 推送修复版 serve.ps1 到远端仓库（防止其他会话再次用旧版覆盖本地）
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
