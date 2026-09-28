@@ -37,6 +37,11 @@ VIEWS.lesson = function(lid){
           ${s.list?`<ul>${s.list.map(x=>`<li>${x}</li>`).join("")}</ul>`:""}
           ${kase?`<div class="case-box"><span class="ctag">案 例</span><p>${kase}</p></div>`:""}
           ${s.plain?`<div class="plain-box"><span class="ptag">俗 讲</span><p>${s.plain}</p></div>`:""}
+          ${(window.MIX && MIX[lid+"|"+s.h]) ? (() => { const mx = MIX[lid+"|"+s.h]; return `
+          <div class="mix-box"><span class="mtag">易混辨析</span>
+            <table class="mix-table"><thead><tr>${mx.head.map(h=>`<th>${h}</th>`).join("")}</tr></thead>
+            <tbody>${mx.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>
+          </div>`; })() : ""}
           ${window.DEEP&&DEEP[s.h]?`<details class="deep-box"><summary><span class="dtag">深 讲</span>多讲几句 · 为什么与怎么用</summary><div class="deep-body">${DEEP[s.h].split("\n").filter(Boolean).map(x=>`<p>${x}</p>`).join("")}</div></details>`:""}
         </div>`;
         }).join("")}

@@ -508,3 +508,32 @@ html[data-theme="dark"] .logic-box{background:linear-gradient(135deg,rgba(201,16
 .term-pop .tp-link{display:inline-block;margin-top:8px;font-size:11.5px;color:#C9A227;text-decoration:none;
   border-bottom:1px dashed rgba(201,162,39,.5)}
 .term-pop .tp-link:hover{color:#E5CE8A}
+/* ================= 实战路由 + 易混辨析（v24） ================= */
+.pb-card{padding:0;overflow:hidden}
+.pb-head{display:flex;align-items:center;gap:12px;width:100%;padding:15px 16px;
+  background:none;border:none;cursor:pointer;font-family:inherit;text-align:left}
+.pb-head b{font-size:15px;color:var(--ink);display:block}
+.pb-head:hover{background:rgba(201,162,39,.06)}
+.pb-steps{padding:4px 16px 14px;border-top:1px dashed rgba(201,162,39,.28)}
+.pb-step{display:flex;gap:12px;margin-top:12px}
+.pb-no{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  background:var(--gold-grad);color:#141210;font-family:var(--num);font-size:12px;font-weight:700}
+.pb-txt{flex:1;min-width:0}
+.pb-txt b{font-size:14px;color:var(--ink)}
+.pb-txt p{margin:3px 0 4px;font-size:13.2px;line-height:1.75;color:var(--ink2)}
+.pb-go{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:var(--gold);
+  text-decoration:none;border-bottom:1px dashed rgba(201,162,39,.5)}
+.mix-box{margin:14px 0 4px;padding:12px 12px 8px;border-radius:12px;
+  background:rgba(74,111,165,.07);border:1px solid rgba(74,111,165,.3);border-left:3px solid #4A6FA5;
+  overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mtag{display:inline-block;font-size:9.5px;letter-spacing:.3em;padding:2px 7px 2px 9px;border-radius:6px;
+  font-weight:700;margin-bottom:8px;font-family:var(--serif);
+  background:linear-gradient(180deg,#8FB4DE,#4A6FA5);color:#0F1B2B}
+.mix-table{width:100%;border-collapse:collapse;font-size:12.3px;min-width:430px}
+.mix-table th{padding:6px 9px;text-align:left;color:#3B5A85;font-weight:700;
+  border-bottom:1.5px solid rgba(74,111,165,.4);white-space:nowrap}
+.mix-table td{padding:6px 9px;border-bottom:1px solid rgba(139,125,94,.18);
+  color:var(--ink2);line-height:1.6;vertical-align:top}
+.mix-table td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+html[data-theme="dark"] .mix-box{background:rgba(74,111,165,.12)}
+html[data-theme="dark"] .mix-table th{color:#8FB4DE}
