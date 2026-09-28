@@ -72,7 +72,7 @@ VIEWS.quiz = function(arg){
       <div class="glass q-card" style="position:relative">
         <div class="q-stem"><span class="no">${QNUM[idx % 10]}</span><div class="txt">${it.q}</div></div>
         ${it.opts.map((o,i)=>`<div class="opt" data-i="${i}"><span class="key">${"ABCD"[i]}</span><span>${o}</span></div>`).join("")}
-        <div id="why"></div>
+        <div id="why" style="position:relative"></div>
         <div class="between" style="margin-top:18px">
           <span class="tiny">已对 ${correct} 题</span>
           <button class="btn btn-gold" id="nextBtn" style="visibility:hidden">${idx===cfg.items.length-1?"交 卷":"下一题"} ${icon("chevR")}</button>
@@ -100,7 +100,7 @@ VIEWS.quiz = function(arg){
     $("#nextBtn", el).addEventListener("click",()=>{ idx++;
       if(idx < cfg.items.length) renderQ(); else renderResult(); });
     $("#qExit", el).addEventListener("click",()=>{
-      modal(`<h3>中途退卷？</h3><p>退卷则此卷进度作废；已答错之题，仍录入错题本与记忆循环。</p>
+      const mask = modal(`<h3>中途退卷？</h3><p>退卷则此卷进度作废；已答错之题，仍录入错题本与记忆循环。</p>
         <div class="row" style="justify-content:flex-end;margin-top:16px">
         <button class="btn btn-ghost btn-sm" id="qxNo">回卷续答</button>
         <button class="btn btn-gold btn-sm" id="qxYes">退 卷</button></div>`);

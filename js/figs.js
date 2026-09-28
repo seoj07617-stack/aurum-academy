@@ -111,25 +111,25 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
   </svg>`;
 })();
 
-/* 七亏二平一赚 */
+/* 七亏二平一赚（HTML 全宽条形：比例真实、窄屏零横滑、文字完整） */
 (function(){
   window.FIGS = window.FIGS || {};
+  const rows721 = [
+    { pct: 100, t: "七 亏 · 70%", d: "追涨杀跌 · 重仓押注 · 不设止损", c: "#9E2B22", f: "rgba(158,43,34,.14)" },
+    { pct: 28.6, t: "二 平 · 20%", d: "拿不住 · 瞎折腾", c: "#8B7D5E", f: "rgba(139,125,94,.16)" },
+    { pct: 14.3, t: "一 赚 · 10%", d: "有纪律 · 按计划", c: "#8C6D2F", f: "rgba(201,162,39,.2)" },
+  ];
   window.FIGS["fig-721"] =
-  `<svg viewBox="0 0 720 210" class="lesson-fig" role="img" aria-label="七亏二平一赚分布">
-    <g font-family="var(--sans)">
-      <rect x="40"  y="52" width="420" height="54" rx="8" fill="rgba(158,43,34,.14)" stroke="#9E2B22" stroke-width="1.6"/>
-      <rect x="466" y="52" width="120" height="54" rx="8" fill="rgba(139,125,94,.16)" stroke="#8B7D5E" stroke-width="1.4"/>
-      <rect x="592" y="52" width="60"  height="54" rx="8" fill="rgba(201,162,39,.2)" stroke="#C9A227" stroke-width="1.8"/>
-      <text x="250" y="76" text-anchor="middle" font-size="14" font-weight="700" fill="#9E2B22">七 亏 · 70%</text>
-      <text x="250" y="95" text-anchor="middle" font-size="11.5" fill="#7A4440">追涨杀跌 · 重仓押注 · 不设止损</text>
-      <text x="526" y="76" text-anchor="middle" font-size="14" font-weight="700" fill="#6B6350">二 平</text>
-      <text x="526" y="95" text-anchor="middle" font-size="11.5" fill="#6B6350">拿不住 · 瞎折腾</text>
-      <text x="622" y="76" text-anchor="middle" font-size="14" font-weight="700" fill="#8C6D2F">一 赚</text>
-      <text x="622" y="95" text-anchor="middle" font-size="11.5" fill="#8C6D2F">有纪律</text>
-      <text x="40" y="150" font-size="12.5" fill="#4A4438">决定你在哪一档的，不是智商、不是消息，是动作——所以第七阶段整章讲纪律。</text>
-      <text x="40" y="174" font-size="12.5" fill="#8C8470">这是 A 股散户长期盈亏的经验口径，各研究样本略有出入，但格局从未变过。</text>
-    </g>
-  </svg>`;
+  `<div class="fig721">
+    ${rows721.map(r=>`
+    <div class="f721-grp">
+      <div class="f721-bar" style="width:${r.pct}%;background:${r.f};border-color:${r.c}">
+        <b style="color:${r.c}">${r.t}</b>
+      </div>
+      <div class="f721-sub">${r.d}</div>
+    </div>`).join("")}
+    <div class="f721-note">条宽 = 占比。决定你在哪一档的不是智商、不是消息，是动作——第七阶段整章讲纪律。</div>
+  </div>`;
 })();
 
 /* 直融与间融：村里的钱怎么流动 */

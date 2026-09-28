@@ -172,8 +172,11 @@ html[data-theme="dark"] .plain-box{background:rgba(201,162,39,.10);border-color:
 
 /* ================= 测验 ================= */
 .quiz-wrap{max-width:730px;margin:0 auto}
-.q-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.q-dots{display:flex;gap:6px}
+.q-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px}
+.q-top > div:first-child{min-width:0}
+.q-top .kicker{word-break:break-word}
+.q-top #qExit{white-space:nowrap;flex:none}
+.q-dots{display:flex;gap:6px;flex-wrap:wrap}
 .q-dot{width:9px;height:9px;border-radius:50%;background:rgba(34,31,26,.14);transition:all .3s}
 .q-dot.cur{background:var(--gold-grad);transform:scale(1.35);box-shadow:0 0 0 4px rgba(201,162,39,.15)}
 .q-dot.ok{background:var(--down)} .q-dot.bad{background:var(--rose)}
@@ -537,3 +540,11 @@ html[data-theme="dark"] .logic-box{background:linear-gradient(135deg,rgba(201,16
 .mix-table td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
 html[data-theme="dark"] .mix-box{background:rgba(74,111,165,.12)}
 html[data-theme="dark"] .mix-table th{color:#8FB4DE}
+/* ================= 七亏二平一赚 HTML 条形（v24 细节修复） ================= */
+.fig721{padding:4px 0 2px}
+.f721-grp{margin-bottom:10px}
+.f721-bar{min-height:44px;border:1.6px solid;border-radius:10px;display:flex;align-items:center;
+  padding:0 14px;box-sizing:border-box}
+.f721-bar b{font-size:14.5px;letter-spacing:.05em;white-space:nowrap}
+.f721-sub{font-size:11.8px;color:#6B6350;margin-top:4px;padding-left:2px}
+.f721-note{font-size:12.3px;color:#4A4438;margin-top:12px;line-height:1.7}
