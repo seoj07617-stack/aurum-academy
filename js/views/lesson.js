@@ -1,5 +1,7 @@
 /* ============================================================
    views/lesson.js — 课程阅读页
+   渲染层：正文 → 图解 → 分步 → 清单 → 案例 → 俗讲 → 深讲折叠
+   数据层：课程自带字段优先，ENRICH 增强包补缺（enrich.js）
    ============================================================ */
 "use strict";
 VIEWS.lesson = function(lid){
@@ -16,23 +18,28 @@ VIEWS.lesson = function(lid){
         <div class="crumb"><a href="#/map">地图</a>${icon("chevR")}<a href="#/stage/${l.stage}">${st.title}</a>${icon("chevR")}第 ${l.order+1} 课</div>
         <h1>${l.title}</h1>
         <p class="hook">◈ ${l.hook}</p>
+        ${window.LOGIC && LOGIC[lid] ? `<div class="logic-box"><span class="ltag">逻辑主线</span><p>${LOGIC[lid]}</p></div>` : ""}
         <div class="row" style="gap:8px;margin:10px 0 4px">
           <span class="tag">${l.mins} 分钟</span>
           ${ls.done?`<span class="tag done">${icon("check")} 已通过 ${ls.best}%</span>`:`<span class="tag gray">未完成</span>`}
           <span class="tag gray">掌握度 ${Math.round(ls.mastery)}%</span>
         </div>
         <hr class="divider" style="margin:14px 0 4px">
-        ${l.sections.map((s,i)=>`
+        ${l.sections.map((s,i)=>{
+          const ex = (window.ENRICH && ENRICH[lid] ? ENRICH[lid][s.h] : null) || {};
+          const fig = s.fig || ex.fig, steps = s.steps || ex.steps, kase = s.case || ex.case;
+          return `
         <div class="sec">
           <div class="sec-head"><span class="no">${String(i+1).padStart(2,"0")}</span><h3>${s.h}</h3></div>
           ${s.p?`<p>${s.p}</p>`:""}
-          ${s.fig&&window.FIGS&&FIGS[s.fig]?`<div class="fig-wrap">${FIGS[s.fig]}</div>`:""}
-          ${s.steps?`<div class="steps-box"><span class="stag">分 步</span><ol>${s.steps.map(x=>`<li><b>${x[0]}</b>${x.slice(1)}</li>`).join("")}</ol></div>`:""}
+          ${fig&&window.FIGS&&FIGS[fig]?`<div class="fig-wrap">${FIGS[fig]}</div>`:""}
+          ${steps?`<div class="steps-box"><span class="stag">分 步</span><ol>${steps.map(x=>`<li><b>${x[0]}</b>${x.slice(1)}</li>`).join("")}</ol></div>`:""}
           ${s.list?`<ul>${s.list.map(x=>`<li>${x}</li>`).join("")}</ul>`:""}
-          ${s.case?`<div class="case-box"><span class="ctag">案 例</span><p>${s.case}</p></div>`:""}
+          ${kase?`<div class="case-box"><span class="ctag">案 例</span><p>${kase}</p></div>`:""}
           ${s.plain?`<div class="plain-box"><span class="ptag">俗 讲</span><p>${s.plain}</p></div>`:""}
           ${window.DEEP&&DEEP[s.h]?`<details class="deep-box"><summary><span class="dtag">深 讲</span>多讲几句 · 为什么与怎么用</summary><div class="deep-body">${DEEP[s.h].split("\n").filter(Boolean).map(x=>`<p>${x}</p>`).join("")}</div></details>`:""}
-        </div>`).join("")}
+        </div>`;
+        }).join("")}
         <div class="trap-box">
           <b>⚠ 常见误区 · 逆向学习</b>
           ${l.traps.map(t=>`<p><b>「${t.w}」</b><br>${t.c}</p>`).join("")}
@@ -60,6 +67,12 @@ VIEWS.lesson = function(lid){
   </div>`;
   $("#toQuiz", el).addEventListener("click",()=>go(`#/quiz/${lid}`));
   $$("[data-go]",el).forEach(n=>n.addEventListener("click",()=>go(n.dataset.go)));
-
+  /* 专业术语自动解读：标注 + 气泡事件（每术语每页仅首次） */
+  try{
+    if(window.annotateTerms){
+      annotateTerms(el);
+      bindTermEvents(el);
+    }
+  }catch(e){}
   return el;
 };

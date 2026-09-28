@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    views.css — 各页面专属样式
    ============================================================ */
 
@@ -128,7 +128,9 @@
 
 /* ================= 课程阅读 ================= */
 .lesson-layout{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
-.lesson-main{padding:30px 34px}
+.lesson-main{padding:30px 34px;min-width:0}
+.lesson-main .sec,.lesson-main .fig-wrap,.lesson-main .logic-box,.lesson-main .case-box,.lesson-main .steps-box,.lesson-main .plain-box,.lesson-main .deep-body{min-width:0}
+.lesson-aside{min-width:0}
 .lesson-main h1{font-size:26px;margin:10px 0 4px}
 .lesson-main .hook{font-family:var(--serif);color:var(--gold);font-size:15.5px;margin-bottom:6px}
 .crumb{font-size:12px;color:var(--ink3);letter-spacing:.08em;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -486,3 +488,23 @@ html[data-theme="dark"] .lesson-fig{filter:none}
 .deep-body{padding:2px 14px 12px;border-top:1px dashed rgba(201,162,39,.35)}
 .deep-body p{margin:9px 0 0;font-family:var(--sans);font-size:13.5px;line-height:1.95;color:var(--ink,#3B372E)}
 @media(max-width:640px){.deep-body p{font-size:13px;line-height:1.85}.deep-box summary{padding:9px 12px}}
+
+/* ================= 逻辑主线 + 术语解读（v15 合并） ================= */
+.logic-box{margin:14px 0 4px;padding:13px 15px 11px;border-radius:12px;position:relative;
+  background:linear-gradient(135deg,rgba(201,162,39,.13),rgba(160,124,44,.05));
+  border:1px solid rgba(201,162,39,.32);border-left:3px solid var(--gold)}
+.ltag{display:inline-block;font-size:9.5px;letter-spacing:.3em;padding:2px 7px 2px 9px;border-radius:6px;
+  font-weight:700;margin-bottom:6px;font-family:var(--serif);
+  background:var(--gold-grad);color:#141210}
+.logic-box p{margin:2px 0 0;font-size:13.8px;line-height:1.9;color:var(--ink)}
+html[data-theme="dark"] .logic-box{background:linear-gradient(135deg,rgba(201,162,39,.16),rgba(201,162,39,.05))}
+.term{border-bottom:1px dashed rgba(160,124,44,.75);cursor:help}
+.term:hover{color:var(--gold);background:rgba(201,162,39,.1)}
+.term-pop{position:fixed;z-index:220;background:linear-gradient(180deg,rgba(39,34,26,.98),rgba(21,18,13,.99));
+  border:1px solid rgba(201,162,39,.45);border-radius:12px;padding:11px 14px 9px;
+  box-shadow:0 10px 32px rgba(0,0,0,.4)}
+.term-pop b{display:block;font-family:var(--serif);font-size:13.5px;color:#E5CE8A;margin-bottom:4px;letter-spacing:.04em}
+.term-pop p{margin:0;font-size:12.5px;line-height:1.75;color:#DDD5BE}
+.term-pop .tp-link{display:inline-block;margin-top:8px;font-size:11.5px;color:#C9A227;text-decoration:none;
+  border-bottom:1px dashed rgba(201,162,39,.5)}
+.term-pop .tp-link:hover{color:#E5CE8A}

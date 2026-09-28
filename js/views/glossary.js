@@ -6,10 +6,10 @@
    术语名、释义与详解正文；展开状态在重新搜索后保留。
    ============================================================ */
 "use strict";
-VIEWS.glossary = function(){
+VIEWS.glossary = function(kwArg){
   const el = document.createElement("div");
   const EXTRA = Object.assign({}, window.GX1 || {}, window.GX2 || {});
-  let kw = "", timer = null;
+  let kw = typeof kwArg === "string" ? decodeURIComponent(kwArg).trim() : "", timer = null;
   const openSet = new Set();
 
   function extraOf(t){ return EXTRA[t]; }

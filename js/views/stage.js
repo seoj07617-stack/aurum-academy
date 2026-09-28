@@ -61,11 +61,25 @@ VIEWS.stage = function(sid){
         <p class="muted small" style="margin:8px 0 12px">从本阶段课程题库随机抽取 8 题，答对 75% 以上（≥6 题）即通过并解锁下一阶段。</p>
         <button class="btn ${ex&&ex.pass?"btn-ghost":"btn-gold"}" id="examBtn" ${allDone?"":"disabled"}>
           ${ex&&ex.pass?"再测一次":"开始阶段测验"}</button>
-      </div>`}
+      </div>
+      ${ex&&ex.pass ? `
+      <div class="glass glass-pad" style="margin-top:14px;border-color:rgba(201,162,39,.35)">
+        <div class="between">
+          <div class="card-title" style="margin:0">${icon("award")} 实战大作业 · 综合应用</div>
+          ${S.missions&&S.missions[sid]&&S.missions[sid].done
+            ?`<span class="tag done">${icon("check")} 最佳 ${S.missions[sid].best}/${S.missions[sid].total}</span>`
+            :`<span class="tag">待挑战</span>`}
+        </div>
+        <p class="muted small" style="margin:8px 0 12px">把本阶段知识放进一个真实场景里用一遍——4 步综合任务，检验「会不会」而不只是「懂没懂」。首次通过 +40 XP。</p>
+        <button class="btn btn-gold" id="missionBtn">进入实战大作业</button>
+      </div>` : ""}
+    `}
   </div>`;
   $$(".lesson-row", el).forEach(n=>n.addEventListener("click",()=>go(`#/lesson/${n.dataset.lesson}`)));
   const examBtn = $("#examBtn", el);
   if(examBtn) examBtn.addEventListener("click",()=>go(`#/quiz/exam-${sid}`));
+  const missionBtn = $("#missionBtn", el);
+  if(missionBtn) missionBtn.addEventListener("click",()=>go(`#/mission/${sid}`));
   const gradBtn = $("#gradBtn", el);
   if(gradBtn) gradBtn.addEventListener("click",()=>go("#/quiz/grad"));
   mountAnimations(el);
