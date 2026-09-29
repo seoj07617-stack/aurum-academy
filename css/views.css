@@ -153,13 +153,14 @@
   border:1px solid rgba(180,91,82,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .trap-box b{color:var(--rose);font-size:13.5px;letter-spacing:.06em}
 .trap-box p{font-size:13.5px;margin-top:3px;color:var(--body-ink)}
-/* 白话比方卡：初学者脚手架层（section.plain 字段） */
-.plain-box{margin-top:12px;padding:13px 16px 13px 18px;border-radius:14px;position:relative;
-  background:rgba(201,162,39,.07);border:1px dashed rgba(184,150,62,.45)}
-.plain-box .ptag{display:inline-block;font-family:var(--serif);font-size:12px;font-weight:700;letter-spacing:.28em;
-  color:var(--gold);margin-bottom:4px}
-.plain-box p{font-size:14.2px;line-height:1.85;color:var(--body-ink);margin-bottom:0;max-width:none}
-html[data-theme="dark"] .plain-box{background:rgba(201,162,39,.10);border-color:rgba(201,162,39,.35)}
+/* 白话比方：引文式（无框减框疲劳——正文口语层不该与案例/分步抢框） */
+.plain-box{margin-top:14px;padding:2px 8px 2px 16px;border-radius:0;position:relative;
+  border:none;border-left:2.5px solid rgba(184,150,62,.5)}
+.plain-box .ptag{display:inline-block;font-family:var(--serif);font-size:10px;font-weight:700;letter-spacing:.28em;
+  color:var(--gold);opacity:.75;margin-bottom:2px}
+.plain-box p{font-size:14px;line-height:1.85;color:var(--ink2);margin-bottom:0;max-width:none;font-style:italic}
+html[data-theme="dark"] .plain-box{border-left-color:rgba(201,162,39,.4)}
+html[data-theme="dark"] .plain-box p{color:var(--ink3)}
 .lesson-aside{position:sticky;top:calc(var(--nav-h) + 20px);display:flex;flex-direction:column;gap:16px}
 .pt-list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 .pt{padding:11px 13px;border-radius:13px;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.6)}
@@ -550,3 +551,7 @@ html[data-theme="dark"] .mix-table th{color:#8FB4DE}
 .f721-bar b{font-size:14.5px;letter-spacing:.05em;white-space:nowrap}
 .f721-sub{font-size:11.8px;color:#6B6350;margin-top:4px;padding-left:2px}
 .f721-note{font-size:12.3px;color:#4A4438;margin-top:12px;line-height:1.7}
+/* ================= 路由切换过渡（v31） ================= */
+.view-in{animation:viewIn .2s var(--ease)}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.view-in{animation:none}}

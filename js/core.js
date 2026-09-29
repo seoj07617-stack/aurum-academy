@@ -148,7 +148,7 @@ const App = {
     const app = $("#app");
     app.innerHTML = "";
     const el = view(arg, arg2) || document.createElement("div");
-    el.classList.add("view");
+    el.classList.add("view", "view-in");
     app.appendChild(el);
     window.scrollTo({top:0, behavior:"instant"});
     $$(".navlinks a, .botnav a").forEach(a=>{
