@@ -24,13 +24,13 @@
     </g>
     <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8B7D5E"/></marker></defs>
     <circle cx="360" cy="150" r="52" fill="rgba(201,162,39,.12)" stroke="#C9A227" stroke-width="1.6"/>
-    <text x="360" y="144" text-anchor="middle" font-family="var(--sans)" font-size="13" font-weight="700" fill="#4A4438">增长 × 通胀</text>
-    <text x="360" y="163" text-anchor="middle" font-family="var(--sans)" font-size="11.5" fill="#8C8470">两把尺子定四季</text>
+    <text x="360" y="144" text-anchor="middle" font-family="var(--sans)" font-size="13" font-weight="700" style="fill:var(--fig-ink,#4A4438)">增长 × 通胀</text>
+    <text x="360" y="163" text-anchor="middle" font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">两把尺子定四季</text>
     ${quad.map(q=>`
     <rect x="${q.x}" y="${q.y}" width="220" height="88" rx="10" fill="${q.c}" opacity=".10"/>
     <rect x="${q.x}" y="${q.y}" width="220" height="88" rx="10" fill="none" stroke="${q.c}" stroke-width="1.6"/>
-    <text x="${q.x+18}" y="${q.y+30}" font-family="var(--sans)" font-size="15" font-weight="700" fill="#4A4438">${q.t}</text>
-    <text x="${q.x+18}" y="${q.y+52}" font-family="var(--sans)" font-size="12" fill="#8C8470">${q.sub}</text>
+    <text x="${q.x+18}" y="${q.y+30}" font-family="var(--sans)" font-size="15" font-weight="700" style="fill:var(--fig-ink,#4A4438)">${q.t}</text>
+    <text x="${q.x+18}" y="${q.y+52}" font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">${q.sub}</text>
     <text x="${q.x+18}" y="${q.y+74}" font-family="var(--sans)" font-size="13" font-weight="700" fill="${q.c}">${q.win}</text>`).join("")}
     <text x="360" y="284" text-anchor="middle" font-family="var(--sans)" font-size="12" fill="#9E2B22" font-weight="600">顺时针转：复苏买股 → 过热买商品 → 滞胀握现金 → 衰退买债券</text>
   </svg>`;
@@ -45,7 +45,7 @@
       <line x1="60" y1="240" x2="660" y2="240"/>
       <line x1="60" y1="240" x2="60" y2="34"/>
     </g>
-    <g font-family="var(--sans)" font-size="11.5" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">
       <text x="60" y="258" text-anchor="middle">3个月</text><text x="200" y="258" text-anchor="middle">2年</text>
       <text x="380" y="258" text-anchor="middle">10年</text><text x="620" y="258" text-anchor="middle">30年</text>
       <text x="34" y="140" text-anchor="middle" transform="rotate(-90 34 140)">收益率 →</text>
@@ -56,11 +56,11 @@
     <circle cx="150" cy="196" r="4" fill="#C9A227"/><circle cx="150" cy="137" r="4" fill="#9E2B22"/>
     <g font-family="var(--sans)" font-size="13" font-weight="700">
       <text x="480" y="72" fill="#C9A227">正常：远期更高</text>
-      <text x="480" y="90" font-size="11.5" font-weight="400" fill="#8C8470">市场相信明天会更好</text>
+      <text x="480" y="90" font-size="11.5" font-weight="400" style="fill:var(--fig-ink3,#8C8470)">市场相信明天会更好</text>
       <text x="470" y="222" fill="#9E2B22">倒挂：短端反超</text>
-      <text x="470" y="240" font-size="11.5" font-weight="400" fill="#8C8470">集体投票「未来更差」——衰退预警</text>
+      <text x="470" y="240" font-size="11.5" font-weight="400" style="fill:var(--fig-ink3,#8C8470)">集体投票「未来更差」——衰退预警</text>
     </g>
-    <text x="60" y="24" font-family="var(--sans)" font-size="12" fill="#4A4438" font-weight="600">曲线是市场的预期投票器：盯住 10 年期国债，等于盯住集体预期</text>
+    <text x="60" y="24" font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink,#4A4438)" font-weight="600">曲线是市场的预期投票器：盯住 10 年期国债，等于盯住集体预期</text>
   </svg>`;
 })();
 
@@ -92,10 +92,10 @@
       <text x="250" y="284" text-anchor="start">锤子线</text>
       <text x="430" y="262" text-anchor="middle">看涨吞没</text>
     </g>
-    <text x="548" y="108" font-family="var(--sans)" font-size="12" fill="#8C8470">下跌末端出现 →</text>
-    <text x="548" y="126" font-family="var(--sans)" font-size="12" fill="#8C8470">待次日放量确认</text>
-    <text x="60" y="52" font-family="var(--sans)" font-size="12" fill="#4A4438" font-weight="600">位置决定价值：同样的锤子线，下跌末端是信号，半山腰是噪音</text>
-    <text x="60" y="296" font-family="var(--sans)" font-size="11.5" fill="#8C8470">实心＝阴线（收＜开）　空心＝阳线（收＞开）　影线＝当期触过的最高最低</text>
+    <text x="548" y="108" font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">下跌末端出现 →</text>
+    <text x="548" y="126" font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">待次日放量确认</text>
+    <text x="60" y="52" font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink,#4A4438)" font-weight="600">位置决定价值：同样的锤子线，下跌末端是信号，半山腰是噪音</text>
+    <text x="60" y="296" font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">实心＝阴线（收＜开）　空心＝阳线（收＞开）　影线＝当期触过的最高最低</text>
   </svg>`;
 })();
 
@@ -116,9 +116,9 @@
       <text x="470" y="56" fill="#C9A227">指数价格：坐了趟过山车</text>
       <text x="440" y="140" fill="#9E2B22">你的定投成本：一路下移后趴在 0.78</text>
     </g>
-    <text x="536" y="118" font-family="var(--sans)" font-size="11.5" fill="#8C8470">指数回到 1.0 才回本</text>
-    <text x="500" y="163" font-family="var(--sans)" font-size="11.5" fill="#8C8470">反弹到 0.8 你已盈利</text>
-    <g font-family="var(--sans)" font-size="12" fill="#8C8470">
+    <text x="536" y="118" font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">指数回到 1.0 才回本</text>
+    <text x="500" y="163" font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">反弹到 0.8 你已盈利</text>
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">
       <text x="60" y="264">低位不停扣（恐惧时不缴械）＋ 高位肯止盈（贪婪时肯落袋）＝ 微笑成立</text>
       <text x="60" y="286">圆点＝每期定投买到的份额：越跌，同样的钱买得越多</text>
     </g>
@@ -142,12 +142,12 @@
     <rect x="${p.x+6}"  y="${248-p.b}" width="42" height="${p.b}" rx="4" fill="none" stroke="#C9A227" stroke-width="2"/>
     <text x="${p.x-25}" y="${248-p.d-8}" text-anchor="middle" font-family="var(--sans)" font-size="11.5" fill="#9E2B22" font-weight="700">${p.l}</text>
     <text x="${p.x+27}" y="${248-p.b-8}" text-anchor="middle" font-family="var(--sans)" font-size="11.5" fill="#B8933B" font-weight="700">回${Math.round(p.b)}%</text>`).join("")}
-    <g font-family="var(--sans)" font-size="12" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">
       <text x="110" y="270">实心＝实际亏损</text>
       <text x="250" y="270">空心＝回本所需涨幅</text>
       <text x="60" y="290" font-size="12.5" fill="#9E2B22" font-weight="600">跌得越深，回本越贵——−50% 要 +100% 才回得来，深亏押上的是复利的时间</text>
     </g>
-    <text x="60" y="36" font-family="var(--sans)" font-size="12" fill="#4A4438" font-weight="600">止损保护的不是这一笔的钱，是未来三十年的复利曲线</text>
+    <text x="60" y="36" font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink,#4A4438)" font-weight="600">止损保护的不是这一笔的钱，是未来三十年的复利曲线</text>
   </svg>`;
 })();
 
@@ -158,14 +158,14 @@
   `<svg viewBox="0 0 720 300" class="lesson-fig" role="img" aria-label="核心卫星结构">
     <circle cx="300" cy="150" r="118" fill="none" stroke="#B8933B" stroke-width="1.8" stroke-dasharray="8 6"/>
     <circle cx="300" cy="150" r="72" fill="rgba(201,162,39,.14)" stroke="#C9A227" stroke-width="2"/>
-    <text x="300" y="142" text-anchor="middle" font-family="var(--sans)" font-size="15" font-weight="700" fill="#4A4438">核心 70–90%</text>
-    <text x="300" y="162" text-anchor="middle" font-family="var(--sans)" font-size="12" fill="#8C8470">宽基指数＋债券</text>
-    <text x="300" y="180" text-anchor="middle" font-family="var(--sans)" font-size="11.5" fill="#8C8470">求稳：吃市场 beta</text>
+    <text x="300" y="142" text-anchor="middle" font-family="var(--sans)" font-size="15" font-weight="700" style="fill:var(--fig-ink,#4A4438)">核心 70–90%</text>
+    <text x="300" y="162" text-anchor="middle" font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">宽基指数＋债券</text>
+    <text x="300" y="180" text-anchor="middle" font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">求稳：吃市场 beta</text>
     <g font-family="var(--sans)" font-size="12.5" font-weight="700" fill="#B8933B">
       <text x="300" y="52" text-anchor="middle">卫星 10–30%</text>
       <text x="300" y="270" text-anchor="middle">行业·主题·个股：求进，博超额</text>
     </g>
-    <g font-family="var(--sans)" font-size="12" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">
       <text x="520" y="96">卫星腰斩，组合只抖一抖——</text>
       <text x="520" y="116">容错内置在结构里</text>
       <text x="520" y="150">单卫星 ≤ 20%，</text>
@@ -187,18 +187,18 @@
   window.FIGS["fig-dupont"] =
   `<svg viewBox="0 0 720 300" class="lesson-fig" role="img" aria-label="杜邦分解">
     <rect x="250" y="34" width="220" height="56" rx="10" fill="rgba(201,162,39,.14)" stroke="#C9A227" stroke-width="2"/>
-    <text x="360" y="58" text-anchor="middle" font-family="var(--sans)" font-size="15" font-weight="700" fill="#4A4438">ROE 净资产收益率</text>
-    <text x="360" y="78" text-anchor="middle" font-family="var(--sans)" font-size="11.5" fill="#8C8470">＝ 三者连乘，同样 20%，成色不同</text>
+    <text x="360" y="58" text-anchor="middle" font-family="var(--sans)" font-size="15" font-weight="700" style="fill:var(--fig-ink,#4A4438)">ROE 净资产收益率</text>
+    <text x="360" y="78" text-anchor="middle" font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">＝ 三者连乘，同样 20%，成色不同</text>
     <g stroke="rgba(139,125,94,.5)" stroke-width="1.4" fill="none">
       <path d="M 360 90 L 360 112 M 120 112 L 600 112 M 120 112 L 120 132 M 360 112 L 360 132 M 600 112 L 600 132"/>
     </g>
     ${nodes.map(n=>`
     <rect x="${n.x}" y="132" width="140" height="82" rx="10" fill="${n.c}" opacity=".1"/>
     <rect x="${n.x}" y="132" width="140" height="82" rx="10" fill="none" stroke="${n.c}" stroke-width="1.8"/>
-    <text x="${n.x+70}" y="158" text-anchor="middle" font-family="var(--sans)" font-size="14" font-weight="700" fill="#4A4438">${n.t}</text>
-    <text x="${n.x+70}" y="178" text-anchor="middle" font-family="var(--sans)" font-size="11.5" fill="#8C8470">${n.s}</text>
+    <text x="${n.x+70}" y="158" text-anchor="middle" font-family="var(--sans)" font-size="14" font-weight="700" style="fill:var(--fig-ink,#4A4438)">${n.t}</text>
+    <text x="${n.x+70}" y="178" text-anchor="middle" font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">${n.s}</text>
     <text x="${n.x+70}" y="200" text-anchor="middle" font-family="var(--sans)" font-size="12" font-weight="700" fill="${n.c}">${n.eg}</text>`).join("")}
-    <text x="60" y="252" font-family="var(--sans)" font-size="12" fill="#4A4438" font-weight="600">三种赚钱模式：靠利润率、靠周转、靠杠杆——靠乘数堆出的 ROE 最脆弱</text>
+    <text x="60" y="252" font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink,#4A4438)" font-weight="600">三种赚钱模式：靠利润率、靠周转、靠杠杆——靠乘数堆出的 ROE 最脆弱</text>
     <text x="60" y="278" font-family="var(--sans)" font-size="11.5" fill="#9E2B22" font-weight="600">看到高 ROE 先拆成分：是生意好，还是借出来的</text>
   </svg>`;
 })();
@@ -219,12 +219,12 @@
       <text x="140" y="248" fill="#9E2B22">恐慌·抑郁</text>
       <text x="470" y="248" fill="#B8933B">狂热·亢奋</text>
     </g>
-    <g font-family="var(--sans)" font-size="11.5" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">
       <text x="128" y="268">把便宜货塞给你</text>
       <text x="486" y="268">用天价求购你的筹码</text>
     </g>
-    <text x="360" y="82" text-anchor="middle" font-family="var(--sans)" font-size="12.5" font-weight="700" fill="#4A4438">冷静区：他报价，你定价</text>
+    <text x="360" y="82" text-anchor="middle" font-family="var(--sans)" font-size="12.5" font-weight="700" style="fill:var(--fig-ink,#4A4438)">冷静区：他报价，你定价</text>
     <text x="360" y="150" text-anchor="middle" font-family="var(--sans)" font-size="12" fill="#9E2B22" font-weight="600">利用他的情绪，绝不被他的情绪支配</text>
-    <text x="60" y="290" font-family="var(--sans)" font-size="11.5" fill="#8C8470">他每天报一个价——你可以成交，也可以不理他；他抑郁时你不必恐慌，他亢奋时你不必踏空</text>
+    <text x="60" y="290" font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">他每天报一个价——你可以成交，也可以不理他；他抑郁时你不必恐慌，他亢奋时你不必踏空</text>
   </svg>`;
 })();

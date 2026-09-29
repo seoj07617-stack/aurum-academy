@@ -1,8 +1,9 @@
-/* ============================================================
+﻿/* ============================================================
    知行金融学院 · Aurum Academy
    base.css — 设计令牌 / 排版 / 背景 / 布局工具
    ============================================================ */
 :root{
+  --fig-ink:#4A4438; --fig-ink2:#6B6350; --fig-ink3:#8C8470;
   --bg:#F6F3EC;
   --ink:#221F1A; --ink2:#6E6A5E; --ink3:#ABA592;
   --body-ink:#3B372E;  /* 课程正文色：写死会导致夜间看不清，全局变量化 */
@@ -65,6 +66,7 @@ a:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none}
 
 /* ---------- 连钱纹（铜钱锦）图案：卡片右上角水印用 ---------- */
 :root{
+  --fig-ink:#4A4438; --fig-ink2:#6B6350; --fig-ink3:#8C8470;
   --coin-pattern:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='96' viewBox='0 0 112 96'%3E%3Cg fill='none' stroke='%23A8842C' stroke-opacity='.62' stroke-width='1.5'%3E%3Ccircle cx='16' cy='16' r='16'/%3E%3Crect x='11.75' y='11.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='44' cy='16' r='16'/%3E%3Crect x='39.75' y='11.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='72' cy='16' r='16'/%3E%3Crect x='67.75' y='11.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='100' cy='16' r='16'/%3E%3Crect x='95.75' y='11.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='2' cy='40' r='16'/%3E%3Crect x='-2.25' y='35.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='30' cy='40' r='16'/%3E%3Crect x='25.75' y='35.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='58' cy='40' r='16'/%3E%3Crect x='53.75' y='35.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='86' cy='40' r='16'/%3E%3Crect x='81.75' y='35.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='16' cy='64' r='16'/%3E%3Crect x='11.75' y='59.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='44' cy='64' r='16'/%3E%3Crect x='39.75' y='59.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='72' cy='64' r='16'/%3E%3Crect x='67.75' y='59.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='100' cy='64' r='16'/%3E%3Crect x='95.75' y='59.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3C/g%3E%3C/svg%3E");
 }
 
@@ -105,6 +107,7 @@ main{padding-top:calc(var(--nav-h) + env(safe-area-inset-top) + 26px);padding-bo
 
 /* ---------- 夜读模式（黑金） ---------- */
 html[data-theme="dark"]{
+  --fig-ink:#EAE2CC; --fig-ink2:#C9BFA6; --fig-ink3:#9A9280;
   --bg:#171511; --ink:#EAE2CC; --ink2:#A79D82; --ink3:#6F6850;
   --gold-soft:rgba(201,162,39,.16);
   --body-ink:#D8CFB6;

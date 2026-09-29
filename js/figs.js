@@ -30,7 +30,7 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
   window.FIGS = window.FIGS || {};
   window.FIGS["fig-compound"] =
   `<svg viewBox="0 0 720 300" class="lesson-fig" role="img" aria-label="复利与单利对比曲线">
-    <g font-family="var(--sans)" font-size="12" fill="#6B6350">
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink2,#6B6350)">
       <text x="14" y="${yTick(80)}">80万</text><text x="14" y="${yTick(60)}">60万</text>
       <text x="14" y="${yTick(40)}">40万</text><text x="14" y="${yTick(20)}">20万</text>
       <text x="${xTick(0)}" y="262">0年</text><text x="${xTick(10)}" y="262">10年</text>
@@ -48,10 +48,10 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       <text x="475" y="46" fill="#9E2B22" font-weight="700">复利 7%：76万</text>
       <text x="430" y="128" fill="#A68B4A" font-weight="600">单利 7%：31万</text>
       <text x="330" y="228" fill="#8B7D5E">活期 1.5%：14万</text>
-      <text x="70" y="140" fill="#4A4438" font-style="italic">前十年几乎贴地——大多数人放弃在这里</text>
+      <text x="70" y="140" style="fill:var(--fig-ink,#4A4438)" font-style="italic">前十年几乎贴地——大多数人放弃在这里</text>
       <path d="M255,132 C310,110 380,78 465,56" fill="none" stroke="#C9A227" stroke-width="1.4" stroke-dasharray="4 3"/>
     </g>
-    <g font-family="var(--sans)" font-size="12" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">
       <text x="${g.x0}" y="284">本金 10 万 · 年化 7% · 三十年三兄弟</text>
     </g>
   </svg>`;
@@ -65,7 +65,7 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     <g stroke="rgba(139,125,94,.3)" stroke-width="1" stroke-dasharray="3 4">
       <line x1="70" y1="240" x2="640" y2="240"/><line x1="70" y1="150" x2="640" y2="150"/><line x1="70" y1="60" x2="640" y2="60"/>
     </g>
-    <g font-family="var(--sans)" font-size="12" fill="#6B6350">
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink2,#6B6350)">
       <text x="16" y="244">100万</text><text x="16" y="154">125万</text><text x="16" y="64">150万</text>
     </g>
     <path d="M70,240 L230,60 L400,240" fill="none" stroke="#9E2B22" stroke-width="3" stroke-linejoin="round"/>
@@ -75,7 +75,7 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       <text x="300" y="270" fill="#9E2B22" font-weight="700">-50% 跌回 75万（亏 25%）</text>
       <text x="500" y="130" fill="#3F8F72" font-weight="700">稳 +10%：121万</text>
     </g>
-    <g font-family="var(--sans)" font-size="12" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">
       <text x="70" y="292">过山车两年 = 白坐，还倒贴；慢慢走反而先到。</text>
     </g>
   </svg>`;
@@ -98,13 +98,13 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     ${steps.map(s=>`
     <rect x="${s.x}" y="${s.y}" width="${s.w}" height="${238-s.y}" rx="6" fill="${s.c}" opacity=".18"/>
     <rect x="${s.x}" y="${s.y}" width="${s.w}" height="${238-s.y}" rx="6" fill="none" stroke="${s.c}" stroke-width="1.6"/>
-    <text x="${s.x+s.w/2}" y="${s.y+22}" text-anchor="middle" font-family="var(--sans)" font-size="13.5" font-weight="700" fill="#4A4438">${s.t}</text>
+    <text x="${s.x+s.w/2}" y="${s.y+22}" text-anchor="middle" font-family="var(--sans)" font-size="13.5" font-weight="700" style="fill:var(--fig-ink,#4A4438)">${s.t}</text>
     <text x="${s.x+s.w/2}" y="${s.y+40}" text-anchor="middle" font-family="var(--sans)" font-size="12.5" fill="${s.c}">${s.r}</text>`).join("")}
     <g font-family="var(--sans)" font-size="12.5" fill="#9E2B22" font-weight="600">
       <text x="545" y="80">越往右，风险工资越高——</text>
       <text x="545" y="98">但「工资」要用波动和心跳来挣</text>
     </g>
-    <g font-family="var(--sans)" font-size="12" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">
       <text x="40" y="264">横着走：风险从左到右升高（长期持有的口径）</text>
       <text x="40" y="286">竖着看：年化收益随之抬高。谁承诺右边的收益、左边的风险，谁就是骗子</text>
     </g>
@@ -144,17 +144,17 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     <g font-family="var(--sans)">
       <circle cx="90" cy="120" r="34" fill="rgba(201,162,39,.14)" stroke="#C9A227" stroke-width="2"/>
       <text x="90" y="116" text-anchor="middle" font-size="12.5" font-weight="700" fill="#8C6D2F">有闲钱的人</text>
-      <text x="90" y="133" text-anchor="middle" font-size="10.5" fill="#8C8470">张家有余粮</text>
+      <text x="90" y="133" text-anchor="middle" font-size="10.5" style="fill:var(--fig-ink3,#8C8470)">张家有余粮</text>
       <circle cx="630" cy="120" r="34" fill="rgba(158,43,34,.1)" stroke="#9E2B22" stroke-width="2"/>
       <text x="630" y="116" text-anchor="middle" font-size="12.5" font-weight="700" fill="#9E2B22">要用钱的人</text>
-      <text x="630" y="133" text-anchor="middle" font-size="10.5" fill="#8C8470">李家想开铺</text>
+      <text x="630" y="133" text-anchor="middle" font-size="10.5" style="fill:var(--fig-ink3,#8C8470)">李家想开铺</text>
       <path d="M132,86 C240,40 480,40 588,86" fill="none" stroke="#C9A227" stroke-width="2.2" marker-end="url(#arrG)"/>
       <text x="360" y="46" text-anchor="middle" font-size="13" font-weight="700" fill="#8C6D2F">直接融资：他直接入股（股票）或打欠条（债券）</text>
-      <text x="360" y="66" text-anchor="middle" font-size="11.5" fill="#8C8470">赚了分红，亏了自己担——甜蜜与风险都归你</text>
+      <text x="360" y="66" text-anchor="middle" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">赚了分红，亏了自己担——甜蜜与风险都归你</text>
       <path d="M132,150 C220,208 500,208 588,150" fill="none" stroke="#8B7D5E" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#arrB)"/>
       <rect x="290" y="176" width="140" height="34" rx="8" fill="rgba(139,125,94,.16)" stroke="#8B7D5E" stroke-width="1.4"/>
-      <text x="360" y="198" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6B6350">银行（中间商）</text>
-      <text x="360" y="234" text-anchor="middle" font-size="11.5" fill="#8C8470">赚利差、担坏账——你拿稳但薄的利息</text>
+      <text x="360" y="198" text-anchor="middle" font-size="12.5" font-weight="700" style="fill:var(--fig-ink2,#6B6350)">银行（中间商）</text>
+      <text x="360" y="234" text-anchor="middle" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">赚利差、担坏账——你拿稳但薄的利息</text>
     </g>
   </svg>`;
 })();
@@ -176,8 +176,8 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       fill="${i===0?"rgba(201,162,39,.22)":"rgba(158,43,34,"+(0.08+i*0.06)+")"}"
       stroke="${i===0?"#C9A227":"#9E2B22"}" stroke-width="${i===0?2:1.6}"/>
     <text x="${b.x+43}" y="${196-b.h}" text-anchor="middle" font-family="var(--sans)" font-size="15" font-weight="700" fill="${i===0?"#8C6D2F":"#9E2B22"}">${b.v}万</text>
-    <text x="${b.x+43}" y="224" text-anchor="middle" font-family="var(--sans)" font-size="12.5" fill="#6B6350">${b.y}</text>`).join("")}
-    <g font-family="var(--sans)" font-size="12.5" fill="#4A4438">
+    <text x="${b.x+43}" y="224" text-anchor="middle" font-family="var(--sans)" font-size="12.5" style="fill:var(--fig-ink2,#6B6350)">${b.y}</text>`).join("")}
+    <g font-family="var(--sans)" font-size="12.5" style="fill:var(--fig-ink,#4A4438)">
       <text x="90" y="250">100 万存着不动，按 3% 通胀算——数字没少，能买的东西 30 年缩水近六成。通胀是唯一「确定发生」的亏损。</text>
     </g>
   </svg>`;
@@ -199,10 +199,10 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       ${bars.map(b=>`
       <rect x="${b.x}" y="${b.y}" width="${b.w}" height="40" rx="8" fill="${b.c}" opacity=".2"/>
       <rect x="${b.x}" y="${b.y}" width="${b.w}" height="40" rx="8" fill="none" stroke="${b.c}" stroke-width="1.6"/>
-      <text x="${b.x-14}" y="${b.y+25}" text-anchor="end" font-size="14.5" font-weight="700" fill="#4A4438">${b.t}</text>
-      <text x="${b.x+16}" y="${b.y+25}" font-size="12.5" fill="#4A4438">${b.v}</text>
-      <text x="${b.x+b.w+14}" y="${b.y+25}" font-size="11.5" fill="#8C8470">${b.note}</text>`).join("")}
-      <text x="40" y="236" font-size="12.5" fill="#8C8470">GDP = 消费 + 投资 + 净出口。看新闻先问：这招打在哪匹马上？</text>
+      <text x="${b.x-14}" y="${b.y+25}" text-anchor="end" font-size="14.5" font-weight="700" style="fill:var(--fig-ink,#4A4438)">${b.t}</text>
+      <text x="${b.x+16}" y="${b.y+25}" font-size="12.5" style="fill:var(--fig-ink,#4A4438)">${b.v}</text>
+      <text x="${b.x+b.w+14}" y="${b.y+25}" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">${b.note}</text>`).join("")}
+      <text x="40" y="236" font-size="12.5" style="fill:var(--fig-ink3,#8C8470)">GDP = 消费 + 投资 + 净出口。看新闻先问：这招打在哪匹马上？</text>
     </g>
   </svg>`;
 })();
@@ -220,7 +220,7 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       <text x="415" y="66" fill="#B0533A">滞胀（秋）· 现金</text>
       <text x="565" y="230" fill="#4A6FA5">衰退（冬）· 债券</text>
     </g>
-    <g font-family="var(--sans)" font-size="11.5" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">
       <text x="60" y="248">经济像四季轮转：增长与通胀两个旋钮的不同组合，决定哪个资产坐在风口——这正是美林时钟的骨架。</text>
     </g>
   </svg>`;
@@ -240,7 +240,7 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       <text x="120" y="52" fill="#9E2B22" font-weight="700">PPI（工厂出厂价）：波动剧烈</text>
       <text x="330" y="140" fill="#8C6D2F" font-weight="700">CPI（消费端物价）：温和黏性</text>
     </g>
-    <g font-family="var(--sans)" font-size="12" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">
       <text x="50" y="240">上游原料涨价先打 PPI，再慢慢传给 CPI。剪刀口张开的方向，就是利润在哪一层被挤压的信号。</text>
     </g>
   </svg>`;
@@ -260,11 +260,11 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     ${chain.map(b=>`
     <rect x="${b.x}" y="40" width="200" height="56" rx="10" fill="${b.c}" opacity=".14"/>
     <rect x="${b.x}" y="40" width="200" height="56" rx="10" fill="none" stroke="${b.c}" stroke-width="1.8"/>
-    <text x="${b.x+100}" y="64" text-anchor="middle" font-family="var(--sans)" font-size="13.5" font-weight="700" fill="#4A4438">${b.t}</text>
-    <text x="${b.x+100}" y="84" text-anchor="middle" font-family="var(--sans)" font-size="11" fill="#8C8470">${b.s}</text>`).join("")}
+    <text x="${b.x+100}" y="64" text-anchor="middle" font-family="var(--sans)" font-size="13.5" font-weight="700" style="fill:var(--fig-ink,#4A4438)">${b.t}</text>
+    <text x="${b.x+100}" y="84" text-anchor="middle" font-family="var(--sans)" font-size="11" style="fill:var(--fig-ink3,#8C8470)">${b.s}</text>`).join("")}
     <line x1="234" y1="68" x2="256" y2="68" stroke="#C9A227" stroke-width="2.4" marker-end="url(#arrG2)"/>
     <line x1="464" y1="68" x2="486" y2="68" stroke="#C9A227" stroke-width="2.4" marker-end="url(#arrG2)"/>
-    <g font-family="var(--sans)" font-size="12" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">
       <text x="30" y="140">央行动的是源头：政策利率一动，折现率跟着动——所有资产定价公式的分母同时变化。</text>
       <text x="30" y="164">这就是「美联储打个喷嚏，全球市场都感冒」的力学原理。</text>
     </g>
@@ -280,8 +280,8 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       <circle cx="240" cy="140" r="92" fill="none" stroke="rgba(139,125,94,.35)" stroke-width="1.4"/>
       <line x1="240" y1="48" x2="240" y2="232" stroke="rgba(139,125,94,.3)"/>
       <line x1="148" y1="140" x2="332" y2="140" stroke="rgba(139,125,94,.3)"/>
-      <text x="240" y="30" text-anchor="middle" font-size="12.5" fill="#8C8470">通胀 ↓ · 增长 ↑（右半 = 复苏带）</text>
-      <text x="240" y="272" text-anchor="middle" font-size="12.5" fill="#8C8470">通胀 ↑ · 增长 ↓（左半 = 滞胀带）</text>
+      <text x="240" y="30" text-anchor="middle" font-size="12.5" style="fill:var(--fig-ink3,#8C8470)">通胀 ↓ · 增长 ↑（右半 = 复苏带）</text>
+      <text x="240" y="272" text-anchor="middle" font-size="12.5" style="fill:var(--fig-ink3,#8C8470)">通胀 ↑ · 增长 ↓（左半 = 滞胀带）</text>
       <rect x="252" y="62" width="64" height="40" rx="8" fill="rgba(63,143,114,.16)" stroke="#3F8F72"/>
       <text x="284" y="80" text-anchor="middle" font-size="12.5" font-weight="700" fill="#3F8F72">复苏</text>
       <text x="284" y="96" text-anchor="middle" font-size="11" fill="#3F8F72">股票</text>
@@ -310,16 +310,16 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     <g font-family="var(--sans)">
       <rect x="40" y="40" width="180" height="52" rx="10" fill="rgba(201,162,39,.14)" stroke="#C9A227" stroke-width="1.8"/>
       <text x="130" y="62" text-anchor="middle" font-size="13" font-weight="700" fill="#8C6D2F">企业（缺钱方）</text>
-      <text x="130" y="82" text-anchor="middle" font-size="11" fill="#8C8470">发行新股 = IPO</text>
+      <text x="130" y="82" text-anchor="middle" font-size="11" style="fill:var(--fig-ink3,#8C8470)">发行新股 = IPO</text>
       <rect x="500" y="40" width="180" height="52" rx="10" fill="rgba(95,191,154,.12)" stroke="#5FBF9A" stroke-width="1.8"/>
       <text x="590" y="62" text-anchor="middle" font-size="13" font-weight="700" fill="#3F8F72">投资者（出钱方）</text>
-      <text x="590" y="82" text-anchor="middle" font-size="11" fill="#8C8470">申购 · 认购</text>
+      <text x="590" y="82" text-anchor="middle" font-size="11" style="fill:var(--fig-ink3,#8C8470)">申购 · 认购</text>
       <line x1="228" y1="56" x2="492" y2="56" stroke="#A68B4A" stroke-width="2.2" marker-end="url(#arrG3)"/>
       <text x="360" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="#8C6D2F">一级市场：钱进企业，股票出厂</text>
       <line x1="492" y1="88" x2="228" y2="88" stroke="#A68B4A" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#arrG3)"/>
-      <text x="360" y="110" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6B6350">二级市场：股票在投资者之间转手（你平时炒的）</text>
-      <text x="40" y="152" font-size="12" fill="#8C8470">关键区别：一级市场的钱进企业口袋；二级市场只是股票换主人——企业拿不到一分钱。</text>
-      <text x="40" y="178" font-size="12" fill="#8C8470">所以打新中签 = 参与一级市场；上市后买卖 = 二级市场博弈。</text>
+      <text x="360" y="110" text-anchor="middle" font-size="12.5" font-weight="700" style="fill:var(--fig-ink2,#6B6350)">二级市场：股票在投资者之间转手（你平时炒的）</text>
+      <text x="40" y="152" font-size="12" style="fill:var(--fig-ink3,#8C8470)">关键区别：一级市场的钱进企业口袋；二级市场只是股票换主人——企业拿不到一分钱。</text>
+      <text x="40" y="178" font-size="12" style="fill:var(--fig-ink3,#8C8470)">所以打新中签 = 参与一级市场；上市后买卖 = 二级市场博弈。</text>
     </g>
   </svg>`;
 })();
@@ -339,10 +339,10 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       ${steps.map((s,i)=>`
       <rect x="${s.x}" y="${150-i*36}" width="130" height="${60+i*36-14}" rx="10" fill="${s.c}" opacity=".16"/>
       <rect x="${s.x}" y="${150-i*36}" width="130" height="${60+i*36-14}" rx="10" fill="none" stroke="${s.c}" stroke-width="1.8"/>
-      <text x="${s.x+65}" y="${150-i*36+28}" text-anchor="middle" font-size="14" font-weight="700" fill="#4A4438">${s.t}</text>
-      <text x="${s.x+65}" y="${150-i*36+48}" text-anchor="middle" font-size="11" fill="#6B6350">${s.d}</text>
+      <text x="${s.x+65}" y="${150-i*36+28}" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--fig-ink,#4A4438)">${s.t}</text>
+      <text x="${s.x+65}" y="${150-i*36+48}" text-anchor="middle" font-size="11" style="fill:var(--fig-ink2,#6B6350)">${s.d}</text>
       <text x="${s.x+65}" y="${150-i*36+66}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${s.c}">涨跌停 ${s.r}</text>`).join("")}
-      <text x="40" y="228" font-size="12" fill="#8C8470">越往右：公司越年轻、波动越大、门槛越高。涨跌幅限制 = 每天的价格天花板与地板。</text>
+      <text x="40" y="228" font-size="12" style="fill:var(--fig-ink3,#8C8470)">越往右：公司越年轻、波动越大、门槛越高。涨跌幅限制 = 每天的价格天花板与地板。</text>
     </g>
   </svg>`;
 })();
@@ -359,9 +359,9 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     <g font-family="var(--sans)" font-size="12.5">
       <text x="420" y="70" fill="#9E2B22" font-weight="700">期权买方：亏损封底（权利金）</text>
       <text x="330" y="210" fill="#A68B4A" font-weight="700">期货：盈亏线性，两头都不封</text>
-      <text x="84" y="248" fill="#8C8470">标的下跌</text>
-      <text x="570" y="248" fill="#8C8470">标的上涨</text>
-      <text x="306" y="46" fill="#8C8470">0</text>
+      <text x="84" y="248" style="fill:var(--fig-ink3,#8C8470)">标的下跌</text>
+      <text x="570" y="248" style="fill:var(--fig-ink3,#8C8470)">标的上涨</text>
+      <text x="306" y="46" style="fill:var(--fig-ink3,#8C8470)">0</text>
     </g>
   </svg>`;
 })();
@@ -379,14 +379,14 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       <text x="70" y="172" fill="#8B7D5E">导入期</text>
       <text x="235" y="120" fill="#A68B4A">成长期</text>
       <text x="425" y="34" fill="#C9A227">成熟期</text>
-      <text x="575" y="94" fill="#8C8470">衰退期</text>
+      <text x="575" y="94" style="fill:var(--fig-ink3,#8C8470)">衰退期</text>
     </g>
-    <g font-family="var(--sans)" font-size="11" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="11" style="fill:var(--fig-ink3,#8C8470)">
       <text x="60" y="120">玩家少</text>
       <text x="225" y="88">诸侯混战</text>
       <text x="430" y="66">剩者为王</text>
     </g>
-    <g font-family="var(--sans)" font-size="12" fill="#8C8470">
+    <g font-family="var(--sans)" font-size="12" style="fill:var(--fig-ink3,#8C8470)">
       <text x="60" y="232">实线=行业规模，虚线=利润率。成长期人人赚钱，成熟期只有龙头赚钱——波特五力说的就是这段。</text>
     </g>
   </svg>`;
@@ -400,16 +400,16 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     <g font-family="var(--sans)">
       <rect x="290" y="20" width="140" height="44" rx="10" fill="rgba(201,162,39,.2)" stroke="#C9A227" stroke-width="2"/>
       <text x="360" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#8C6D2F">ROE 净资产收益率</text>
-      <text x="130" y="120" text-anchor="middle" font-size="13.5" font-weight="700" fill="#4A4438">净利率</text>
-      <text x="130" y="140" text-anchor="middle" font-size="11" fill="#8C8470">产品有多赚钱</text>
-      <text x="360" y="120" text-anchor="middle" font-size="13.5" font-weight="700" fill="#4A4438">资产周转率</text>
-      <text x="360" y="140" text-anchor="middle" font-size="11" fill="#8C8470">资产跑得多快</text>
-      <text x="590" y="120" text-anchor="middle" font-size="13.5" font-weight="700" fill="#4A4438">权益乘数</text>
-      <text x="590" y="140" text-anchor="middle" font-size="11" fill="#8C8470">用了多少杠杆</text>
+      <text x="130" y="120" text-anchor="middle" font-size="13.5" font-weight="700" style="fill:var(--fig-ink,#4A4438)">净利率</text>
+      <text x="130" y="140" text-anchor="middle" font-size="11" style="fill:var(--fig-ink3,#8C8470)">产品有多赚钱</text>
+      <text x="360" y="120" text-anchor="middle" font-size="13.5" font-weight="700" style="fill:var(--fig-ink,#4A4438)">资产周转率</text>
+      <text x="360" y="140" text-anchor="middle" font-size="11" style="fill:var(--fig-ink3,#8C8470)">资产跑得多快</text>
+      <text x="590" y="120" text-anchor="middle" font-size="13.5" font-weight="700" style="fill:var(--fig-ink,#4A4438)">权益乘数</text>
+      <text x="590" y="140" text-anchor="middle" font-size="11" style="fill:var(--fig-ink3,#8C8470)">用了多少杠杆</text>
       <line x1="360" y1="64" x2="130" y2="104" stroke="rgba(139,125,94,.4)"/>
       <line x1="360" y1="64" x2="360" y2="104" stroke="rgba(139,125,94,.4)"/>
       <line x1="360" y1="64" x2="590" y2="104" stroke="rgba(139,125,94,.4)"/>
-      <text x="360" y="182" text-anchor="middle" font-size="12" fill="#8C8470">三个乘数相乘 = ROE。高 ROE 靠哪种？靠杠杆撑起来的要打折看。</text>
+      <text x="360" y="182" text-anchor="middle" font-size="12" style="fill:var(--fig-ink3,#8C8470)">三个乘数相乘 = ROE。高 ROE 靠哪种？靠杠杆撑起来的要打折看。</text>
     </g>
   </svg>`;
 })();
@@ -423,18 +423,18 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     <g font-family="var(--sans)">
       <rect x="40" y="40" width="190" height="70" rx="10" fill="rgba(201,162,39,.14)" stroke="#C9A227" stroke-width="1.8"/>
       <text x="135" y="70" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8C6D2F">利润表</text>
-      <text x="135" y="92" text-anchor="middle" font-size="11" fill="#8C8470">一段时间赚没赚（成绩单）</text>
+      <text x="135" y="92" text-anchor="middle" font-size="11" style="fill:var(--fig-ink3,#8C8470)">一段时间赚没赚（成绩单）</text>
       <rect x="265" y="40" width="190" height="70" rx="10" fill="rgba(95,191,154,.12)" stroke="#5FBF9A" stroke-width="1.8"/>
       <text x="360" y="70" text-anchor="middle" font-size="13.5" font-weight="700" fill="#3F8F72">现金流量表</text>
-      <text x="360" y="92" text-anchor="middle" font-size="11" fill="#8C8470">钱真进真出（验血报告）</text>
+      <text x="360" y="92" text-anchor="middle" font-size="11" style="fill:var(--fig-ink3,#8C8470)">钱真进真出（验血报告）</text>
       <rect x="490" y="40" width="190" height="70" rx="10" fill="rgba(74,111,165,.12)" stroke="#4A6FA5" stroke-width="1.8"/>
       <text x="585" y="70" text-anchor="middle" font-size="13.5" font-weight="700" fill="#4A6FA5">资产负债表</text>
-      <text x="585" y="92" text-anchor="middle" font-size="11" fill="#8C8470">某一天的家底（存照）</text>
+      <text x="585" y="92" text-anchor="middle" font-size="11" style="fill:var(--fig-ink3,#8C8470)">某一天的家底（存照）</text>
       <line x1="230" y1="75" x2="258" y2="75" stroke="#C9A227" stroke-width="2" marker-end="url(#arrG4)"/>
-      <text x="244" y="66" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#8C8470">利润</text>
+      <text x="244" y="66" text-anchor="middle" font-family="var(--sans)" font-size="10" style="fill:var(--fig-ink3,#8C8470)">利润</text>
       <line x1="455" y1="75" x2="483" y2="75" stroke="#C9A227" stroke-width="2" marker-end="url(#arrG4)"/>
-      <text x="469" y="66" text-anchor="middle" font-family="var(--sans)" font-size="10" fill="#8C8470">净额</text>
-      <text x="360" y="160" text-anchor="middle" font-size="12.5" fill="#4A4438">勾稽口诀：利润表的净利润流进资产负债表的留存收益；现金流量表的期末现金 = 资产负债表的货币资金。</text>
+      <text x="469" y="66" text-anchor="middle" font-family="var(--sans)" font-size="10" style="fill:var(--fig-ink3,#8C8470)">净额</text>
+      <text x="360" y="160" text-anchor="middle" font-size="12.5" style="fill:var(--fig-ink,#4A4438)">勾稽口诀：利润表的净利润流进资产负债表的留存收益；现金流量表的期末现金 = 资产负债表的货币资金。</text>
       <text x="360" y="188" text-anchor="middle" font-size="12" fill="#9E2B22" font-weight="600">利润高增而经营现金流常年背离 → 排雷头号信号。</text>
     </g>
   </svg>`;
@@ -450,21 +450,21 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     <g font-family="var(--sans)">
       <line x1="180" y1="40" x2="180" y2="200" stroke="#C0392B" stroke-width="2"/>
       <rect x="152" y="90" width="56" height="80" fill="#C0392B"/>
-      <text x="235" y="46" font-size="12" fill="#8C8470">最高价（上影线顶）</text>
+      <text x="235" y="46" font-size="12" style="fill:var(--fig-ink3,#8C8470)">最高价（上影线顶）</text>
       <line x1="228" y1="42" x2="184" y2="42" stroke="#8C8470" stroke-width="1" stroke-dasharray="3 2"/>
-      <text x="235" y="97" font-size="12" fill="#8C8470">开盘价（红K：实体下沿）</text>
+      <text x="235" y="97" font-size="12" style="fill:var(--fig-ink3,#8C8470)">开盘价（红K：实体下沿）</text>
       <line x1="228" y1="92" x2="212" y2="92" stroke="#8C8470" stroke-width="1" stroke-dasharray="3 2"/>
-      <text x="235" y="178" font-size="12" fill="#8C8470">收盘价（红K：实体上沿）</text>
+      <text x="235" y="178" font-size="12" style="fill:var(--fig-ink3,#8C8470)">收盘价（红K：实体上沿）</text>
       <line x1="228" y1="168" x2="212" y2="168" stroke="#8C8470" stroke-width="1" stroke-dasharray="3 2"/>
-      <text x="235" y="210" font-size="12" fill="#8C8470">最低价（下影线底）</text>
+      <text x="235" y="210" font-size="12" style="fill:var(--fig-ink3,#8C8470)">最低价（下影线底）</text>
       <text x="180" y="34" text-anchor="middle" font-size="13" font-weight="700" fill="#C0392B">阳线（红）：收 > 开</text>
       <line x1="470" y1="50" x2="470" y2="190" stroke="#1E8449" stroke-width="2"/>
       <rect x="442" y="80" width="56" height="76" fill="#1E8449"/>
       <text x="470" y="34" text-anchor="middle" font-size="13" font-weight="700" fill="#1E8449">阴线（绿）：收 < 开</text>
-      <text x="525" y="120" font-size="12" fill="#8C8470">实体 = 开收之间</text>
-      <text x="525" y="142" font-size="12" fill="#8C8470">影线 = 曾到过</text>
-      <text x="525" y="164" font-size="12" fill="#8C8470">上影长 = 冲高回落</text>
-      <text x="360" y="230" text-anchor="middle" font-size="12" fill="#8C8470">一根K线是一天多空交战记录：谁能把影线打回去、把实体守住，谁说了算。</text>
+      <text x="525" y="120" font-size="12" style="fill:var(--fig-ink3,#8C8470)">实体 = 开收之间</text>
+      <text x="525" y="142" font-size="12" style="fill:var(--fig-ink3,#8C8470)">影线 = 曾到过</text>
+      <text x="525" y="164" font-size="12" style="fill:var(--fig-ink3,#8C8470)">上影长 = 冲高回落</text>
+      <text x="360" y="230" text-anchor="middle" font-size="12" style="fill:var(--fig-ink3,#8C8470)">一根K线是一天多空交战记录：谁能把影线打回去、把实体守住，谁说了算。</text>
     </g>
   </svg>`;
 })();
@@ -481,14 +481,14 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     <path d="M40,215 C150,214 260,205 380,175 C500,150 600,152 680,148"
       fill="none" stroke="#B0533A" stroke-width="2.6"/>
     <g font-family="var(--sans)" font-size="12.5">
-      <text x="52" y="176" fill="#8C8470">价格</text>
+      <text x="52" y="176" style="fill:var(--fig-ink3,#8C8470)">价格</text>
       <text x="345" y="128" fill="#C9A227" font-weight="700">MA20</text>
       <text x="580" y="140" fill="#B0533A" font-weight="700">MA60</text>
       <circle cx="295" cy="133" r="7" fill="none" stroke="#3F8F72" stroke-width="2.4"/>
       <text x="240" y="86" fill="#3F8F72" font-weight="700">金叉：短线上穿长线 = 转强信号</text>
       <circle cx="563" cy="107" r="7" fill="none" stroke="#9E2B22" stroke-width="2.4"/>
       <text x="470" y="192" fill="#9E2B22" font-weight="700">死叉：短线下穿长线 = 转弱信号</text>
-      <text x="40" y="232" fill="#8C8470" font-size="12">金叉死叉在震荡市会反复打脸——它只在趋势市可靠（第四阶段第一课的边界）。</text>
+      <text x="40" y="232" style="fill:var(--fig-ink3,#8C8470)" font-size="12">金叉死叉在震荡市会反复打脸——它只在趋势市可靠（第四阶段第一课的边界）。</text>
     </g>
   </svg>`;
 })();
@@ -502,13 +502,13 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       fill="none" stroke="#C9A227" stroke-width="2.8"/>
     <line x1="60" y1="172" x2="500" y2="188" stroke="#9E2B22" stroke-width="1.8" stroke-dasharray="7 4"/>
     <g font-family="var(--sans)" font-size="12.5">
-      <text x="140" y="140" fill="#4A4438" font-weight="700">左肩</text>
+      <text x="140" y="140" style="fill:var(--fig-ink,#4A4438)" font-weight="700">左肩</text>
       <text x="270" y="66" fill="#9E2B22" font-weight="700">头（最高点）</text>
-      <text x="392" y="146" fill="#4A4438" font-weight="700">右肩</text>
+      <text x="392" y="146" style="fill:var(--fig-ink,#4A4438)" font-weight="700">右肩</text>
       <text x="508" y="176" fill="#9E2B22" font-weight="700">颈线（虚线）</text>
       <text x="540" y="206" fill="#9E2B22" font-weight="700">破位确认</text>
       <path d="M520,200 C560,196 600,204 636,220" fill="none" stroke="rgba(158,43,34,.55)" stroke-width="1.6" stroke-dasharray="4 3"/>
-      <text x="60" y="240" fill="#8C8470" font-size="12">三峰中间最高；跌破颈线才叫确认，目标位 ≈ 头到颈线的垂直距离，自突破点向下投影。</text>
+      <text x="60" y="240" style="fill:var(--fig-ink3,#8C8470)" font-size="12">三峰中间最高；跌破颈线才叫确认，目标位 ≈ 头到颈线的垂直距离，自突破点向下投影。</text>
     </g>
   </svg>`;
 })();
@@ -529,9 +529,9 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       ${rows.map((r,i)=>`
       <rect x="150" y="${18+i*44}" width="${r.w}" height="34" rx="8" fill="${r.c}" opacity=".18"/>
       <rect x="150" y="${18+i*44}" width="${r.w}" height="34" rx="8" fill="none" stroke="${r.c}" stroke-width="1.6"/>
-      <text x="136" y="${40+i*44}" text-anchor="end" font-size="13.5" font-weight="700" fill="#4A4438">${r.t}</text>
-      <text x="${150+r.w+12}" y="${40+i*44}" font-size="11.5" fill="#8C8470">${r.d}</text>`).join("")}
-      <text x="150" y="240" font-size="12" fill="#8C8470">越往下：预期收益越高，波动与回撤也越大。选基金先选类型，再选经理——别拿货币基金的钱去买股票基金的事。</text>
+      <text x="136" y="${40+i*44}" text-anchor="end" font-size="13.5" font-weight="700" style="fill:var(--fig-ink,#4A4438)">${r.t}</text>
+      <text x="${150+r.w+12}" y="${40+i*44}" font-size="11.5" style="fill:var(--fig-ink3,#8C8470)">${r.d}</text>`).join("")}
+      <text x="150" y="240" font-size="12" style="fill:var(--fig-ink3,#8C8470)">越往下：预期收益越高，波动与回撤也越大。选基金先选类型，再选经理——别拿货币基金的钱去买股票基金的事。</text>
     </g>
   </svg>`;
 })();
@@ -556,7 +556,7 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       <text x="330" y="142" fill="#3F8F72" font-weight="700">定投平均成本（在腰部）</text>
       <text x="70" y="52" fill="#8C6D2F" font-weight="700">跌越多买越多</text>
       <text x="560" y="46" fill="#8C6D2F" font-weight="700">回到起点已盈利</text>
-      <text x="60" y="232" fill="#8C8470" font-size="12">价格走了一个 V，成本却停在腰部——下跌段攒的便宜份额，是微笑的右半边。前提：标的必须长期向上。</text>
+      <text x="60" y="232" style="fill:var(--fig-ink3,#8C8470)" font-size="12">价格走了一个 V，成本却停在腰部——下跌段攒的便宜份额，是微笑的右半边。前提：标的必须长期向上。</text>
     </g>
   </svg>`;
 })();
@@ -575,7 +575,7 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       <text x="150" y="216" fill="#9E2B22" font-weight="700">止损 -2%（先写好）</text>
       <text x="322" y="104" fill="#3F8F72" font-weight="700">止盈 +4%：盈亏比 2:1</text>
       <text x="206" y="150" fill="#8C6D2F" font-weight="700">入场价（下单前就定好两条线）</text>
-      <text x="70" y="120" fill="#8C8470">错 1 赔 2 时，胜率只需 34% 即长期正期望——这就是盈亏比思维的数学底。</text>
+      <text x="70" y="120" style="fill:var(--fig-ink3,#8C8470)">错 1 赔 2 时，胜率只需 34% 即长期正期望——这就是盈亏比思维的数学底。</text>
     </g>
   </svg>`;
 })();
@@ -592,8 +592,8 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     <g font-family="var(--sans)" font-size="12.5">
       <text x="80" y="86" fill="#C0392B" font-weight="700">股票（牛市里越涨占比越高 70→80%）</text>
       <text x="420" y="170" fill="#4A6FA5" font-weight="700">债券（占比被动变低）</text>
-      <text x="60" y="126" fill="#8C8470">目标线 70/30</text>
-      <text x="60" y="218" fill="#8C8470" font-size="12">再平衡 = 卖出涨多的、补入跌少的，把比例拉回目标——机械地「高抛低吸」，收益来源是波动本身。</text>
+      <text x="60" y="126" style="fill:var(--fig-ink3,#8C8470)">目标线 70/30</text>
+      <text x="60" y="218" style="fill:var(--fig-ink3,#8C8470)" font-size="12">再平衡 = 卖出涨多的、补入跌少的，把比例拉回目标——机械地「高抛低吸」，收益来源是波动本身。</text>
     </g>
   </svg>`;
 })();

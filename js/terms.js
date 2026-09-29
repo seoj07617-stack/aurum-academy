@@ -114,7 +114,7 @@ function annotateTerms(root){
     acceptNode(n){
       if(!n.nodeValue || n.nodeValue.trim().length < 2) return NodeFilter.FILTER_REJECT;
       const p = n.parentElement;
-      if(!p || p.closest(".term,.term-pop,script,style,.no,.stag,.ctag,.ptag,.ltag,.cap")) return NodeFilter.FILTER_REJECT;
+      if(!p || p.closest(".term,.term-pop,script,style,.no,.stag,.ctag,.ptag,.ltag,.cap,.lesson-aside,.logic-box,.pt-list")) return NodeFilter.FILTER_REJECT;
       return NodeFilter.FILTER_ACCEPT;
     }
   });
