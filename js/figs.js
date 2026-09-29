@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    figs.js — 课程图解库（SVG 手绘图）
    原则：淡金描边 + 传统色点缀 + 朱砂点睛；每图独立可复用
    数据课内引用：section 加 fig:"fig-xxx"
@@ -48,8 +48,8 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
       <text x="475" y="46" fill="#9E2B22" font-weight="700">复利 7%：76万</text>
       <text x="430" y="128" fill="#A68B4A" font-weight="600">单利 7%：31万</text>
       <text x="330" y="228" fill="#8B7D5E">活期 1.5%：14万</text>
-      <text x="150" y="170" fill="#4A4438" font-style="italic">前十年几乎贴地——大多数人放弃在这里</text>
-      <path d="M295,164 C340,120 400,80 465,56" fill="none" stroke="#C9A227" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <text x="70" y="140" fill="#4A4438" font-style="italic">前十年几乎贴地——大多数人放弃在这里</text>
+      <path d="M255,132 C310,110 380,78 465,56" fill="none" stroke="#C9A227" stroke-width="1.4" stroke-dasharray="4 3"/>
     </g>
     <g font-family="var(--sans)" font-size="12" fill="#8C8470">
       <text x="${g.x0}" y="284">本金 10 万 · 年化 7% · 三十年三兄弟</text>
@@ -191,7 +191,7 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
   const bars = [
     { x: 120, w: 320, y: 60,  t: "消费", v: "贡献约一半", c: "#C9A227", note: "主力引擎" },
     { x: 120, w: 160, y: 120, t: "投资", v: "约三分之一", c: "#A68B4A", note: "基建 · 地产 · 制造" },
-    { x: 120, w: 60,  y: 180, t: "净出口", v: "占比最小但波动大", c: "#8B7D5E", note: "外需的脸色" },
+    { x: 120, w: 60,  y: 180, t: "净出口", v: "占比最小", c: "#8B7D5E", note: "外需的脸色" },
   ];
   window.FIGS["fig-gdp-three"] =
   `<svg viewBox="0 0 720 250" class="lesson-fig" role="img" aria-label="GDP 三驾马车">
@@ -334,15 +334,15 @@ function _line(pts, x0, y0, w, h, vmax, ymax){
     { x: 550, t: "北交所", d: "专精特新", r: "±30%", c: "#C9A227" },
   ];
   window.FIGS["fig-a-layers"] =
-  `<svg viewBox="0 0 720 220" class="lesson-fig" role="img" aria-label="A股多层次板块">
+  `<svg viewBox="0 0 720 250" class="lesson-fig" role="img" aria-label="A股多层次板块">
     <g font-family="var(--sans)">
       ${steps.map((s,i)=>`
-      <rect x="${s.x}" y="${170-i*36}" width="130" height="${60+i*36-14}" rx="10" fill="${s.c}" opacity=".16"/>
-      <rect x="${s.x}" y="${170-i*36}" width="130" height="${60+i*36-14}" rx="10" fill="none" stroke="${s.c}" stroke-width="1.8"/>
-      <text x="${s.x+65}" y="${170-i*36+28}" text-anchor="middle" font-size="14" font-weight="700" fill="#4A4438">${s.t}</text>
-      <text x="${s.x+65}" y="${170-i*36+48}" text-anchor="middle" font-size="11" fill="#6B6350">${s.d}</text>
-      <text x="${s.x+65}" y="${170-i*36+66}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${s.c}">涨跌停 ${s.r}</text>`).join("")}
-      <text x="40" y="206" font-size="12" fill="#8C8470">越往右：公司越年轻、波动越大、门槛越高。涨跌幅限制 = 每天的价格天花板与地板。</text>
+      <rect x="${s.x}" y="${150-i*36}" width="130" height="${60+i*36-14}" rx="10" fill="${s.c}" opacity=".16"/>
+      <rect x="${s.x}" y="${150-i*36}" width="130" height="${60+i*36-14}" rx="10" fill="none" stroke="${s.c}" stroke-width="1.8"/>
+      <text x="${s.x+65}" y="${150-i*36+28}" text-anchor="middle" font-size="14" font-weight="700" fill="#4A4438">${s.t}</text>
+      <text x="${s.x+65}" y="${150-i*36+48}" text-anchor="middle" font-size="11" fill="#6B6350">${s.d}</text>
+      <text x="${s.x+65}" y="${150-i*36+66}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${s.c}">涨跌停 ${s.r}</text>`).join("")}
+      <text x="40" y="228" font-size="12" fill="#8C8470">越往右：公司越年轻、波动越大、门槛越高。涨跌幅限制 = 每天的价格天花板与地板。</text>
     </g>
   </svg>`;
 })();

@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    figs_extra.js — 课程图解库·扩展（v16）
    覆盖 macro/markets/technical/funds/discipline/portfolio/company/models
    风格与 figs.js 一致：淡金描边 + 传统色点缀 + 朱砂点睛
@@ -89,13 +89,13 @@
       <circle cx="390" cy="200" r="42"/>
     </g>
     <g font-family="var(--sans)" font-size="12.5" font-weight="700" fill="#9E2B22">
-      <text x="270" y="286" text-anchor="middle">锤子线：长下影承接</text>
-      <text x="418" y="270" text-anchor="middle">看涨吞没：实体全包</text>
+      <text x="250" y="284" text-anchor="start">锤子线</text>
+      <text x="430" y="262" text-anchor="middle">看涨吞没</text>
     </g>
-    <text x="560" y="120" font-family="var(--sans)" font-size="12" fill="#8C8470">下跌末端出现 →</text>
-    <text x="560" y="138" font-family="var(--sans)" font-size="12" fill="#8C8470">待次日放量确认</text>
+    <text x="548" y="108" font-family="var(--sans)" font-size="12" fill="#8C8470">下跌末端出现 →</text>
+    <text x="548" y="126" font-family="var(--sans)" font-size="12" fill="#8C8470">待次日放量确认</text>
     <text x="60" y="52" font-family="var(--sans)" font-size="12" fill="#4A4438" font-weight="600">位置决定价值：同样的锤子线，下跌末端是信号，半山腰是噪音</text>
-    <text x="60" y="284" font-family="var(--sans)" font-size="11.5" fill="#8C8470">实心＝阴线（收＜开）　空心＝阳线（收＞开）　影线＝当期触过的最高最低</text>
+    <text x="60" y="296" font-family="var(--sans)" font-size="11.5" fill="#8C8470">实心＝阴线（收＜开）　空心＝阳线（收＞开）　影线＝当期触过的最高最低</text>
   </svg>`;
 })();
 
