@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    views/glossary.js — 金融词汇表：全部要点卡按阶段浏览/搜索
    2026-09-22 拾壹：搜索改为局部重渲染（修手机端丢焦点/IME打断）
    2026-09-22 拾壹 v15：接入详解库 glossary_extra1/2.js——
@@ -50,6 +50,7 @@ VIEWS.glossary = function(kwArg){
               <span class="tiny" style="flex:none">${EXTRA[p.t]?'<span class="tmore-btn">详解</span>':""}${esc(p.lesson)}</span>
             </div>
             <p class="small muted" style="margin-top:3px;line-height:1.7">${esc(p.d)}</p>
+            ${(window.GUIDE && GUIDE[p.t]) ? `<div class="glo-guide"><div><i>在哪看</i>${esc(GUIDE[p.t].where)}</div><div><i>怎么看</i>${esc(GUIDE[p.t].how)}</div><div><i>怎么用</i>${esc(GUIDE[p.t].use)}</div></div>` : ""}
             ${termMoreHTML(p.t)}
           </div>`).join("")}
         </div>

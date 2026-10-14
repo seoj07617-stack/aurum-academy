@@ -61,7 +61,15 @@ VIEWS.lesson = function(lid){
       <aside class="lesson-aside">
         <div class="glass glass-pad">
           <div class="card-title">${icon("star")} 本课要点 <span class="tiny" style="margin-left:auto">复习卡片来源</span></div>
-          <div class="pt-list">${l.points.map(p=>`<div class="pt"><b>${p.t}</b><span>${p.d}</span></div>`).join("")}</div>
+          <div class="pt-list">${l.points.map(p=>{
+            const g = (window.GUIDE && GUIDE[p.t]) || null;
+            return `<div class="pt"><b>${p.t}</b><span>${p.d}</span>
+            ${g?`<div class="pt-guide">
+              <div><i>在哪看</i>${g.where}</div>
+              <div><i>怎么看</i>${g.how}</div>
+              <div><i>怎么用</i>${g.use}</div>
+            </div>`:""}</div>`;
+          }).join("")}</div>
         </div>
         <div class="glass glass-pad">
           <div class="card-title">${icon("brain")} 记忆提示</div>
