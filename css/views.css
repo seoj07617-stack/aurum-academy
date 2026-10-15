@@ -585,3 +585,6 @@ html[data-theme="dark"] .fig-how{background:rgba(201,162,39,.08);border-color:rg
   border:1px solid rgba(95,191,154,.4)}
 .newbie-tip b{color:#3F8F72;font-family:var(--serif)}
 html[data-theme="dark"] .newbie-tip{background:rgba(95,191,154,.1)}
+/* 时效声明灰章（政策敏感条目） */
+.pt-guide i.rk, .glo-guide i.rk{background:#D8D4C8;color:#4A4438}
+html[data-theme="dark"] .pt-guide i.rk, html[data-theme="dark"] .glo-guide i.rk{background:#5A564C;color:#D8D4C8}

@@ -69,6 +69,7 @@ VIEWS.lesson = function(lid){
               <div><i>在哪看</i>${g.where}</div>
               <div><i>怎么看</i>${g.how}</div>
               <div><i>怎么用</i>${g.use}</div>
+              ${window.GUIDE_RISK && GUIDE_RISK[p.t] ? `<div><i class="rk">时效</i>${GUIDE_RISK[p.t]}</div>` : ""}
             </div>`:""}</div>`;
           }).join("")}</div>
         </div>

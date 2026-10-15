@@ -50,7 +50,7 @@ VIEWS.glossary = function(kwArg){
               <span class="tiny" style="flex:none">${EXTRA[p.t]?'<span class="tmore-btn">详解</span>':""}${esc(p.lesson)}</span>
             </div>
             <p class="small muted" style="margin-top:3px;line-height:1.7">${esc(p.d)}</p>
-            ${(window.GUIDE && GUIDE[p.t]) ? `<div class="glo-guide"><div><i>在哪看</i>${esc(GUIDE[p.t].where)}</div><div><i>怎么看</i>${esc(GUIDE[p.t].how)}</div><div><i>怎么用</i>${esc(GUIDE[p.t].use)}</div></div>` : ""}
+            ${(window.GUIDE && GUIDE[p.t]) ? `<div class="glo-guide"><div><i>在哪看</i>${esc(GUIDE[p.t].where)}</div><div><i>怎么看</i>${esc(GUIDE[p.t].how)}</div><div><i>怎么用</i>${esc(GUIDE[p.t].use)}</div>${(window.GUIDE_RISK && GUIDE_RISK[p.t]) ? `<div><i class="rk">时效</i>${esc(GUIDE_RISK[p.t])}</div>` : ""}</div>` : ""}
             ${termMoreHTML(p.t)}
           </div>`).join("")}
         </div>
