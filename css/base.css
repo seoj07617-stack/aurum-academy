@@ -2,6 +2,11 @@
    知行金融学院 · Aurum Academy
    base.css — 设计令牌 / 排版 / 背景 / 布局工具
    ============================================================ */
+/* 开源数据字体：JetBrains Mono（OFL 授权）— 仅拉丁与数字，swap 渐进加载 */
+@font-face{font-family:"JetBrains Mono";src:url("../fonts/jbm-400.woff2") format("woff2");
+  font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0020-007E,U+00A0-00FF,U+2000-206F}
+@font-face{font-family:"JetBrains Mono";src:url("../fonts/jbm-700.woff2") format("woff2");
+  font-weight:700;font-style:normal;font-display:swap;unicode-range:U+0020-007E,U+00A0-00FF,U+2000-206F}
 :root{
   --fig-ink:#4A4438; --fig-ink2:#6B6350; --fig-ink3:#8C8470;
   --bg:#F6F3EC;
@@ -20,7 +25,7 @@
   --r:22px; --r2:16px; --r3:12px;
   --serif:"Source Han Serif SC","Noto Serif SC","Songti SC",STSong,"SimSun",serif;
   --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Microsoft YaHei UI","Microsoft YaHei","Segoe UI",sans-serif;
-  --num:"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  --num:"JetBrains Mono","SF Pro Display","Helvetica Neue",Consolas,Arial,sans-serif;
   --ease:cubic-bezier(.22,1,.36,1);
   --nav-h:64px;
   --coin-single:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23A8842C' stroke-opacity='.75'%3E%3Ccircle cx='32' cy='32' r='28' stroke-width='3'/%3E%3Crect x='25' y='25' width='14' height='14' stroke-width='2.4'/%3E%3C/g%3E%3C/svg%3E");
@@ -65,6 +70,11 @@ a:focus:not(:focus-visible),button:focus:not(:focus-visible){outline:none}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.5 0 0 0 0 0.38 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* ---------- 连钱纹（铜钱锦）图案：卡片右上角水印用 ---------- */
+/* 开源数据字体：JetBrains Mono（OFL 授权）— 仅拉丁与数字，swap 渐进加载 */
+@font-face{font-family:"JetBrains Mono";src:url("../fonts/jbm-400.woff2") format("woff2");
+  font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0020-007E,U+00A0-00FF,U+2000-206F}
+@font-face{font-family:"JetBrains Mono";src:url("../fonts/jbm-700.woff2") format("woff2");
+  font-weight:700;font-style:normal;font-display:swap;unicode-range:U+0020-007E,U+00A0-00FF,U+2000-206F}
 :root{
   --fig-ink:#4A4438; --fig-ink2:#6B6350; --fig-ink3:#8C8470;
   --coin-pattern:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='96' viewBox='0 0 112 96'%3E%3Cg fill='none' stroke='%23A8842C' stroke-opacity='.62' stroke-width='1.5'%3E%3Ccircle cx='16' cy='16' r='16'/%3E%3Crect x='11.75' y='11.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='44' cy='16' r='16'/%3E%3Crect x='39.75' y='11.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='72' cy='16' r='16'/%3E%3Crect x='67.75' y='11.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='100' cy='16' r='16'/%3E%3Crect x='95.75' y='11.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='2' cy='40' r='16'/%3E%3Crect x='-2.25' y='35.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='30' cy='40' r='16'/%3E%3Crect x='25.75' y='35.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='58' cy='40' r='16'/%3E%3Crect x='53.75' y='35.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='86' cy='40' r='16'/%3E%3Crect x='81.75' y='35.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='16' cy='64' r='16'/%3E%3Crect x='11.75' y='59.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='44' cy='64' r='16'/%3E%3Crect x='39.75' y='59.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='72' cy='64' r='16'/%3E%3Crect x='67.75' y='59.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3Ccircle cx='100' cy='64' r='16'/%3E%3Crect x='95.75' y='59.75' width='8.5' height='8.5' stroke-width='1.1'/%3E%3C/g%3E%3C/svg%3E");

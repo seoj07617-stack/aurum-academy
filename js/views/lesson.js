@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    views/lesson.js — 课程阅读页
    渲染层：正文 → 图解 → 分步 → 清单 → 案例 → 俗讲 → 深讲折叠
    数据层：课程自带字段优先，ENRICH 增强包补缺（enrich.js）
@@ -19,6 +19,7 @@ VIEWS.lesson = function(lid){
         <h1>${l.title}</h1>
         <p class="hook">◈ ${l.hook}</p>
         ${window.LOGIC && LOGIC[lid] ? `<div class="logic-box"><span class="ltag">逻辑主线</span><p>${LOGIC[lid]}</p></div>` : ""}
+        ${(window.NEWBIE && !ORDER.some(id => LState(id).done)) ? `<div class="newbie-tip"><b>第一次来？</b>别急着往下翻——先读完下面的第 1 节，再点底部「开始本课测验」。每课 8 分钟，读完就能通过。全部完成后，这条提示会自动消失。</div>` : ""}
         <div class="row" style="gap:8px;margin:10px 0 4px">
           <span class="tag">${l.mins} 分钟</span>
           ${ls.done?`<span class="tag done">${icon("check")} 已通过 ${ls.best}%</span>`:`<span class="tag gray">未完成</span>`}
@@ -32,7 +33,7 @@ VIEWS.lesson = function(lid){
         <div class="sec">
           <div class="sec-head"><span class="no">${String(i+1).padStart(2,"0")}</span><h3>${s.h}</h3></div>
           ${s.p?`<p>${s.p}</p>`:""}
-          ${fig&&window.FIGS&&FIGS[fig]?`<div class="fig-wrap">${FIGS[fig]}</div>`:""}
+          ${fig&&window.FIGS&&FIGS[fig]?`<div class="fig-wrap">${FIGS[fig]}</div>${window.FIGHOW&&FIGHOW[fig]?`<div class="fig-how">${icon("map")} 怎么看这张图：${FIGHOW[fig]}</div>`:""}`:""}
           ${steps?`<div class="steps-box"><span class="stag">分 步</span><ol>${steps.map(x=>`<li><b>${x[0]}</b>${x.slice(1)}</li>`).join("")}</ol></div>`:""}
           ${s.list?`<ul>${s.list.map(x=>`<li>${x}</li>`).join("")}</ul>`:""}
           ${kase?`<div class="case-box"><span class="ctag">案 例</span><p>${kase}</p></div>`:""}

@@ -574,3 +574,14 @@ html[data-theme="dark"] .pt-guide i{color:#1D1C1A}
   background:var(--gold-grad);color:#141210;font-weight:700;white-space:nowrap}
 .glo-guide > div:nth-child(2) i{background:linear-gradient(180deg,#7ED4B0,#5FBF9A);color:#0E241C}
 .glo-guide > div:nth-child(3) i{background:linear-gradient(180deg,#8FB4DE,#4A6FA5);color:#0F1B2B}
+/* ================= 图解新手引导 + 新手提示条（v35） ================= */
+.fig-how{margin-top:8px;font-size:12.5px;line-height:1.75;color:var(--ink2);
+  padding:8px 11px;border-radius:9px;background:rgba(201,162,39,.06);
+  border:1px dashed rgba(184,150,62,.35)}
+.fig-how svg{width:13px;height:13px;vertical-align:-2px;margin-right:2px;color:var(--gold)}
+html[data-theme="dark"] .fig-how{background:rgba(201,162,39,.08);border-color:rgba(184,150,62,.4)}
+.newbie-tip{margin:14px 0 4px;padding:12px 15px;border-radius:12px;font-size:13.3px;line-height:1.8;
+  background:linear-gradient(135deg,rgba(95,191,154,.12),rgba(95,191,154,.04));
+  border:1px solid rgba(95,191,154,.4)}
+.newbie-tip b{color:#3F8F72;font-family:var(--serif)}
+html[data-theme="dark"] .newbie-tip{background:rgba(95,191,154,.1)}
