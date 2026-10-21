@@ -89,5 +89,33 @@ VIEWS.lesson = function(lid){
       bindTermEvents(el);
     }
   }catch(e){}
+  /* 阅读进度条 + 当前小节浮标（长课程页的「身处何处」）
+     用 200ms 轮询而非 scroll 事件：站内其他滚动监听可能拦截派发，轮询最稳 */
+  try{
+    if(document.getElementById("readProg")) document.getElementById("readProg").remove();
+    if(document.getElementById("secBubble")) document.getElementById("secBubble").remove();
+    const secs = [...el.querySelectorAll(".sec-head h3")];
+    const bar = document.createElement("div");
+    bar.id = "readProg";
+    document.body.appendChild(bar);
+    const bubble = document.createElement("div");
+    bubble.id = "secBubble";
+    document.body.appendChild(bubble);
+    const secNames = secs.map(h => h.textContent);
+    const onScroll = () => {
+      if(!document.body.contains(bar) || !document.body.contains(bubble)){ clearInterval(iv); return; }
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? Math.min(100, Math.max(0, window.scrollY / total * 100)) : 0;
+      bar.style.width = pct.toFixed(1) + "%";
+      let cur = -1;
+      secs.forEach((h, i) => { if(h.getBoundingClientRect().top < window.innerHeight * 0.4) cur = i; });
+      if(cur >= 0 && secNames[cur]){
+        bubble.textContent = String(cur+1).padStart(2,"0") + " · " + secNames[cur];
+        bubble.classList.add("show");
+      } else bubble.classList.remove("show");
+    };
+    const iv = setInterval(onScroll, 200);
+    onScroll();
+  }catch(e){}
   return el;
 };

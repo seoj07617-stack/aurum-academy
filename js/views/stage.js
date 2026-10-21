@@ -21,6 +21,7 @@ VIEWS.stage = function(sid){
           <div class="crumb"><a href="#/map">知识地图</a> ${icon("chevR")} ${st.num}</div>
           <h1 style="font-size:27px;margin-top:8px">${st.cn} · ${st.title}</h1>
           <p class="muted" style="max-width:66ch;margin-top:6px">${st.intro}</p>
+          ${window.STAGE_BRIDGE && STAGE_BRIDGE[sid] ? `<div class="bridge-box"><span class="btag">衔 接</span><p>${STAGE_BRIDGE[sid]}</p></div>` : ""}
         </div>
         <div style="text-align:center;flex:none">
           ${ring(info.pct, 96, "课程进度", info.mastery>0?`掌握 ${info.mastery}%`:"")}

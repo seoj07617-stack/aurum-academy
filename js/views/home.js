@@ -60,10 +60,15 @@ VIEWS.home = function(){
         <div class="t"><b>${t.t}</b><span>${t.s}</span></div>
         <span class="go">${t.done?"已完成":icon("chevR")}</span>
       </div>`).join("")}
-      <div class="task-row" data-go="#/playbook" style="border-top:1px dashed rgba(201,162,39,.28);margin-top:6px;padding-top:14px">
-        <div class="task-ic">${icon("map")}</div>
-        <div class="t"><b>实战路由 · 遇事查这里</b><span>亏了 20% 怎么办、有人推荐高收益产品…按场景反查知识与动作</span></div>
-        <span class="go">${icon("chevR")}</span>
+    </div>
+
+    <div class="glass loop-card" style="margin-top:14px">
+      <div class="between" style="align-items:center;gap:12px;flex-wrap:wrap">
+        <div class="row" style="gap:8px;align-items:center">
+          <span class="task-ic" style="width:34px;height:34px">${icon("map")}</span>
+          <div><b style="font-size:14px">实战路由</b><span class="tiny muted" style="display:block">遇事查这里：16 个真实场景反查知识与动作</span></div>
+        </div>
+        <button class="btn btn-ghost btn-sm" data-go="#/playbook">打开手册</button>
       </div>
     </div>
 

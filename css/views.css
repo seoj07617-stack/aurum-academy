@@ -79,8 +79,10 @@
   background-size:100% 46px}
 /* 词汇表 */
 .glo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.glo-grid > *{min-width:0}
 .term-card{padding:13px 15px;border-radius:14px;background:rgba(255,255,255,.45);
-  border:1px solid rgba(255,255,255,.65);transition:all .3s var(--ease)}
+  border:1px solid rgba(255,255,255,.65);transition:all .3s var(--ease);min-width:0;overflow-wrap:break-word}
+.term-card .glo-guide > div{overflow-wrap:break-word;word-break:break-word}
 .term-card:hover{background:rgba(255,255,255,.72);transform:translateY(-2px)}
 .term-card b{font-family:var(--serif);font-size:15px;color:var(--gold)}
 @media (max-width:760px){.glo-grid{grid-template-columns:1fr}}
@@ -588,3 +590,24 @@ html[data-theme="dark"] .newbie-tip{background:rgba(95,191,154,.1)}
 /* 时效声明灰章（政策敏感条目） */
 .pt-guide i.rk, .glo-guide i.rk{background:#D8D4C8;color:#4A4438}
 html[data-theme="dark"] .pt-guide i.rk, html[data-theme="dark"] .glo-guide i.rk{background:#5A564C;color:#D8D4C8}
+/* ================= 阅读进度条 + 当前小节浮标（v37） ================= */
+#readProg{position:fixed;top:0;left:0;height:3px;width:0;z-index:200;
+  background:linear-gradient(90deg,#8C6D2F,#C9A227,#E5CE8A);
+  box-shadow:0 0 8px rgba(201,162,39,.5);transition:width .1s linear;pointer-events:none}
+#secBubble{position:fixed;top:calc(var(--nav-h) + 12px);right:16px;z-index:90;
+  font-family:var(--serif);font-size:11.5px;color:#8C6D2F;letter-spacing:.04em;
+  background:rgba(255,255,255,.82);border:1px solid rgba(201,162,39,.35);
+  padding:4px 11px;border-radius:999px;backdrop-filter:blur(6px);
+  opacity:0;transform:translateY(-4px);transition:opacity .3s,transform .3s;pointer-events:none}
+#secBubble.show{opacity:1;transform:none}
+html[data-theme="dark"] #secBubble{background:rgba(24,21,16,.8);color:#C9A227;border-color:rgba(201,162,39,.3)}
+@media (max-width:880px){#secBubble{top:calc(var(--nav-h) + 8px);right:12px;font-size:10.5px}}
+/* ================= 阶段衔接卡（v38 知识体系衔接） ================= */
+.bridge-box{margin:12px 0 0;max-width:66ch;padding:11px 14px 10px;border-radius:12px;position:relative;
+  background:linear-gradient(135deg,rgba(201,162,39,.12),rgba(160,124,44,.04));
+  border:1px solid rgba(201,162,39,.3);border-left:3px solid var(--gold)}
+.btag{display:inline-block;font-size:9.5px;letter-spacing:.3em;padding:2px 7px 2px 9px;border-radius:6px;
+  font-weight:700;margin-bottom:6px;font-family:var(--serif);
+  background:var(--gold-grad);color:#141210}
+.bridge-box p{margin:2px 0 0;font-size:13.3px;line-height:1.85;color:var(--ink2)}
+html[data-theme="dark"] .bridge-box{background:linear-gradient(135deg,rgba(201,162,39,.15),rgba(201,162,39,.04))}
