@@ -1,6 +1,6 @@
 ﻿/* 知行金融学院 · Service Worker：离线缓存 + network-first 版本管理 */
 "use strict";
-const VER = "aurum-v42";
+const VER = "aurum-v43";
 const CORE = [
   "./", "./index.html", "./fonts/jbm-400.woff2", "./fonts/jbm-700.woff2", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png",
   "./css/base.css", "./css/components.css", "./css/views.css", "./css/ai.css", "./css/animations.css",

@@ -72,7 +72,17 @@ const bankOf = (function(){
   }
   return function(lid){
     if(!built) built = build();
-    return built[lid] || [];
+    const arr = built[lid] || [];
+    const l = LESSON[lid];
+    if(!l) return arr;
+    const own = new Set((l.quiz || []).map(q => String(q.q).trim()));
+    const seen = new Set();
+    return arr.filter(q => {
+      const t = String(q.q).trim();
+      if(own.has(t) || seen.has(t)) return false;
+      seen.add(t);
+      return true;
+    });
   };
 })();
 /* 统一取题：qi < 100 为课程原题，≥100 为生成题 */
