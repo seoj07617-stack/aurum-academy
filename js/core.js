@@ -146,6 +146,8 @@ const App = {
     if(name==="quiz") t = "测验中";
     document.title = t + " · 知行金融学院";
     const app = $("#app");
+    /* 路由切换时清理残留的弹窗遮罩（退出测验/每日一卷等场景） */
+    $$(".modal-mask").forEach(n => n.remove());
     app.innerHTML = "";
     const el = view(arg, arg2) || document.createElement("div");
     el.classList.add("view", "view-in");

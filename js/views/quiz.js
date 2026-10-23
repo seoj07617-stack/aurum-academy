@@ -105,7 +105,7 @@ VIEWS.quiz = function(arg){
         <button class="btn btn-ghost btn-sm" id="qxNo">回卷续答</button>
         <button class="btn btn-gold btn-sm" id="qxYes">退 卷</button></div>`);
       $("#qxNo", mask).addEventListener("click",()=>mask.remove());
-      $("#qxYes", mask).addEventListener("click",()=>go(cfg.back));
+      $("#qxYes", mask).addEventListener("click",()=>{ mask.remove(); go(cfg.back); });
     });
   }
 

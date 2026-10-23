@@ -82,12 +82,12 @@ VIEWS.daily = function(){
     }, idx);
     $("#dNext", el).addEventListener("click", () => { idx++; renderQ(); });
     $("#mixExit", el).addEventListener("click", () => {
-      modal(`<h3>退出今日一卷？</h3><p>本卷进度将丢弃（已答错的题仍会收录进错题本与复习循环），明日更换新卷。</p>
+      const mask = modal(`<h3>退出今日一卷？</h3><p>本卷进度将丢弃（已答错的题仍会收录进错题本与复习循环），明日更换新卷。</p>
         <div class="row" style="justify-content:flex-end;margin-top:16px">
         <button class="btn btn-ghost btn-sm" id="mxNo">继续作答</button>
         <button class="btn btn-gold btn-sm" id="mxYes">确认退出</button></div>`);
       $("#mxNo", mask).addEventListener("click", () => mask.remove());
-      $("#mxYes", mask).addEventListener("click", () => go("#/home"));
+      $("#mxYes", mask).addEventListener("click", () => { mask.remove(); go("#/home"); });
     });
   }
 

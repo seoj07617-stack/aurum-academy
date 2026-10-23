@@ -30,8 +30,8 @@ const SRS = {
 
   /* 错题卡：答错的题目即时生成（明天到期，优先复习） */
   addWrongCard(lessonId, qi){
-    const l = LESSON[lessonId]; if(!l) return;
-    const q = l.quiz[qi]; if(!q) return;
+    if(!LESSON[lessonId]) return;
+    const q = quizOf(lessonId, qi); if(!q) return;
     const id = `${lessonId}.q${qi}`;
     this.CARDS[id] = { id, lesson:lessonId, kind:"quiz",
       front:q.q, back:`正确答案：${q.opts[q.a]}。${q.why}` };
